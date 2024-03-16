@@ -443,11 +443,13 @@ def create_monster(monster):
             monster_string += resolve_functions(action["effect"], bonuses, profbonus) + LINEBREAK
             
 
-    print(monster_string)
+    return monster_string
 
 
 def create_doc(filedict):
-    print(PREAMBLE)
+    latexfile = open("monsters.tex", "w")
+    latexfile.write(PREAMBLE)
+
     
     monster_name_dict = {}
     monsters_by_habitat = {}
@@ -482,9 +484,11 @@ def create_doc(filedict):
 
     for monster_name in sorted(monster_name_dict):
         monster = monster_name_dict[monster_name]
-        create_monster(monster)
+        latexfile.write(create_monster(monster))
+        latexfile.write("\\newpage")
 
-    print(CONCLUSION)
+    latexfile.write(CONCLUSION)
+    latexfile.close()
 
 
 with open("monsters.yaml") as stream:
