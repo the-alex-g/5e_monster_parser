@@ -1,38 +1,168 @@
+# REQUIRED PARAMETERS
+# name: Title Case Name
+# cr: 0, 1-30, or 1/8, 1/4, or 1/2
+# size: lowercase
+# type: lowercase
+# alignment: lower case
+# hd: integer
+# speed:
+#   land: int
+#   otherlowercasespeeds: ints
+# stats:
+#   str: int, etc.
+
+# OPTIONAL PARAMETERS
+# headername: String, Title Case
+# flavor: Properly capitalized string with punctuation.
+# description:
+# - header: Title Case String
+#   text: Properly capitalized string with punctuation.
+# ac:
+# - int bonus
+# - string explaining bonus
+# skills:
+# - list of lowercase skill names
+# - entering the same skill twice gives double proficiency
+# immune:
+# - list of lowercase damage types
+# resist:
+# - list of lowercase damage types
+# vulnerable:
+# - list of lowercase damage types
+# cond-immune:
+# - list of lowercase conditions
+# senses:
+# - list of lowercase senses, with punctuation, eg. "blindsight 30 ft."
+# languages:
+# - list of lowercase languages
+# saves:
+# - list of attributes, properly sorted
+# - entering the same attribute twice gives double proficiency... if that's a thing
+# abilities:
+# - name: Title Case Name
+#   effect: Properly capitalized string with punctuation and [bracket commands].
+# attacks:
+# - name: Title Case Name
+#   type: mw, ms, rw, or rs
+#   ability: one of the attributes, lowercase
+#   reach: int or split-range string (30/60)
+#   target: lowercase string
+#   onhit: Properly capitalized string with punctuation and [bracket commands].
+#   special: (optional parameter) Properly capitalized string with punctuation and [bracket commands].
+# actions:
+# - name: Title Case Name
+#   effect: Properly capitalized string with punctuation and [bracket commands].
+# habitat:
+# - list of habitats
+
+
 ---
-headername: Beast, Foo
-name: Foo Beast
-cr: 1
-size: small
-type: monstrosity
-alignment: chaotic evil
-hd: 4
-speed:
- land: 30
-immune:
-- poison
-- acid
-- bludgeoning, piercing, and slashing from non-magical weapons
-cond-immune:
-- poisoned
+monsters:  
+- name: Foo Beast
+  cr: 1
+  size: small
+  type: monstrosity
+  alignment: chaotic evil
+  hd: 4
+  speed:
+    land: 30
+    climb: 10
+  skills:
+  - perception
+  immune:
+  - poison
+  - acid
+  - bludgeoning, piercing, and slashing from non-magical weapons
+  cond-immune:
+  - poisoned
 
-ac:
-- 1
-- natural armor
+  ac:
+  - 1
+  - natural armor
 
-stats:
- str: 10
- dex: 10
- con: 10
- int: 10
- wis: 10
- cha: 10
+  stats:
+    str: 10
+    dex: 10
+    con: 10
+    int: 10
+    wis: 10
+    cha: 10
 
-flavor: The dreadly foo beast looms against the pinkish "sky".
+  flavor: The dreadly foo beast looms against the pinkish "sky".
 
-attacks:
-- type: mwa
-  ability: str
-  name: Claw
-  reach: 5
-  target: one target
-  onhit: "[diceroll 1 6 str] slashing damage."
+  description:
+  - header: Horrid Predator
+    text: Foo beasts hunt the weak, the vulnerable, and the completely helpess.
+
+  abilities:
+  - name: Stench
+    effect: "[save w/con con]"
+
+  attacks:
+  - type: mw
+    ability: str
+    name: Claw
+    reach: 5
+    target: one target
+    onhit: "[diceroll 1 6 str] slashing damage."
+- name: Test Case
+  headername: Case, Test
+  cr: 1/4
+  size: large
+  type: construct
+  alignment: unaligned
+  hd: 10
+  speed:
+    land: 30
+    climb: 20
+    fly-hover: 35
+  stats:
+    str: 12
+    dex: 10
+    con: 10
+    int: 10
+    wis: 10
+    cha: 10
+
+  flavor: Properly capitalized string with punctuation.
+  description:
+  - header: Title Case String
+    text: Properly capitalized string with punctuation.
+  ac:
+  - 10
+  - string explaining bonus
+  skills:
+  - stealth
+  immune:
+  - list of lowercase damage types
+  resist:
+  - list of lowercase damage types
+  vulnerable:
+  - list of lowercase damage types
+  cond-immune:
+  - list of lowercase conditions
+  senses:
+  - blindsight 15 ft.
+  - darkvision 120 ft.
+  languages:
+  - list of lowercase languages
+  saves:
+  - dex
+  abilities:
+  - name: Title Case Name
+    effect: Properly capitalized string with punctuation and bracket commands.
+  attacks:
+  - name: Title Case Name
+    type: mw
+    ability: str
+    reach: 30/60
+    target: lowercase string
+    onhit: Properly capitalized string with punctuation and bracket commands.
+    special: (optional parameter) Properly capitalized string with punctuation and bracket commands.
+  actions:
+  - name: Title Case Name
+    effect: Properly capitalized string with punctuation and bracket commands.
+  - name: multiattack
+    effect: The test case makes [diceroll 1 4 0] claw attacks.
+  habitat:
+  - swamp
