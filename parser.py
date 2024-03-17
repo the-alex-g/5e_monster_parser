@@ -94,6 +94,92 @@ CR_TO_XP = {
     29:"135,000",
     30:"155,000",
 }
+FULL_SPELLCASTER = [
+    [2],
+    [3],
+    [4, 2],
+    [4, 3],
+    [4, 3, 2],
+    [4, 3, 3],
+    [4, 3, 3, 1],
+    [4, 3, 3, 2],
+    [4, 3, 3, 3, 1],
+    [4, 3, 3, 3, 2],
+    [4, 3, 3, 3, 2, 1],
+    [4, 3, 3, 3, 2, 1],
+    [4, 3, 3, 3, 2, 1, 1],
+    [4, 3, 3, 3, 2, 1, 1],
+    [4, 3, 3, 3, 2, 1, 1, 1],
+    [4, 3, 3, 3, 2, 1, 1, 1],
+    [4, 3, 3, 3, 2, 1, 1, 1, 1],
+    [4, 3, 3, 3, 3, 1, 1, 1, 1],
+    [4, 3, 3, 3, 3, 2, 1, 1, 1],
+    [4, 3, 3, 3, 3, 2, 2, 1, 1],
+]
+SEMI_SPELLCASTER = [
+    [],
+    [2],
+    [3],
+    [3],
+    [4, 2],
+    [4, 2],
+    [4, 3],
+    [4, 3],
+    [4, 3, 2],
+    [4, 3, 2],
+    [4, 3, 3],
+    [4, 3, 3],
+    [4, 3, 3, 1],
+    [4, 3, 3, 1],
+    [4, 3, 3, 2],
+    [4, 3, 3, 2],
+    [4, 3, 3, 3, 1],
+    [4, 3, 3, 3, 1],
+    [4, 3, 3, 3, 2],
+    [4, 3, 3, 3, 2],
+]
+WARLOCK = [
+    [1],
+    [2],
+    [0, 2],
+    [0, 2],
+    [0, 0, 2],
+    [0, 0, 2],
+    [0, 0, 0, 2],
+    [0, 0, 0, 2],
+    [0, 0, 0, 0, 2],
+    [0, 0, 0, 0, 2],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 4],
+    [0, 0, 0, 0, 4],
+    [0, 0, 0, 0, 4],
+    [0, 0, 0, 0, 4],
+]
+SPELL_SLOTS = {
+    "bard":FULL_SPELLCASTER,
+    "cleric":FULL_SPELLCASTER,
+    "druid":FULL_SPELLCASTER,
+    "paladin":SEMI_SPELLCASTER,
+    "ranger":SEMI_SPELLCASTER,
+    "sorceror":FULL_SPELLCASTER,
+    "warlock":WARLOCK,
+    "wizard":FULL_SPELLCASTER
+}
+SPELLCASTING_ABILITY = {
+    "bard":"cha",
+    "cleric":"wis",
+    "druid":"wis",
+    "paladin":"cha",
+    "ranger":"wis",
+    "sorceror":"cha",
+    "warlock":"cha",
+    "wizard":"int"
+}
 NEWLINE = "\\\\"
 LINEBREAK = NEWLINE + "\\bigskip"
 PREAMBLE = """\\documentclass[letterpaper, 12pt, twocolumn]{book}
@@ -124,6 +210,40 @@ def diceroll(num, size, bonus):
             string += " - "
         string += str(bonus)
     return string + ")"
+
+
+def alignment(code):
+    code.lower()
+    if code == "u":
+        return "Unaligned"
+    elif code == "n":
+        return "Neutral"
+    else:
+        string = ""
+        if code[0] == "l":
+            string += "Lawful "
+        elif code[0] == "n":
+            string += "Neutral "
+        elif code[0] == "c":
+            strign += "Chaotic "
+        if code[1] == "e":
+            string += "Evil"
+        elif code[1] == "n":
+            string += "Neutral"
+        elif code[1] == "g":
+            string += "Good"
+    return string
+
+
+def format_index(index):
+    if index == 1:
+        return "1st"
+    elif index == 2:
+        return "2nd"
+    elif index == 3:
+        return "3rd"
+    else:
+        return str(index) + "th"
 
 
 def save(ability, abilitybonus, profbonus):
@@ -316,6 +436,25 @@ def dmg_attributes(attributes):
     return attribute_string
 
 
+def spellcasting(slot_type, level, spells, stats, profbonus, name):
+    string = "\\textbf{\\textit{Spellcasting.}} "
+    string += "The " + name.lower() + " is a " + format_index(level)
+    string += "-level spellcaster. Its spellcasting ability is " + ABILITIES_SPELLOUT[SPELLCASTING_ABILITY[slot_type]]
+    bonus = stats[SPELLCASTING_ABILITY[slot_type]] + profbonus
+    string += " (spell save DC " + str(8 + bonus) + ", spell attack bonus " + format_bonus(bonus) + "). "
+    string += "The " + name.lower() + " has the following spells prepared:" + NEWLINE
+    string += "\\textbf{Cantrips:} \\textit{" + comma_separate(sorted(spells[0])) + "}"
+    slots = SPELL_SLOTS[slot_type][level - 1]
+    for i in range(0, len(slots)):
+        slot_num = slots[i]
+        string += NEWLINE + "\\textbf{" + format_index(i + 1) + " Level"
+        if slot_num != 0:
+            string += " (" + str(slot_num) + " slots)"
+        string += ":} \\textit{"
+        string += comma_separate(sorted(spells[i + 1])) + "}"
+    return string
+
+
 def speeds(speed_dict):
     speed_string = str(speed_dict["land"]) + " ft."
     speed_type_list = sorted(speed_dict)
@@ -361,8 +500,7 @@ def create_monster(monster):
 
     monster_string += "\\textbf{Hit Points} " + hitpoints(monster["hd"], monster["size"], bonuses["con"]) + NEWLINE
 
-    monster_string += "\\textbf{Speed} " + speeds(monster["speed"]) + NEWLINE
-    
+    monster_string += "\\textbf{Speed} " + speeds(monster["speed"]) + NEWLINE    
 
     monster_string += create_stat_table(scores, bonuses) + NEWLINE
 
@@ -415,6 +553,11 @@ def create_monster(monster):
             monster_string += "\\textbf{\\textit{" + ability["name"] + ".}} "
             monster_string += resolve_functions(ability["effect"], bonuses, profbonus) + LINEBREAK
 
+    if "spellcasting" in monster:
+        ability = monster["spellcasting"]
+        monster_string += spellcasting(ability["type"], ability["level"], ability["spells"], bonuses, profbonus, monster["name"])
+        monster_string += LINEBREAK
+    
     if "attacks" in monster or "actions" in monster:
         monster_string += "\\textbf{Actions}" + NEWLINE
 

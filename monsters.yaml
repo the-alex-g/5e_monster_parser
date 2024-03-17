@@ -56,6 +56,7 @@
 # - list of habitats
 ---
 monsters:
+# TEST CASE ##################################################################################################
 - name: Test Case
   headername: Case, Test
   cr: 1/4
@@ -117,6 +118,17 @@ monsters:
     effect: The test case makes [diceroll 1 4 0] claw attacks.
   habitat:
   - swamp
+  spellcasting:
+   type: "ranger"
+   level: 5
+   spells:
+   - - Druid Cantrip 1
+   - - Fireball
+     - Scorching Ray
+   - - Sunshine
+     - Moonshine
+   - - Starshine
+# NULL BEHOLDER ########################################################################################################
 - name: Null Beholder
   headername: Beholder, Null
   type: aberration
