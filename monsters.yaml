@@ -71,6 +71,8 @@ monsters:
      plus [diceroll 1 4 0] necrotic damage at the start of each of their turns, and cannot cast spells.
      An affected creature can repeat the saving throw at the end of each of their turns,
      ending the effect on itself on a success.
+  habitat:
+  - underground
   flavor: >
    This monstrosity is nothing but mouths;
    eight tentacles, each tipped with a snapping mouth,
@@ -94,3 +96,77 @@ monsters:
   actions:
   - name: multiattack
     effect: The null beholder makes one maw attack and two other melee attacks.
+# STONE SLUG ####################################################################
+- name: Stone Slug
+  cr: 2
+  size: large
+  type: beast
+  hd: 8
+  speed:
+   land: 20
+   climb: 20
+   burrow: 10
+  stats:
+   str: 19
+   dex: 7
+   con: 13
+   int: 1
+   wis: 10
+   cha: 3
+  ac:
+  - 3
+  - natural armor
+  resist:
+  - bludgeoning
+  - poison
+  vulnerable:
+  - necrotic
+  saves:
+  - str
+  - con
+  cond-immune:
+  - petrified
+  - poisoned
+  abilities:
+  - name: Spider Climb
+  - name: Soft-bodied
+    effect: >
+     The stone slug can fit into a space small enough for a Medium creature
+     without squeezing.
+  - name: Stone Eater
+    effect: >
+     The stone slug can burrow through solid rock at half their burrow speed,
+     leaving a tunnel a little bit less than 10 feet in diameter behind.
+  attacks:
+  - name: Flail
+    type: mw
+    ability: str
+    reach: 5
+    target: one target
+    onhit: >
+     [diceroll 1 10 str] bludgeoning damage.
+  - name: Grinding Bite
+    type: mw
+    ability: str
+    reach: 5
+    target: one target
+    onhit: >
+     [diceroll 2 4 str] slashing damage. If the target is wearing non-magical body
+     armor, they must succeed on a [save w/dex str] or their armor is damaged.
+     Damaged armor's AC is reduced by one until it is repaired. This damage
+     reduction is not cumulative.
+  habitat:
+  - underground
+  flavor: This enormous slug is covered with grey, stonelike armor plates.
+  description:
+  - header: Rock Eaters
+    text: >
+     Stone slugs are omnivores, but can also subsist on the rock they burrow
+     through. Much like purple worms, they can leave undigested gemstones
+     in their wake.
+  - header: Worm Prey
+    text: >
+     Stone slugs are a favored prey of purple worms. As a result of this
+     predation, they have developed a strong resistance to poison. Other
+     creatures that dwell underground tend to leave the slugs alone,
+     because most creatures think they taste horrible.

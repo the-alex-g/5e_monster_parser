@@ -180,6 +180,10 @@ SPELLCASTING_ABILITY = {
     "warlock":"cha",
     "wizard":"int"
 }
+PREBAKED_ABILITIES = [
+    "spider climb",
+    "legendary resistance"
+]
 NEWLINE = "\\\\"
 LINEBREAK = NEWLINE + "\\bigskip"
 PREAMBLE = """\\documentclass[letterpaper, 12pt, twocolumn]{book}
@@ -404,13 +408,13 @@ def create_attack(attack, stats, profbonus):
     bonus = stats[attack["ability"]] + profbonus
     if attack["type"] == "mw":
         attack_string += "Melee Weapon Attack:} "
-        attack_string += format_bonus(bonus) + " to hit, reach " + str(attack["reach"]) + "ft."
+        attack_string += format_bonus(bonus) + " to hit, reach " + str(attack["reach"]) + " ft."
     elif attack["type"] == "rw":
         attack_string += "Ranged Weapon Attack:} "
         attack_string += format_bonus(bonus) + " to hit, range " + str(attack["reach"])
     elif attack["type"] == "ms":
         attack_string += "Melee Spell Attack:} "
-        attack_string += format_bonus(bonus) + " to hit, reach " + str(attack["reach"]) + "ft."
+        attack_string += format_bonus(bonus) + " to hit, reach " + str(attack["reach"]) + " ft."
     elif attack["type"] == "rw":
         attack_string += "Ranged Spell Attack:} "
         attack_string += format_bonus(bonus) + " to hit, range " + str(attack["reach"])
@@ -518,6 +522,27 @@ def check_missing_fields(monster):
     return error
 
 
+def get_baked_ability(ability_name, stats, profbonus, name):
+    if ability_name == "spider climb":
+        return "The " + name.lower() + """ can climb difficult surfaces, 
+including upside down on ceilings, without needing to make an ability check."""
+
+
+def abilities(abilities, stats, profbonus, name):
+    ability_string = ""
+    ability_name_dict = {}
+    for ability in abilities:
+        ability_name_dict[ability["name"]] = ability
+    for ability_name in sorted(ability_name_dict):
+        ability = ability_name_dict[ability_name]
+        ability_string += "\\textbf{\\textit{" + ability["name"] + ".}} "
+        if ability_name.lower() in PREBAKED_ABILITIES:
+            ability_string += get_baked_ability(ability_name.lower(), stats, profbonus, name) + LINEBREAK
+        else:
+            ability_string += resolve_functions(ability["effect"], stats, profbonus) + LINEBREAK
+    return ability_string
+
+
 def create_monster(monster):
     monster_string = "\\subsection*{"
     if "headername" in monster:
@@ -599,13 +624,7 @@ def create_monster(monster):
     monster_string += "\\textbf{Challenge} " + cr(monster["cr"]) + LINEBREAK
 
     if "abilities" in monster:
-        ability_name_dict = {}
-        for ability in monster["abilities"]:
-            ability_name_dict[ability["name"]] = ability
-        for ability_name in sorted(ability_name_dict):
-            ability = ability_name_dict[ability_name]
-            monster_string += "\\textbf{\\textit{" + ability["name"] + ".}} "
-            monster_string += resolve_functions(ability["effect"], bonuses, profbonus) + LINEBREAK
+        monster_string += abilities(monster["abilities"], bonuses, profbonus, monster["name"])
 
     if "innate-spellcasting" in monster:
         ability = monster["innate-spellcasting"]
