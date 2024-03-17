@@ -186,12 +186,10 @@ PREAMBLE = """\\documentclass[letterpaper, 12pt, twocolumn]{book}
 \\usepackage{ragged2e}
 \\usepackage[left=0.5in, right=0.5in, top=1in, bottom=1in]{geometry}
 \\usepackage{graphicx}
+\\def\\halfline{\\noindent\\makebox[\\columnwidth]{\\rule{3.7in}{0.4pt}}\\\\}
 \\begin{document}\\RaggedRight"""
 CONCLUSION = """\\end{document}"""
 SOURCE_YAML_NAME = "monsters"
-
-
-filedict = {}
 
 
 def cr_to_prof(cr):
@@ -620,7 +618,7 @@ def create_monster(monster):
         monster_string += LINEBREAK
     
     if "attacks" in monster or "actions" in monster:
-        monster_string += "\\textbf{Actions}" + NEWLINE
+        monster_string += "\\textbf{Actions}" + NEWLINE + "\\halfline"
 
     monster_string += "\n%mabp\n"
 
