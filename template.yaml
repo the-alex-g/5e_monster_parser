@@ -1,0 +1,75 @@
+---
+# REQUIRED PARAMETERS
+name: Title Case Name
+cr: 0, 1-30, or 1/8, 1/4, or 1/2
+size: lowercase
+type: lowercase
+hd: integer
+speed:
+  land: int
+  otherlowercasespeeds: ints
+stats:
+  str: int, etc.
+
+# OPTIONAL PARAMETERS
+headername: String, Title Case
+alignment: lower case
+flavor: Properly capitalized string with punctuation.
+description:
+- header: Title Case String
+  text: Properly capitalized string with punctuation.
+ac:
+- int bonus
+- string explaining bonus
+skills:
+- list of lowercase skill names
+- entering the same skill twice gives double proficiency
+immune:
+- list of lowercase damage types
+resist:
+- list of lowercase damage types
+vulnerable:
+- list of lowercase damage types
+cond-immune:
+- list of lowercase conditions
+senses:
+- list of lowercase senses, with punctuation, eg. "blindsight 30 ft."
+languages:
+- list of lowercase languages
+saves:
+- list of attributes, properly sorted
+- entering the same attribute twice gives double proficiency... if that's a thing
+abilities:
+- name: Title Case Name
+  effect: Properly capitalized string with punctuation and [bracket commands].
+attacks:
+- name: Title Case Name
+  type: mw, ms, rw, or rs
+  ability: one of the attributes, lowercase
+  reach: int or split-range string (30/60)
+  target: lowercase string
+  onhit: Properly capitalized string with punctuation and [bracket commands].
+  special: (optional parameter) Properly capitalized string with punctuation and [bracket commands].
+actions:
+- name: Title Case Name
+  effect: Properly capitalized string with punctuation and [bracket commands].
+habitat:
+- list of habitats
+spellcasting:
+ type: class name
+ level: int
+ spells:
+ - - cantrip
+   - cantrip
+ - - level 1 spell
+   - level 1 spell, etc.
+innate-spellcasting:
+ ability: str, dex, int...
+ spells:
+ - frequency: lowercase
+   spells:
+   - spell
+   - spell
+ - frequency: 3/day each
+   spells:
+   - spell

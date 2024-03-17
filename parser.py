@@ -188,6 +188,7 @@ PREAMBLE = """\\documentclass[letterpaper, 12pt, twocolumn]{book}
 \\usepackage{graphicx}
 \\begin{document}\\RaggedRight"""
 CONCLUSION = """\\end{document}"""
+SOURCE_YAML_NAME = "monsters"
 
 
 filedict = {}
@@ -260,6 +261,7 @@ def ac(dex, bonus, reason):
     if reason != "":
         ac_string += " (" + reason + ")"
     return ac_string
+
 
 def cr(cr):
     return str(cr) + " (" + CR_TO_XP[cr] + " XP)"
@@ -455,6 +457,25 @@ def spellcasting(slot_type, level, spells, stats, profbonus, name):
     return string
 
 
+def possessive(name):
+    if name[-1] == "s":
+        return name + "'"
+    else:
+        return name + "'s"
+
+
+def innate_spellcasting(ability, spells, stats, profbonus, name):
+    string = "\\textbf{\\textit{Innate Spellcasting.}} "
+    string += "The " + possessive(name.lower()) + " spellcasting ability is " + ABILITIES_SPELLOUT[ability]
+    bonus = stats[ability] + profbonus
+    string += " (spell save DC " + str(8 + bonus) + ", spell attack bonus " + format_bonus(bonus) + "). "
+    string += "The " + name.lower() + " can cast the following spells, requiring no material components:"
+    for category in spells:
+        string += NEWLINE + "\\textbf{" + category["frequency"].title() + ":} \\textit{"
+        string += comma_separate(sorted(category["spells"])) + "}"
+    return string
+
+
 def speeds(speed_dict):
     speed_string = str(speed_dict["land"]) + " ft."
     speed_type_list = sorted(speed_dict)
@@ -465,7 +486,39 @@ def speeds(speed_dict):
             else:
                 speed_string += ", " + speed_type + " " + str(speed_dict[speed_type]) + " ft."
     return speed_string
-    
+
+
+def check_missing_fields(monster):
+    error = False
+    monster_name = ""
+    if not "name" in monster:
+        print("Unnamed monster!")
+        error = True
+    else:
+        monster_name = monster["name"]
+        if not "cr" in monster:
+            print(monster_name + " does not have a CR")
+            error = True
+        if not "size" in monster:
+            print(monster_name + " does not have a size")
+            error = True
+        if not "type" in monster:
+            print(monster_name + " does not have a type")
+            error = True
+        if not "hd" in monster:
+            print(monster_name + " does not have hit dice")
+            error = True
+        if not "speed" in monster:
+            print(monster_name + " does not have a speed")
+            error = True
+        elif not "land" in monster["speed"]:
+            print(monster_name + " does not have a land speed")
+            error = True
+        if not "stats" in monster:
+            print(monster_name + " does not have ability scores")
+            error = True
+    return error
+
 
 def create_monster(monster):
     monster_string = "\\subsection*{"
@@ -485,7 +538,10 @@ def create_monster(monster):
         monster_string += "\\bigskip"
 
     monster_string += "\\textbf{" + monster["name"].upper() + "}" + NEWLINE
-    monster_string += "\\textit{" + (monster["size"] + " " + monster["type"] + ", " + monster["alignment"]).title() + "}" + NEWLINE
+    alignment = "unaligned"
+    if "alignment" in monster:
+        alignment = monster["alignment"]        
+    monster_string += "\\textit{" + (monster["size"] + " " + monster["type"] + ", " + alignment).title() + "}" + NEWLINE
 
     scores = monster["stats"]
     bonuses = ability_scores_to_bonuses(scores)
@@ -553,6 +609,11 @@ def create_monster(monster):
             monster_string += "\\textbf{\\textit{" + ability["name"] + ".}} "
             monster_string += resolve_functions(ability["effect"], bonuses, profbonus) + LINEBREAK
 
+    if "innate-spellcasting" in monster:
+        ability = monster["innate-spellcasting"]
+        monster_string += innate_spellcasting(ability["ability"], ability["spells"], bonuses, profbonus, monster["name"])
+        monster_string += LINEBREAK
+    
     if "spellcasting" in monster:
         ability = monster["spellcasting"]
         monster_string += spellcasting(ability["type"], ability["level"], ability["spells"], bonuses, profbonus, monster["name"])
@@ -599,6 +660,8 @@ def create_doc(filedict):
     monsters_by_type = {}
     monsters_by_cr = {}
     for monster in filedict["monsters"]:
+        if check_missing_fields(monster):
+            continue
         monstername = ""
         if "headername" in monster:
             monstername = monster["headername"]
@@ -634,7 +697,7 @@ def create_doc(filedict):
     latexfile.close()
 
 
-with open("monsters.yaml") as stream:
+with open(SOURCE_YAML_NAME + ".yaml") as stream:
     try:
         create_doc(yaml.safe_load(stream))
     except yaml.YAMLError as exc:
