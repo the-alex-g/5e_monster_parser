@@ -180,6 +180,15 @@ SPELLCASTING_ABILITY = {
     "warlock":"cha",
     "wizard":"int"
 }
+DEFAULT_IMMUNITIES = {
+    "elemental":[
+        "exhaustion",
+        "paralyzed",
+        "petrified",
+        "poisoned",
+        "unconcious"
+    ]
+}
 PREBAKED_ABILITIES = [
     "Spider Climb",
     "Nimble Escape"
@@ -419,6 +428,17 @@ def dmg_attributes(attributes):
     return attribute_string
 
 
+def cond_immunities(immunities, creature_type):
+    default_immunities = DEFAULT_IMMUNITIES[creature_type]
+    for immunity in immunities:
+        if immunity[0:1] == "n/":
+            if immunity[2:] in default_immunities:
+                default_immunities.erase(immunity[2:])
+        else:
+            default_immunities.append(immunity)
+    return comma_separate(sorted(default_immunities))
+
+
 def spellcasting(slot_type, level, spells, stats, profbonus, name):
     string = "\\textbf{\\textit{Spellcasting.}} "
     string += "The " + name.lower() + " is a " + format_index(level)
@@ -585,8 +605,12 @@ def create_monster(monster):
         monster_string += "\\textbf{Damage Immunities} " + dmg_attributes(monster["immune"]) + NEWLINE
 
     if "cond-immune" in monster:
-        monster_string += "\\textbf{Condition Immunities} " + comma_separate(sorted(monster["cond-immune"])) + NEWLINE
-    
+        monster_string += "\\textbf{Condition Immunities} "
+        monster_string += comma_separate(cond_immunities(monster["cond-immune"], monster["type"])) + NEWLINE
+    elif monster["type"] in DEFAULT_IMMUNITIES:
+        monster_string += "\\textbf{Condition Immunities} "
+        monster_string += comma_separate(cond_immunities([], monster["type"])) + NEWLINE
+
     monster_string += "\\textbf{Senses} "
     if "senses" in monster:
         monster_string += comma_separate(sorted(monster["senses"])) + ", "
