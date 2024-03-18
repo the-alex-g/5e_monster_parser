@@ -544,10 +544,10 @@ def create_monster(monster):
     alignment = "unaligned"
     if "alignment" in monster:
         alignment = monster["alignment"]        
-    monster_string += "\\textit{" + (monster["size"] + " " + monster["type"]
+    monster_string += "\\textit{" + (monster["size"] + " " + monster["type"]).title()
     if "tags" in monster:
         monster_string += " (" + comma_separate(sorted(monster["tags"])) + ")"
-    monster_string +=  ", " + alignment).title() + "}" + NEWLINE
+    monster_string +=  ", " + alignment.title() + "}" + NEWLINE
 
     scores = monster["stats"]
     bonuses = ability_scores_to_bonuses(scores)
@@ -654,7 +654,6 @@ def create_doc(filedict):
     latexfile = open("monsters.tex", "w")
     latexfile.write(PREAMBLE)
 
-    
     monster_name_dict = {}
     monsters_by_habitat = {}
     monsters_by_type = {}
@@ -689,6 +688,7 @@ def create_doc(filedict):
         monster_name_dict[monstername] = monster
 
     for monster_name in sorted(monster_name_dict):
+        print(monster_name)
         monster = monster_name_dict[monster_name]
         latexfile.write(create_monster(monster))
         latexfile.write("\\newpage")

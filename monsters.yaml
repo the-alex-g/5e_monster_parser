@@ -190,7 +190,7 @@ monsters:
    wis: 9
    cha: 15
   skills:
-   stealth
+  - stealth
   senses:
   - darkvision 60 ft.
   languages:
