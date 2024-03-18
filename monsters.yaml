@@ -1,4 +1,31 @@
 ---
+groups:
+- name: Dragon, Zinc
+  shortname: dragon
+  type: dragon
+  flavor: This dragon’s brilliant silver scales practically glow in the blazing desert sun as it swoops overhead.
+  description:
+  - header: Mercurial Temperament
+    text: >
+     Zinc dragons are unpredictable, jumping from one thing to
+     another with little regard for anything other than their
+     immediate interests. However, they are also exceedingly
+     vain and take great pride in their acrobatic skill and
+     mirrorlike scales. Any creature that compliments them
+     often and profusely stays in their good graces longer than
+     they would otherwise.
+  - header: Desert Dwellers
+    text: >
+     Zinc dragons live in the deepest parts of the desert,
+     usually establishing their lairs far from any settlements.
+     Occasionally, blue dragons and zinc dragons fight over
+     territory, but such conflicts are relatively rare.
+  - header: Hatred of Water
+    text: >
+     Zinc dragons have an intense fear of water, stemming from
+     the fact that any large amount of water sears their scales
+     like acid. They go to great lengths to ensure that no one
+     brings water into their domain.
 monsters:
 # NULL BEHOLDER ########################################################################################################
 - name: Null Beholder

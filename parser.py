@@ -389,17 +389,19 @@ legendary actions at the start of its turn.""" + NEWLINE + LINEBREAK
     return string
 
 
-def create_monster(monster):
-    monster_string = "\\section*{"
-    header_name = ""
-    if "headername" in monster:
-        monster_string += monster["headername"]
-        header_name = monster["headername"]
-    else:
-        monster_string += monster["name"]
-        header_name = monster["name"]
-    monster_string += "}\\markboth{" + header_name + "}{" + header_name + "}"
-    monster_string += "\\addcontentsline{toc}{subsection}{" + header_name + "}"
+def create_monster(monster, in_group=False):
+    monster_string = ""
+    if not in_group:
+        monster_string = "\\section*{"
+        header_name = ""
+        if "headername" in monster:
+            monster_string += monster["headername"] + "}"
+            header_name = monster["headername"]
+        else:
+            monster_string += monster["name"] + "}"
+            header_name = monster["name"]
+        monster_string += "\\markboth{" + header_name + "}{" + header_name + "}"
+        monster_string += "\\addcontentsline{toc}{subsection}{" + header_name + "}"
 
     if "flavor" in monster:
         monster_string += "\\textit{" + monster["flavor"] + "}" + NEWLINE + LINEBREAK
@@ -524,6 +526,28 @@ def create_monster(monster):
     return monster_string
 
 
+def resolve_group(group, monsters):
+    group_string = "\\section*{" + group["name"] + "}\\markboth{" + group["name"] + "}{" + group["name"] + "}"
+    group_string += "\\addcontentsline{toc}{subsection}{" + group["name"] + "}"
+    if "flavor" in group:
+        group_string += "\\textit{" + group["flavor"] + "}" + NEWLINE + LINEBREAK
+
+    if "description" in group:
+        group_type = ""
+        group_shortname = group["name"]
+        if "type" in group:
+            group_type = group["type"]
+        if "shortname" in group:
+            group_shortname = group["shortname"]
+        group_string += description(group["description"], group_type, group_shortname) + LINEBREAK
+
+    for monster in monsters:
+        print(monster["name"])
+        group_string += create_monster(monster, in_group=True) + LINEBREAK
+    
+    return group_string
+
+
 def create_doc(filedict):
     latexfile = open("monsters.tex", "w")
     latexfile.write(PREAMBLE)
@@ -532,6 +556,9 @@ def create_doc(filedict):
     monsters_by_habitat = {}
     monsters_by_type = {}
     monsters_by_cr = {}
+    if "groups" in filedict:
+        for group in filedict["groups"]:
+            monster_name_dict[group["name"]] = [group]
     for monster in filedict["monsters"]:
         if check_missing_fields(monster):
             continue
@@ -540,6 +567,19 @@ def create_doc(filedict):
             monstername = monster["headername"]
         else:
             monstername = monster["name"]
+        if "group" in monster:
+            monster_name_dict[monster["group"]].append(monster)
+        else:
+            monster_name_dict[monstername] = monster
+
+    for monster_name in sorted(monster_name_dict):
+        if type(monster_name_dict[monster_name]) == list:
+            group = monster_name_dict[monster_name]
+            latexfile.write(resolve_group(group[0], group[1:]))
+            latexfile.write("\\newpage")
+            continue
+        print(monster_name)
+        monster = monster_name_dict[monster_name]
         if "habitat" in monster:
             for region in monster["habitat"]:
                 if region in monsters_by_habitat:
@@ -559,11 +599,6 @@ def create_doc(filedict):
             monsters_by_cr[monster["cr"]].append(monstername)
         else:
             monsters_by_cr[monster["cr"]] = [monstername]
-        monster_name_dict[monstername] = monster
-
-    for monster_name in sorted(monster_name_dict):
-        print(monster_name)
-        monster = monster_name_dict[monster_name]
         latexfile.write(create_monster(monster))
         latexfile.write("\\newpage")
 
