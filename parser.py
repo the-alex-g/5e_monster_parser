@@ -189,6 +189,36 @@ DEFAULT_IMMUNITIES = {
         "unconcious"
     ]
 }
+NATURES = {
+    "elemental":{
+        "header":"Elemental Nature",
+        "text":"A [name] does not require air, food, drink, or sleep."
+    },
+    "undead":{
+        "header":"Undead Nature",
+        "text":"A [name] does not require air, food, drink, or sleep."
+    },
+    "construct":{
+        "header":"Constructed Nature",
+        "text":"A [name] does not require air, food, drink, or sleep."
+    },
+    "fiend":{
+        "header":"Fiendish Nature",
+        "text":"A [name] does not require air, food, drink, or sleep."
+    },
+    "celestial":{
+        "header":"Celestial Nature",
+        "text":"A [name] does not require air, food, drink, or sleep."
+    },
+    "ooze":{
+        "header":"Ooze",
+        "text":"A [name] does not require air or sleep."
+    },
+    "plant":{
+        "header":"Plant",
+        "text":"A [name] does not require sleep."
+    }
+}
 PREBAKED_ABILITIES = [
     "Spider Climb",
     "Nimble Escape"
@@ -200,7 +230,7 @@ PREAMBLE = """\\documentclass[letterpaper, 12pt, twocolumn]{book}
 \\usepackage[left=0.5in, right=0.5in, top=1in, bottom=1in]{geometry}
 \\usepackage{graphicx}
 \\def\\halfline{\\noindent\\makebox[\\columnwidth]{\\rule{3.7in}{0.4pt}}\\\\}
-\\begin{document}\\RaggedRight"""
+\\begin{document}\\RaggedRight\\tableofcontents"""
 CONCLUSION = """\\end{document}"""
 SOURCE_YAML_NAME = "monsters"
 
@@ -543,22 +573,33 @@ def abilities(abilities, stats, profbonus, name):
     return ability_string
 
 
+def description(descriptions, monster_type, name):
+    string = ""
+    for description in descriptions:
+            string += "\\textbf{\\textit{" + description["header"] + ".}} " + description["text"] + NEWLINE
+        if monster_type in NATURES:
+            description = NATURES[monster_type]
+            description["effect"].replace("[name]", name.lower())
+            string += "\\textbf{\\textit{" + description["header"] + ".}} " + description["text"] + NEWLINE
+    return string
+
+
 def create_monster(monster):
-    monster_string = "\\subsection*{"
+    monster_string = "\\section*{"
+    header_name = ""
     if "headername" in monster:
         monster_string += monster["headername"]
+        header_name = monster["headername"]
     else:
         monster_string += monster["name"]
-    monster_string += "}"
+        header_name = monster["name"]
+    monster_string += "}\\addcontentsline{toc}{subsection}{" + header_name + "}"
 
     if "flavor" in monster:
         monster_string += "\\textit{" + monster["flavor"] + "}" + LINEBREAK
 
     if "description" in monster:
-        for description in monster["description"]:
-            monster_string += "\\textbf{\\textit{" + description["header"] + ".}} "
-            monster_string += description["text"] + NEWLINE
-        monster_string += "\\bigskip"
+        monster_string += description(monster["description"], monster["type"], monster["name"]) + "\\bigskip"
 
     monster_string += "\\textbf{" + monster["name"].upper() + "}" + NEWLINE
     alignment = "unaligned"
@@ -670,7 +711,6 @@ def create_monster(monster):
             monster_string += "\\textbf{\\textit{" + action["name"] + ".}} "
             monster_string += resolve_functions(action["effect"], bonuses, profbonus) + LINEBREAK
             
-
     return monster_string
 
 
