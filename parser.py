@@ -225,15 +225,20 @@ PREBAKED_ABILITIES = {
     "Sunlight Sensitivity":"While in sunlight, the [name] has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.",
 }
 NEWLINE = "\\\\"
-LINEBREAK = NEWLINE + "\\bigskip"
+LINEBREAK = "\\bigskip"
 PREAMBLE = """\\documentclass[letterpaper, 12pt, twocolumn]{book}
 \\usepackage{ragged2e}
 \\usepackage[left=0.5in, right=0.5in, top=1in, bottom=1in]{geometry}
 \\usepackage{graphicx}
-\\def\\halfline{\\noindent\\makebox[\\columnwidth]{\\rule{3.7in}{0.4pt}}\\\\}
+\\def\\halfline{\\makebox[\\columnwidth]{\\rule{3.7in}{0.4pt}}\\\\}
+\\def\\entry#1#2{\\textit{\\textbf{#1.}} #2\\\\}
 \\begin{document}\\RaggedRight\\tableofcontents"""
 CONCLUSION = """\\end{document}"""
 SOURCE_YAML_NAME = "monsters"
+
+
+def entry(header, body):
+    return "\\entry{" + header + "}{" + body + "}"
 
 
 def cr_to_prof(cr):
@@ -400,7 +405,6 @@ def resolve_functions(string, stats, profbonus):
 def create_stat_table(scores, bonuses):
     table = """\\smallskip
     \\begin{footnotesize}
-    \\noindent
     \\resizebox{\\columnwidth}{!}{
     \\begin{tabular}{llllll}
     \\hline""" + NEWLINE
@@ -421,7 +425,7 @@ def create_stat_table(scores, bonuses):
 
 
 def create_attack(attack, stats, profbonus):
-    attack_string = "\\noindent\\textit{\\textbf{" + attack["name"] + ".} "
+    attack_string = "\\entry{" + attack["name"] + "}{\\textit{"
     bonus = stats[attack["ability"]] + profbonus
     if "bonus" in attack:
         bonus += attack["bonus"]
@@ -441,7 +445,7 @@ def create_attack(attack, stats, profbonus):
     attack_string += ", " + attack["target"] + "." + NEWLINE + "\\textit{Hit:} " + resolve_functions(attack["onhit"], stats, profbonus)
     if "special" in attack:
         attack_string += NEWLINE + resolve_functions(attack["special"], stats, profbonus)
-    return attack_string
+    return attack_string + "}"
 
 
 def dmg_attributes(attributes):
@@ -460,7 +464,9 @@ def dmg_attributes(attributes):
 
 
 def cond_immunities(immunities, creature_type):
-    default_immunities = DEFAULT_IMMUNITIES[creature_type]
+    default_immunities = []
+    if creature_type in DEFAULT_IMMUNITIES:
+        default_immunities = DEFAULT_IMMUNITIES[creature_type]
     for immunity in immunities:
         if immunity[0:1] == "n/":
             if immunity[2:] in default_immunities:
@@ -471,7 +477,7 @@ def cond_immunities(immunities, creature_type):
 
 
 def spellcasting(slot_type, level, spells, stats, profbonus, name):
-    string = "\\textbf{\\textit{Spellcasting.}} "
+    string = "\\entry{Spellcasting}{"
     string += "The " + name.lower() + " is a " + format_index(level)
     string += "-level spellcaster. Its spellcasting ability is " + ABILITIES_SPELLOUT[SPELLCASTING_ABILITY[slot_type]]
     bonus = stats[SPELLCASTING_ABILITY[slot_type]] + profbonus
@@ -486,7 +492,7 @@ def spellcasting(slot_type, level, spells, stats, profbonus, name):
             string += " (" + str(slot_num) + " slots)"
         string += ":} \\textit{"
         string += comma_separate(sorted(spells[i + 1])) + "}"
-    return string
+    return string + "}"
 
 
 def possessive(name):
@@ -497,7 +503,7 @@ def possessive(name):
 
 
 def innate_spellcasting(ability, spells, stats, profbonus, name):
-    string = "\\textbf{\\textit{Innate Spellcasting.}} "
+    string = "\\entry{Innate Spellcasting}{"
     string += "The " + possessive(name.lower()) + " spellcasting ability is " + ABILITIES_SPELLOUT[ability]
     bonus = stats[ability] + profbonus
     string += " (spell save DC " + str(8 + bonus) + ", spell attack bonus " + format_bonus(bonus) + "). "
@@ -505,7 +511,7 @@ def innate_spellcasting(ability, spells, stats, profbonus, name):
     for category in spells:
         string += NEWLINE + "\\textbf{" + category["frequency"].title() + ":} \\textit{"
         string += comma_separate(sorted(category["spells"])) + "}"
-    return string
+    return string + "}"
 
 
 def speeds(speed_dict):
@@ -559,24 +565,24 @@ def abilities(abilities, stats, profbonus, name):
         ability_name_dict[ability["name"]] = ability
     for ability_name in sorted(ability_name_dict):
         ability = ability_name_dict[ability_name]
-        ability_string += "\\textbf{\\textit{" + ability["name"] + ".}} "
+        ability_string += "\\entry{" + ability["name"] + "}{"
         if ability_name in PREBAKED_ABILITIES:
             raw_ability = PREBAKED_ABILITIES[ability_name]
             raw_ability.replace("[name]", name.lower())
-            ability_string += raw_ability + LINEBREAK
+            ability_string += raw_ability + "}"
         else:
-            ability_string += resolve_functions(ability["effect"], stats, profbonus) + LINEBREAK
+            ability_string += resolve_functions(ability["effect"], stats, profbonus) + "}"
     return ability_string
 
 
 def description(descriptions, monster_type, name):
     string = ""
     for description in descriptions:
-            string += "\\textbf{\\textit{" + description["header"] + ".}} " + description["text"] + NEWLINE
-        if monster_type in NATURES:
-            description = NATURES[monster_type]
-            description["effect"].replace("[name]", name.lower())
-            string += "\\textbf{\\textit{" + description["header"] + ".}} " + description["text"] + NEWLINE
+        string += "\\entry{" + description["header"] + "}{" + description["text"] + "}"
+    if monster_type in NATURES:
+        description = NATURES[monster_type]
+        description["text"].replace("[name]", name.lower())
+        string += "\\entry{" + description["header"] + "}{" + description["text"] + "}"
     return string
 
 
@@ -589,13 +595,14 @@ def create_monster(monster):
     else:
         monster_string += monster["name"]
         header_name = monster["name"]
-    monster_string += "}\\addcontentsline{toc}{subsection}{" + header_name + "}"
+    monster_string += "}\\markboth{" + header_name + "}{" + header_name + "}"
+    monster_string += "\\addcontentsline{toc}{subsection}{" + header_name + "}"
 
     if "flavor" in monster:
-        monster_string += "\\textit{" + monster["flavor"] + "}" + LINEBREAK
+        monster_string += "\\textit{" + monster["flavor"] + "}" + NEWLINE + LINEBREAK
 
     if "description" in monster:
-        monster_string += description(monster["description"], monster["type"], monster["name"]) + "\\bigskip"
+        monster_string += description(monster["description"], monster["type"], monster["name"]) + LINEBREAK
 
     monster_string += "\\textbf{" + monster["name"].upper() + "}" + NEWLINE
     alignment = "unaligned"
@@ -643,10 +650,10 @@ def create_monster(monster):
 
     if "cond-immune" in monster:
         monster_string += "\\textbf{Condition Immunities} "
-        monster_string += comma_separate(cond_immunities(monster["cond-immune"], monster["type"])) + NEWLINE
+        monster_string += cond_immunities(monster["cond-immune"], monster["type"]) + NEWLINE
     elif monster["type"] in DEFAULT_IMMUNITIES:
         monster_string += "\\textbf{Condition Immunities} "
-        monster_string += comma_separate(cond_immunities([], monster["type"])) + NEWLINE
+        monster_string += cond_immunities([], monster["type"]) + NEWLINE
 
     monster_string += "\\textbf{Senses} "
     if "senses" in monster:
@@ -665,10 +672,10 @@ def create_monster(monster):
         monster_string += "---}"
     monster_string += NEWLINE
 
-    monster_string += "\\textbf{Challenge} " + cr(monster["cr"]) + LINEBREAK
+    monster_string += "\\textbf{Challenge} " + cr(monster["cr"]) + NEWLINE + LINEBREAK
 
     if "abilities" in monster:
-        monster_string += abilities(monster["abilities"], bonuses, profbonus, monster["name"])
+        monster_string += abilities(monster["abilities"], bonuses, profbonus, monster["name"]) + LINEBREAK
 
     if "innate-spellcasting" in monster:
         ability = monster["innate-spellcasting"]
@@ -681,9 +688,7 @@ def create_monster(monster):
         monster_string += LINEBREAK
     
     if "attacks" in monster or "actions" in monster:
-        monster_string += "\\textbf{Actions}" + NEWLINE + "\\halfline"
-
-    monster_string += "\n%mabp\n"
+        monster_string += "\\textbf{Actions}" + NEWLINE + "\\halfline\n%mabp\n"
 
     if "attacks" in monster:
         attack_name_dict = {}
@@ -700,12 +705,11 @@ def create_monster(monster):
             else:
                 monster_string = monster_string.replace(
                     "%mabp",
-                    "\\textbf{\\textit{Multiattack.}} " + resolve_functions(action["effect"], bonuses, profbonus) + LINEBREAK
+                    entry("Multiattack", resolve_functions(action["effect"], bonuses, profbonus)) + LINEBREAK
                 )
         for action_name in sorted(action_name_dict):
             action = action_name_dict[action_name]
-            monster_string += "\\textbf{\\textit{" + action["name"] + ".}} "
-            monster_string += resolve_functions(action["effect"], bonuses, profbonus) + LINEBREAK
+            monster_string += entry(action["name"], resolve_functions(action["effect"], bonuses, profbonus)) + LINEBREAK
             
     return monster_string
 
