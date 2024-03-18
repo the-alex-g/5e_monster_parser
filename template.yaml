@@ -14,6 +14,8 @@ stats:
 # OPTIONAL PARAMETERS
 headername: String, Title Case
 alignment: lower case
+tags:
+- lowercase tag name (eg. "goblinoid")
 flavor: Properly capitalized string with punctuation.
 description:
 - header: Title Case String

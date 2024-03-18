@@ -181,8 +181,8 @@ SPELLCASTING_ABILITY = {
     "wizard":"int"
 }
 PREBAKED_ABILITIES = [
-    "spider climb",
-    "legendary resistance"
+    "Spider Climb",
+    "Nimble Escape"
 ]
 NEWLINE = "\\\\"
 LINEBREAK = NEWLINE + "\\bigskip"
@@ -213,29 +213,6 @@ def diceroll(num, size, bonus):
             string += " - "
         string += str(bonus)
     return string + ")"
-
-
-def alignment(code):
-    code.lower()
-    if code == "u":
-        return "Unaligned"
-    elif code == "n":
-        return "Neutral"
-    else:
-        string = ""
-        if code[0] == "l":
-            string += "Lawful "
-        elif code[0] == "n":
-            string += "Neutral "
-        elif code[0] == "c":
-            strign += "Chaotic "
-        if code[1] == "e":
-            string += "Evil"
-        elif code[1] == "n":
-            string += "Neutral"
-        elif code[1] == "g":
-            string += "Good"
-    return string
 
 
 def format_index(index):
@@ -406,6 +383,8 @@ def create_stat_table(scores, bonuses):
 def create_attack(attack, stats, profbonus):
     attack_string = "\\noindent\\textit{\\textbf{" + attack["name"] + ".} "
     bonus = stats[attack["ability"]] + profbonus
+    if "bonus" in attack:
+        bonus += attack["bonus"]
     if attack["type"] == "mw":
         attack_string += "Melee Weapon Attack:} "
         attack_string += format_bonus(bonus) + " to hit, reach " + str(attack["reach"]) + " ft."
@@ -523,9 +502,10 @@ def check_missing_fields(monster):
 
 
 def get_baked_ability(ability_name, stats, profbonus, name):
-    if ability_name == "spider climb":
-        return "The " + name.lower() + """ can climb difficult surfaces, 
-including upside down on ceilings, without needing to make an ability check."""
+    if ability_name == "Spider Climb":
+        return "The " + name.lower() + " can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+    if ability_name == "Nimble Escape":
+        return "The " + name.lower() + " can take the Disengage or Hide action as a bonus action on each of its turns."
 
 
 def abilities(abilities, stats, profbonus, name):
@@ -536,8 +516,8 @@ def abilities(abilities, stats, profbonus, name):
     for ability_name in sorted(ability_name_dict):
         ability = ability_name_dict[ability_name]
         ability_string += "\\textbf{\\textit{" + ability["name"] + ".}} "
-        if ability_name.lower() in PREBAKED_ABILITIES:
-            ability_string += get_baked_ability(ability_name.lower(), stats, profbonus, name) + LINEBREAK
+        if ability_name in PREBAKED_ABILITIES:
+            ability_string += get_baked_ability(ability_name, stats, profbonus, name) + LINEBREAK
         else:
             ability_string += resolve_functions(ability["effect"], stats, profbonus) + LINEBREAK
     return ability_string
@@ -564,7 +544,10 @@ def create_monster(monster):
     alignment = "unaligned"
     if "alignment" in monster:
         alignment = monster["alignment"]        
-    monster_string += "\\textit{" + (monster["size"] + " " + monster["type"] + ", " + alignment).title() + "}" + NEWLINE
+    monster_string += "\\textit{" + (monster["size"] + " " + monster["type"]
+    if "tags" in monster:
+        monster_string += " (" + comma_separate(sorted(monster["tags"])) + ")"
+    monster_string +=  ", " + alignment).title() + "}" + NEWLINE
 
     scores = monster["stats"]
     bonuses = ability_scores_to_bonuses(scores)
