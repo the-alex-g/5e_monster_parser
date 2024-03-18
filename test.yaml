@@ -46,6 +46,8 @@ monsters:
   saves:
   - dex
   abilities:
+  - name: Legendary Resistance
+    uses: 3/day
   - name: Title Case Name
     effect: Properly capitalized string with punctuation and bracket commands.
   attacks:
@@ -89,3 +91,9 @@ monsters:
       - Grasping Vine
       - Plant Growth
       - Spike Growth 
+  legendary-actions:
+  - name: Title Case Name
+    cost: 3
+    effect: The test case makes [diceroll 2 10 3] poke attacks.
+  - name: Foopants
+    effect: A foo beast appears. Run in Fear!

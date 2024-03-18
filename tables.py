@@ -220,4 +220,7 @@ PREBAKED_ABILITIES = {
     "Spider Climb":"The [name] can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.",
     "Nimble Escape":"The [name] can take the Disengage or Hide action as a bonus action on each of its turns.",
     "Sunlight Sensitivity":"While in sunlight, the [name] has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.",
+    "Legendary Resistance":"If the [name] fails a saving throw, it can choose to succeed instead.",
+    "Avoidance":"If the [name] is subject to an effect that allows it to make a Dexterity saving throw to take only half damage, it instead takes no damage if it succeeds on the saving throw, and only half damage if it fails.",
+    "Frightful Presence":"Each creature of the [name]'s choice that is within 120 feet and aware of it must succeed on a [save w/wis cha] or become frightened for 1 minute. A creature repeats the saving throw at the end of each of its turns, ending the effect on itself on a success. If the creature’s saving throw is successful or the effect ends for it, the creature is immune to the [name]'s Frightful Presence for the next 24 hours.",
 }

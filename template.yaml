@@ -75,3 +75,14 @@ innate-spellcasting:
  - frequency: 3/day each
    spells:
    - spell
+legendary-actions:
+- name: Title Case Name
+  cost: (optional parameter) int
+  effect: Properly capitalized string with punctuation and [bracket commands]
+# ALTERNATE FORMAT:
+# legendary-actions:
+#  uses: int
+#  actions:
+#  - name: 
+#    cost:
+#    effect:

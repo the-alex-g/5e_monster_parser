@@ -355,3 +355,99 @@ monsters:
      from the Plane of Shadow, becomes a twisted, evil creature of darkness.
      Although not particularly dangerous individually, swarms of tainted
      gloamwings pose a significant threat to travelers after dark.
+# ANCIENT ZINC DRAGON ####################################
+- name: Ancient Zinc Dragon
+  group: Dragon, Zinc
+  size: gargantuan
+  type: dragon
+  alignment: chaotic neutral
+  speed:
+   land: 40
+   fly: 90
+  hd: 12
+  stats:
+   str: 24
+   dex: 20
+   con: 25
+   int: 17
+   wis: 16
+   cha: 22
+  saves:
+  - dex
+  - con
+  - wis
+  - cha
+  skills:
+  - acrobatics
+  - perception
+  - performance
+  resist:
+  - fire
+  immune:
+  - lightning
+  senses:
+  - blindsight 120 ft
+  languages:
+  - auran
+  - common
+  - draconic
+  cr: 22
+  abilities:
+  - name: Avoidance
+  - name: Electric Current
+    effect: >
+     Any creature that touches the zinc dragon or hits it with a metal
+     melee weapon suffers [diceroll 2 12 0] lightning damage. This effect
+     extends to include any conductive material that the dragon is touching.
+     For example, if the zinc dragon was in contact with a pool of water,
+     and someone jumped into the water, they would be electrocuted. The
+     zinc dragon can suppress this effect at any time.
+  - name: Legendary Resistance
+    uses: 3/day
+  - name: Water Weakness
+    effect: >
+     At the start of each turn that the dragon is in contact with a significant
+     amount of water (submerged, in a rainstorm, was hit with a barrel of water
+     fired from a catapult), it takes [diceroll 6 6 0] necrotic damage.
+  actions:
+  - name: multiattack
+    effect: >
+     The dragon can use its Frightful Presence. It then makes one bite attack
+     and two claw attacks.
+  - name: Frightful Presence
+  - name: Lightning Breath (Recharge 5-6)
+    effect: >
+     The dragon spits a 60-foot-long, 5-foot-wide line of crackling electricity.
+     All targets in the area take [diceroll 13 12 0] lightning damage, or half
+     as much with a successful [save w/dex con] saving throw.
+  attacks:
+  - name: Bite
+    type: mw
+    ability: str
+    reach: 15
+    target: one target
+    onhit: >
+     [diceroll 2 8 str] piercing damage plus [diceroll 2 12 0] lightning damage.
+  - name: Claw
+    type: mw
+    ability: str
+    reach: 10
+    target: one target
+    onhit: >
+     [diceroll 2 6 str] slashing damage plus [diceroll 2 12 0] lightning damage.
+  legendary-actions:
+  - name: Flight
+    effect: The dragon moves up to its flying speed.
+  - name: Claw
+    effect: The dragon makes a claw attack.
+  - name: Dive
+    cost: 3
+    effect: >
+     The dragon dives at least 100 feet straight towards a target and makes a
+     bite attack. This attack deals an additional [diceroll 3 8 0] piercing
+     damage on a hit.
+  reactions:
+  - name: Electric Transfer
+    effect: >
+     When a creature within 60 feet of the dragon deals lightning damage,
+     the dragon can deal [diceroll 2 12 0] to that creature.

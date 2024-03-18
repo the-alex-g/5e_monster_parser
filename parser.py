@@ -1,5 +1,5 @@
 import yaml
-import tables
+from tables import *
 from math import floor
 
 NEWLINE = "\\\\"
@@ -23,7 +23,7 @@ def cr_to_prof(cr):
     if type(cr) == str:
         return 2
     else:
-        return min(2, floor((cr - 1) / 4) + 2)
+        return max(2, floor((cr - 1) / 4) + 2)
 
 
 def diceroll(num, size, bonus):
@@ -343,13 +343,17 @@ def abilities(abilities, stats, profbonus, name):
         ability_name_dict[ability["name"]] = ability
     for ability_name in sorted(ability_name_dict):
         ability = ability_name_dict[ability_name]
-        ability_string += "\\entry{" + ability["name"] + "}{"
+        ability_string += "\\entry{" + ability["name"]
+        if "uses" in ability:
+            ability_string += " (" + ability["uses"].title() + ")"
+        ability_string += "}{"
         if ability_name in PREBAKED_ABILITIES:
             raw_ability = PREBAKED_ABILITIES[ability_name]
-            raw_ability.replace("[name]", name.lower())
+            raw_ability = raw_ability.replace("[name]", name.lower())
             ability_string += raw_ability + "}"
         else:
             ability_string += resolve_functions(ability["effect"], stats, profbonus) + "}"
+        ability_string += LINEBREAK
     return ability_string
 
 
@@ -361,6 +365,27 @@ def description(descriptions, monster_type, name):
         description = NATURES[monster_type]
         description["text"].replace("[name]", name.lower())
         string += "\\entry{" + description["header"] + "}{" + description["text"] + "}"
+    return string
+
+
+def legendary_actions(actions, name, stats, profbonus):
+    string = "\\textbf{Legendary Actions}" + NEWLINE + "\\halfline The " + name.lower() + " can take "
+    if "uses" in actions:
+        string += str(actions["uses"])
+        actions = actions["actions"]
+    else:
+        string += "3"
+    string += """ legendary actions, choosing from the options below. Only one legendary action option can
+be used at a time, and only at the end of another creature's turn. The """ + name.lower() + """ regains spent
+legendary actions at the start of its turn.""" + NEWLINE + LINEBREAK
+    action_name_dict = {}
+    for action in actions:
+        action_name_dict[action["name"]] = action
+    for action_name in sorted(action_name_dict):
+        action = action_name_dict[action_name]
+        if "cost" in action:
+            action_name += " (Costs " + str(action["cost"]) + " Actions)"
+        string += entry(action_name, resolve_functions(action["effect"], stats, profbonus))
     return string
 
 
@@ -453,7 +478,7 @@ def create_monster(monster):
     monster_string += "\\textbf{Challenge} " + cr(monster["cr"]) + NEWLINE + LINEBREAK
 
     if "abilities" in monster:
-        monster_string += abilities(monster["abilities"], bonuses, profbonus, monster["name"]) + LINEBREAK
+        monster_string += abilities(monster["abilities"], bonuses, profbonus, monster["name"])
 
     if "innate-spellcasting" in monster:
         ability = monster["innate-spellcasting"]
@@ -487,8 +512,15 @@ def create_monster(monster):
                 )
         for action_name in sorted(action_name_dict):
             action = action_name_dict[action_name]
+            if action_name in PREBAKED_ABILITIES:
+                raw_action = PREBAKED_ABILITIES[action_name]
+                raw_action = raw_action.replace("[name]", monster["name"].lower())
+                action["effect"] = raw_action
             monster_string += entry(action["name"], resolve_functions(action["effect"], bonuses, profbonus)) + LINEBREAK
-            
+    
+    if "legendary-actions" in monster:
+        monster_string += legendary_actions(monster["legendary-actions"], monster["name"], bonuses, profbonus)
+    
     return monster_string
 
 
