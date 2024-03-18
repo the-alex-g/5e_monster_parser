@@ -1,0 +1,223 @@
+ABILITIES_SPELLOUT = {
+    "str":"Strength",
+    "dex":"Dexterity",
+    "con":"Constitution",
+    "int":"Intelligence",
+    "wis":"Wisdom",
+    "cha":"Charisma"
+}
+ABILITY_LIST = ["str", "dex", "con", "int", "wis", "cha"]
+HIT_DIE_SIZE = {
+    "tiny":4,
+    "small":6,
+    "medium":8,
+    "large":10,
+    "huge":12,
+    "gargantuan":20
+}
+SKILL_ABILITY = {
+    "athletics":"str",
+    "acrobatics":"dex",
+    "sleight of hand":"dex",
+    "stealth":"dex",
+    "arcana":"int",
+    "history":"int",
+    "investigation":"int",
+    "nature":"int",
+    "religion":"int",
+    "animal handling":"wis",
+    "insight":"wis",
+    "medicine":"wis",
+    "perception":"wis",
+    "survival":"wis",
+    "deception":"cha",
+    "intimidation":"cha",
+    "performance":"cha",
+    "persuasion":"cha"
+}
+SKILL_PRETTYNAME = {
+    "athletics":"Athletics",
+    "acrobatics":"Acrobatics",
+    "sleight of hand":"Sleight of Hand",
+    "stealth":"Stealth",
+    "arcana":"Arcana",
+    "history":"History",
+    "investigation":"Investigation",
+    "nature":"Nature",
+    "religion":"Religion",
+    "animal handling":"Animal Handling",
+    "insight":"Insight",
+    "medicine":"Medicine",
+    "perception":"Perception",
+    "survival":"Survival",
+    "deception":"Deception",
+    "intimidation":"Intimidation",
+    "performance":"Performance",
+    "persuasion":"Persuasion"
+}
+CR_TO_XP = {
+    0:"10",
+    "1/8":"25",
+    "1/4":"50",
+    "1/2":"100",
+    1:"200",
+    2:"450",
+    3:"700",
+    4:"1,100",
+    5:"1,800",
+    6:"2,300",
+    7:"2,900",
+    8:"3,900",
+    9:"5,000",
+    10:"5,900",
+    11:"7,200",
+    12:"8,400",
+    13:"10,000",
+    14:"11,500",
+    15:"13,000",
+    16:"15,000",
+    17:"18,000",
+    18:"20,000",
+    19:"22,000",
+    20:"25,000",
+    21:"33,000",
+    22:"41,000",
+    23:"50,000",
+    24:"62,000",
+    25:"75,000",
+    26:"90,000",
+    27:"105,000",
+    28:"120,000",
+    29:"135,000",
+    30:"155,000",
+}
+FULL_SPELLCASTER = [
+    [2],
+    [3],
+    [4, 2],
+    [4, 3],
+    [4, 3, 2],
+    [4, 3, 3],
+    [4, 3, 3, 1],
+    [4, 3, 3, 2],
+    [4, 3, 3, 3, 1],
+    [4, 3, 3, 3, 2],
+    [4, 3, 3, 3, 2, 1],
+    [4, 3, 3, 3, 2, 1],
+    [4, 3, 3, 3, 2, 1, 1],
+    [4, 3, 3, 3, 2, 1, 1],
+    [4, 3, 3, 3, 2, 1, 1, 1],
+    [4, 3, 3, 3, 2, 1, 1, 1],
+    [4, 3, 3, 3, 2, 1, 1, 1, 1],
+    [4, 3, 3, 3, 3, 1, 1, 1, 1],
+    [4, 3, 3, 3, 3, 2, 1, 1, 1],
+    [4, 3, 3, 3, 3, 2, 2, 1, 1],
+]
+SEMI_SPELLCASTER = [
+    [],
+    [2],
+    [3],
+    [3],
+    [4, 2],
+    [4, 2],
+    [4, 3],
+    [4, 3],
+    [4, 3, 2],
+    [4, 3, 2],
+    [4, 3, 3],
+    [4, 3, 3],
+    [4, 3, 3, 1],
+    [4, 3, 3, 1],
+    [4, 3, 3, 2],
+    [4, 3, 3, 2],
+    [4, 3, 3, 3, 1],
+    [4, 3, 3, 3, 1],
+    [4, 3, 3, 3, 2],
+    [4, 3, 3, 3, 2],
+]
+WARLOCK = [
+    [1],
+    [2],
+    [0, 2],
+    [0, 2],
+    [0, 0, 2],
+    [0, 0, 2],
+    [0, 0, 0, 2],
+    [0, 0, 0, 2],
+    [0, 0, 0, 0, 2],
+    [0, 0, 0, 0, 2],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 3],
+    [0, 0, 0, 0, 4],
+    [0, 0, 0, 0, 4],
+    [0, 0, 0, 0, 4],
+    [0, 0, 0, 0, 4],
+]
+SPELL_SLOTS = {
+    "bard":FULL_SPELLCASTER,
+    "cleric":FULL_SPELLCASTER,
+    "druid":FULL_SPELLCASTER,
+    "paladin":SEMI_SPELLCASTER,
+    "ranger":SEMI_SPELLCASTER,
+    "sorceror":FULL_SPELLCASTER,
+    "warlock":WARLOCK,
+    "wizard":FULL_SPELLCASTER
+}
+SPELLCASTING_ABILITY = {
+    "bard":"cha",
+    "cleric":"wis",
+    "druid":"wis",
+    "paladin":"cha",
+    "ranger":"wis",
+    "sorceror":"cha",
+    "warlock":"cha",
+    "wizard":"int"
+}
+DEFAULT_IMMUNITIES = {
+    "elemental":[
+        "exhaustion",
+        "paralyzed",
+        "petrified",
+        "poisoned",
+        "unconcious"
+    ]
+}
+NATURES = {
+    "elemental":{
+        "header":"Elemental Nature",
+        "text":"A [name] does not require air, food, drink, or sleep."
+    },
+    "undead":{
+        "header":"Undead Nature",
+        "text":"A [name] does not require air, food, drink, or sleep."
+    },
+    "construct":{
+        "header":"Constructed Nature",
+        "text":"A [name] does not require air, food, drink, or sleep."
+    },
+    "fiend":{
+        "header":"Fiendish Nature",
+        "text":"A [name] does not require air, food, drink, or sleep."
+    },
+    "celestial":{
+        "header":"Celestial Nature",
+        "text":"A [name] does not require air, food, drink, or sleep."
+    },
+    "ooze":{
+        "header":"Ooze",
+        "text":"A [name] does not require air or sleep."
+    },
+    "plant":{
+        "header":"Plant",
+        "text":"A [name] does not require sleep."
+    }
+}
+PREBAKED_ABILITIES = {
+    "Spider Climb":"The [name] can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.",
+    "Nimble Escape":"The [name] can take the Disengage or Hide action as a bonus action on each of its turns.",
+    "Sunlight Sensitivity":"While in sunlight, the [name] has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.",
+}
