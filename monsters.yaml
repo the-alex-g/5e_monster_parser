@@ -388,6 +388,9 @@ monsters:
   size: gargantuan
   type: dragon
   alignment: chaotic neutral
+  ac:
+  - 10
+  - natural armor
   speed:
    land: 40
    fly: 90

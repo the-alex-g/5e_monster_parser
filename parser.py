@@ -4,6 +4,7 @@ from math import floor
 
 NEWLINE = "\\\\"
 LINEBREAK = "\\bigskip"
+PAGEBREAK = "\n\\clearpage\n"
 PREAMBLE = """\\documentclass[letterpaper, 12pt, twocolumn]{book}
 \\usepackage{ragged2e}
 \\usepackage[left=0.5in, right=0.5in, top=1in, bottom=1in]{geometry}
@@ -336,6 +337,30 @@ def check_missing_fields(monster):
     return error
 
 
+def format_actions(actions, name, stats, profbonus):
+    action_string = ""
+    action_name_dict = {}
+    for action in actions:
+        action_name_dict[action["name"]] = action
+    for action_name in sorted(action_name_dict):
+        action = action_name_dict[action_name]
+        action_string += "\\entry{" + action["name"]
+        if "uses" in action:
+            action_string += " (" + action["uses"].title() + ")"
+        # the "cost" clause is for legendary actions
+        elif "cost" in action:
+            action_string += " (Costs " + str(action["cost"]) + " Actions)"
+        action_string += "}{"
+        if action_name in PREBAKED_ABILITIES:
+            raw_action = PREBAKED_ABILITIES[action_name]
+            raw_action = raw_action.replace("[name]", name.lower())
+            action_string += raw_action + "}"
+        else:
+            action_string += resolve_functions(action["effect"], stats, profbonus) + "}"
+        action_string += LINEBREAK
+    return action_string
+
+
 def abilities(abilities, stats, profbonus, name):
     ability_string = ""
     ability_name_dict = {}
@@ -363,7 +388,7 @@ def description(descriptions, monster_type, name):
         string += "\\entry{" + description["header"] + "}{" + description["text"] + "}"
     if monster_type in NATURES:
         description = NATURES[monster_type]
-        description["text"].replace("[name]", name.lower())
+        description["text"] = description["text"].replace("[name]", name.lower())
         string += "\\entry{" + description["header"] + "}{" + description["text"] + "}"
     return string
 
@@ -378,16 +403,13 @@ def legendary_actions(actions, name, stats, profbonus):
     string += """ legendary actions, choosing from the options below. Only one legendary action option can
 be used at a time, and only at the end of another creature's turn. The """ + name.lower() + """ regains spent
 legendary actions at the start of its turn.""" + NEWLINE + LINEBREAK
-    action_name_dict = {}
-    for action in actions:
-        action_name_dict[action["name"]] = action
-    for action_name in sorted(action_name_dict):
-        action = action_name_dict[action_name]
-        if "cost" in action:
-            action_name += " (Costs " + str(action["cost"]) + " Actions)"
-        string += entry(action_name, resolve_functions(action["effect"], stats, profbonus))
-    return string
+    return string + format_actions(actions, name, stats, profbonus)
 
+
+def reactions(actions, name, stats, profbonus):
+    string = "\\textbf{Reactions}" + NEWLINE + "\\halfline"
+    return string + format_actions(actions, name, stats, profbonus)
+        
 
 def create_monster(monster, in_group=False):
     monster_string = ""
@@ -519,6 +541,9 @@ def create_monster(monster, in_group=False):
                 raw_action = raw_action.replace("[name]", monster["name"].lower())
                 action["effect"] = raw_action
             monster_string += entry(action["name"], resolve_functions(action["effect"], bonuses, profbonus)) + LINEBREAK
+
+    if "reactions" in monster:
+        monster_string += reactions(monster["reactions"], monster["name"], bonuses, profbonus) + LINEBREAK
     
     if "legendary-actions" in monster:
         monster_string += legendary_actions(monster["legendary-actions"], monster["name"], bonuses, profbonus)
@@ -575,8 +600,7 @@ def create_doc(filedict):
     for monster_name in sorted(monster_name_dict):
         if type(monster_name_dict[monster_name]) == list:
             group = monster_name_dict[monster_name]
-            latexfile.write(resolve_group(group[0], group[1:]))
-            latexfile.write("\\newpage")
+            latexfile.write(resolve_group(group[0], group[1:]) + PAGEBREAK)
             continue
         print(monster_name)
         monster = monster_name_dict[monster_name]
@@ -599,8 +623,7 @@ def create_doc(filedict):
             monsters_by_cr[monster["cr"]].append(monstername)
         else:
             monsters_by_cr[monster["cr"]] = [monstername]
-        latexfile.write(create_monster(monster))
-        latexfile.write("\\newpage")
+        latexfile.write(create_monster(monster) + PAGEBREAK)
 
     latexfile.write(CONCLUSION)
     latexfile.close()
