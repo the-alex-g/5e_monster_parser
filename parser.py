@@ -219,10 +219,11 @@ NATURES = {
         "text":"A [name] does not require sleep."
     }
 }
-PREBAKED_ABILITIES = [
-    "Spider Climb",
-    "Nimble Escape"
-]
+PREBAKED_ABILITIES = {
+    "Spider Climb":"The [name] can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.",
+    "Nimble Escape":"The [name] can take the Disengage or Hide action as a bonus action on each of its turns.",
+    "Sunlight Sensitivity":"While in sunlight, the [name] has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.",
+}
 NEWLINE = "\\\\"
 LINEBREAK = NEWLINE + "\\bigskip"
 PREAMBLE = """\\documentclass[letterpaper, 12pt, twocolumn]{book}
@@ -551,13 +552,6 @@ def check_missing_fields(monster):
     return error
 
 
-def get_baked_ability(ability_name, stats, profbonus, name):
-    if ability_name == "Spider Climb":
-        return "The " + name.lower() + " can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
-    if ability_name == "Nimble Escape":
-        return "The " + name.lower() + " can take the Disengage or Hide action as a bonus action on each of its turns."
-
-
 def abilities(abilities, stats, profbonus, name):
     ability_string = ""
     ability_name_dict = {}
@@ -567,7 +561,9 @@ def abilities(abilities, stats, profbonus, name):
         ability = ability_name_dict[ability_name]
         ability_string += "\\textbf{\\textit{" + ability["name"] + ".}} "
         if ability_name in PREBAKED_ABILITIES:
-            ability_string += get_baked_ability(ability_name, stats, profbonus, name) + LINEBREAK
+            raw_ability = PREBAKED_ABILITIES[ability_name]
+            raw_ability.replace("[name]", name.lower())
+            ability_string += raw_ability + LINEBREAK
         else:
             ability_string += resolve_functions(ability["effect"], stats, profbonus) + LINEBREAK
     return ability_string
