@@ -32,6 +32,22 @@ def cr_to_prof(cr):
         return max(2, floor((cr - 1) / 4) + 2)
 
 
+def cr_to_digit(cr):
+    if type(cr) == int:
+        return cr
+    else:
+        return 1 / int(cr[-1])
+
+
+def cr_to_string(cr):
+    if type(cr) == int:
+        return str(cr)
+    elif type(cr) == float:
+        return {0.125:"1/8", 0.25:"1/4", 0.5:"1/2"}[cr]
+    else:
+        return cr
+
+
 def diceroll(num, size, bonus):
     total = floor(num * (size / 2 + 0.5)) + bonus
     string = str(total) + " (" + str(num) + "d" + str(size)
@@ -149,15 +165,19 @@ def format_and_execute(field, stats, profbonus):
     in_function_body = False
     arg_text = ""
     function_name = ""
-    for char in field:
+    # the extra space at the end of field
+    # causes the last argument to be processed
+    for char in field + " ":
         if char == " ":
             if in_function_body:
+                if formatted_field[-1] != "(":
+                    formatted_field += ", "
                 if arg_text in ABILITY_LIST:
                     arg_text = str(stats[arg_text])
                 elif not arg_text.isdigit():
                     formatted_field += "\""
                     arg_text += "\""
-                formatted_field += arg_text + ", "
+                formatted_field += arg_text
                 arg_text = ""
             else:
                 formatted_field += "("
@@ -168,9 +188,6 @@ def format_and_execute(field, stats, profbonus):
             else:
                 formatted_field += char
                 function_name += char
-    if arg_text in ABILITY_LIST:
-        arg_text = str(stats[arg_text])
-    formatted_field += arg_text
     if function_name == "save":
         formatted_field += ", " + str(profbonus)
     return eval(formatted_field + ")")
@@ -554,6 +571,7 @@ def create_monster(monster, in_group=False):
 
 
 def add_to_appendices(monster):
+    monstername = monster_headername(monster)
     if "habitat" in monster:
         for region in monster["habitat"]:
             if region in monsters_by_habitat:
@@ -565,15 +583,15 @@ def add_to_appendices(monster):
     else:
         monsters_by_habitat["any"] = [monstername]
 
-    if monster["type"] in monsters_by_type:
-        monsters_by_type[monster["type"]].append(monstername)
+    if monster["type"] + "s" in monsters_by_type:
+        monsters_by_type[monster["type"] + "s"].append(monstername)
     else:
-        monsters_by_type[monster["type"]] = [monstername]
-    monster_cr_string = "CR " + str(monster["cr"])
-    if monster_cr_string in monsters_by_cr:
-        monsters_by_cr[monster_cr_string].append(monstername)
+        monsters_by_type[monster["type"] + "s"] = [monstername]
+    monster_cr = cr_to_digit(monster["cr"])
+    if monster_cr in monsters_by_cr:
+        monsters_by_cr[monster_cr].append(monstername)
     else:
-        monsters_by_cr[monster_cr_string] = [monstername]
+        monsters_by_cr[monster_cr] = [monstername]
 
 
 def resolve_group(group, monsters):
@@ -601,11 +619,15 @@ def resolve_group(group, monsters):
 
 def create_appendix_table(table):
     string = ""
-    for section in table:
-        string += "\\textbf{" + section + "}" + NEWLINE + "\\begin{tabular*}{\\columnwidth}{@{\\extracolsep{\\fill}} lc}"
+    for section in sorted(table):
+        section_name = section
+        if type(section) != str:
+            # assume it's a CR table
+            section_name = "Challenge " + cr_to_string(section)
+        string += "\\textbf{" + section_name.title() + "}" + NEWLINE + "\\begin{tabular*}{\\columnwidth}{@{\\extracolsep{\\fill}} lc}"
         for entry in table[section]:
-            string += NEWLINE + entry + "&\\pageref{" + entry + "}"
-        string += "\\end{tabular*}"
+            string += entry + "&p.\\pageref{" + entry + "}" + NEWLINE
+        string += "\\end{tabular*}" + NEWLINE + LINEBREAK
     return string
 
 
@@ -625,7 +647,7 @@ def create_doc(filedict):
             monster_name_dict[monster["group"]].append(monster)
         else:
             monster_name_dict[monstername] = monster
-
+    
     for monster_name in sorted(monster_name_dict):
         if type(monster_name_dict[monster_name]) == list:
             group = monster_name_dict[monster_name]
@@ -635,7 +657,8 @@ def create_doc(filedict):
         monster = monster_name_dict[monster_name]
         add_to_appendices(monster)
         latexfile.write(create_monster(monster) + PAGEBREAK)
-    
+        
+    latexfile.write("\\markboth{Appendicies}{Appendicies}")
     latexfile.write(create_appendix_table(monsters_by_cr) + PAGEBREAK)
     latexfile.write(create_appendix_table(monsters_by_habitat) + PAGEBREAK)
     latexfile.write(create_appendix_table(monsters_by_type) + PAGEBREAK)

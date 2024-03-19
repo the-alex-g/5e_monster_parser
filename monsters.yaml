@@ -384,6 +384,8 @@ monsters:
      gloamwings pose a significant threat to travelers after dark.
 # ANCIENT ZINC DRAGON ####################################
 - name: Ancient Zinc Dragon
+  headername: Dragon, Zinc, Ancient
+  shortname: dragon
   group: Dragon, Zinc
   size: gargantuan
   type: dragon
