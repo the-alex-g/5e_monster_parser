@@ -362,24 +362,7 @@ def format_actions(actions, name, stats, profbonus):
 
 
 def abilities(abilities, stats, profbonus, name):
-    ability_string = ""
-    ability_name_dict = {}
-    for ability in abilities:
-        ability_name_dict[ability["name"]] = ability
-    for ability_name in sorted(ability_name_dict):
-        ability = ability_name_dict[ability_name]
-        ability_string += "\\entry{" + ability["name"]
-        if "uses" in ability:
-            ability_string += " (" + ability["uses"].title() + ")"
-        ability_string += "}{"
-        if ability_name in PREBAKED_ABILITIES:
-            raw_ability = PREBAKED_ABILITIES[ability_name]
-            raw_ability = raw_ability.replace("[name]", name.lower())
-            ability_string += raw_ability + "}"
-        else:
-            ability_string += resolve_functions(ability["effect"], stats, profbonus) + "}"
-        ability_string += LINEBREAK
-    return ability_string
+    return format_actions(abilities, name, stats, profbonus)
 
 
 def description(descriptions, monster_type, name):
@@ -389,7 +372,7 @@ def description(descriptions, monster_type, name):
     if monster_type in NATURES:
         description = NATURES[monster_type]
         description["text"] = description["text"].replace("[name]", name.lower())
-        string += "\\entry{" + description["header"] + "}{" + description["text"] + "}"
+        string += entry(description["header"], description["text"])
     return string
 
 
@@ -571,6 +554,12 @@ def resolve_group(group, monsters):
         group_string += create_monster(monster, in_group=True) + LINEBREAK
     
     return group_string
+
+
+def create_appendix_table():
+    string = "\\begin{tabular*}{\\columnwidth}{@{\\extracolsep{\\fill}} clc}
+    string += "\\textbf{CR} & \\textbf{Name} & \\textbf{Page} \\
+    return string + "\\end{tabular*}"
 
 
 def create_doc(filedict):
