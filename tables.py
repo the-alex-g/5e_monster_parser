@@ -184,6 +184,11 @@ DEFAULT_IMMUNITIES = {
         "petrified",
         "poisoned",
         "unconcious"
+    ],
+    "plant":[
+        "exhaustion",
+        "blinded",
+        "deafened",
     ]
 }
 NATURES = {
@@ -225,4 +230,5 @@ PREBAKED_ABILITIES = {
     "Frightful Presence":"Each creature of the [possessive [name]] choice that is within 120 feet and aware of it must succeed on a [save w/wis cha] or become frightened for 1 minute. A creature repeats the saving throw at the end of each of its turns, ending the effect on itself on a success. If the creature's saving throw is successful or the effect ends for it, the creature is immune to the [possessive [name]] Frightful Presence for the next 24 hours.",
     "Earthwalk":"The [name] can walk through unworked earth as if it were air, leaving no trace of its passage.",
     "Siege Monster":"The [name] deals double damage to structures.",
+    "Swarm":"The [name] can fit through any gap large enough for a [swarmsize] creature, cannot regain hit points or gain temporary hit points, takes twice as much damage from area-of-effect sources, can enter the spaces of other creatures, and other creatures can enter the swarm's space.",
 }

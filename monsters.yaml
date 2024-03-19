@@ -601,3 +601,94 @@ monsters:
      make their lairs on mountain peaks.
   habitat:
   - mountain
+# ALGAE BLOOM ###########################################################
+- name: Algae Bloom
+  size: medium
+  swarm: tiny
+  type: plant
+  hd: 12
+  speed:
+   land: 5
+   swim: 30
+  stats:
+   str: 13
+   dex: 14
+   con: 11
+   int: 1
+   wis: 10
+   cha: 3
+  saves:
+  - dex
+  skills:
+  - stealth
+  vulnerable:
+  - cold
+  - lightning
+  - necrotic
+  resist:
+  - fire
+  - poison
+  - bludgeoning, piercing, and slashing from non-magical weapons
+  immune:
+  - psychic
+  - radiant
+  cond-immune:
+  - charmed
+  - frightened
+  - paralyzed
+  - petrified
+  - poisoned
+  - prone
+  senses:
+  - blindsight 30 ft. (blind beyond this radius)
+  - tremorsense 60 ft.
+  cr: 3
+  abilities:
+  - name: False Appearance
+    effect: >
+     While motionless, the algae bloom is indistinguishable from an ordinary
+     mat of pond scum or algae.
+  - name: Radiance Absorption
+    effect: >
+     When the algae bloom would suffer radiant damage, it gains temporary hit points
+     and regains hit points, both equal to half the damage it would have taken (even
+     though the algae bloom is a swarm). The temporary hit points last for one minute.
+  - name: Torpor
+    effect: >
+     If the algae bloom suffers 10 or more cold damage in a single round, it enters a
+     state of torpor. While in torpor, the algae bloom loses its cold and necrotic
+     vulnerabilities, its movement speed is halved, its Dexterity score is reduced to
+     7 (-2), and it makes attacks with disadvantage. If the algae bloom takes 10 or more
+     fire and/or radiant damage in a single round while in torpor, it exits torpor.
+  actions:
+  - name: multiattack
+    effect: The algae bloom makes two slam attacks and two tainted water attacks.
+  attacks:
+  - name: Tainted Water
+    type: rw
+    ability: dex
+    range: 20/30
+    target: one target
+    onhit: >
+     [diceroll 1 4] poison damage and the target must succeed on a [save w/con con] or
+     become poisoned. An affected creature can repeat the saving throw at the end of each
+     of its turns, ending the effect on itself on a success.
+  - name: Slam
+    type: mw
+    ability: dex
+    reach: 5
+    target: one target
+    onhit: "[diceroll 2 6 dex] bludgeoning damage."
+  flavor: A wall of pond scum interspersed with water surges across the lake.
+  description:
+  - header: Lake Hazard
+    text: >
+     Algae blooms dwell in lakes, ponds, rivers, and swamps throughout the land. Since an
+     algae bloom looks exactly like an ordinary mat of pond scum, an infestation is rarely
+     noticed until it is too late.
+  - header: Adaptable
+    text: >
+     Although vulnerable to cold, algae blooms have developed a way to survive the frigid
+     winters of the northern regions: when the weather turns cold, algae blooms enter a
+     state of torpor, protecting them from the worst of the winter cold. However, a torpid
+     algae bloom is much less dangerous than a fully awake one.

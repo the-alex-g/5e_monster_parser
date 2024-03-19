@@ -376,7 +376,7 @@ def format_actions(actions, name, stats, profbonus):
         action_name_dict[action["name"]] = action
     for action_name in sorted(action_name_dict):
         action = action_name_dict[action_name]
-        if action_name in PREBAKED_ABILITIES:
+        if action_name in PREBAKED_ABILITIES and not "effect" in action:
             raw_action = PREBAKED_ABILITIES[action_name]
             raw_action = raw_action.replace("[name]", name.lower())
             action["effect"] = raw_action
@@ -456,8 +456,22 @@ def create_monster(monster, in_group=False):
     monster_string += "\\textbf{" + plainname.upper() + "}" + NEWLINE
     alignment = "unaligned"
     if "alignment" in monster:
-        alignment = monster["alignment"]        
-    monster_string += "\\textit{" + (monster["size"] + " " + monster["type"]).title()
+        alignment = monster["alignment"]
+    if "swarm" in monster:
+        monster_string += "\\textit{" + monster["size"].title() + " Swarm of " + (monster["swarm"] + " " + monster["type"]).title() + "s"
+        swarm_ability = PREBAKED_ABILITIES["Swarm"].replace("[name]", shortname.lower()).replace("[swarmsize]", monster["swarm"].title())
+        if "abilities" in monster:
+            swarm_override = False
+            for ability in monster["abilities"]:
+                if ability["name"] == "Swarm":
+                    swarm_override = True
+                    break
+            if not swarm_override:
+                monster["abilities"].append(swarm_ability)
+        else:
+            monster["abilities"] = [swarm_ability]
+    else:
+        monster_string += "\\textit{" + (monster["size"] + " " + monster["type"]).title()
     if "tags" in monster:
         monster_string += " (" + comma_separate(sorted(monster["tags"])) + ")"
     monster_string +=  ", " + alignment.title() + "}" + NEWLINE
@@ -506,8 +520,7 @@ def create_monster(monster, in_group=False):
 
     monster_string += "\\textbf{Senses} "
     if "senses" in monster:
-        monster_string += comma_separate(sorted(monster["senses"])) + ", "
-    monster_string += "passive Perception "
+        monster_string += comma_separate(sorted(monster["senses"])) + ", passive Perception "
     if "perception" in skill_prof_dict:
         monster_string += str(10 + skill_prof_dict["perception"])
     else:
