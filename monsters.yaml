@@ -692,3 +692,134 @@ monsters:
      winters of the northern regions: when the weather turns cold, algae blooms enter a
      state of torpor, protecting them from the worst of the winter cold. However, a torpid
      algae bloom is much less dangerous than a fully awake one.
+- name: Bloodbough Shambler
+  headername: Shambler, Bloodbough
+  category: Shambler
+  size: huge
+  type: plant
+  ac:
+  - 3
+  - natural armor
+  hd: 19
+  speed:
+   land: 15
+  saves:
+  - str
+  - con
+  immune:
+  - acid
+  - psychic
+  resist:
+  - piercing from non-magical weapons
+  vulnerable:
+  - fire
+  - slashing from magical weapons
+  senses:
+  - tremorsense 120 ft.
+  stats:
+   str: 17
+   dex: 4
+   con: 14
+   int: 1
+   wis: 9
+   cha: 4
+  cr: 4
+  abilities:
+  - name: Flammable Sap
+    effect: >
+     If the bloodbough shambler takes 5 or more fire damage in a single round,
+     it bursts into flames. While burning, it takes [diceroll 4 6] fire damage
+     at the start of each of its turns, its sap shower ability deals an additional
+     [diceroll 2 4] fire damage, and its slam attacks deal an additional
+     [dicroll 1 8] fire damage. The fire is put out if the shambler takes 20 or
+     more cold damage in a single round.
+  - name: Sap Shower
+    effect: >
+     Whenever a creature starts or ends its turn within 20 feet of the
+     bloodbough shambler, it takes [diceroll 1 4] acid damage from dripping sap.
+  - name: Rooted
+  actions:
+  - name: multiattack
+    effect: The bloodbough shambler makes three slam attacks.
+  attacks:
+  - name: Slam
+    type: mw
+    reach: 20
+    ability: str
+    target: one target
+    onhit: "[diceroll 1 8 str] bludgeoning damage plus [diceroll 1 4] acid damage."
+  flavor: Everything about this tree is red---the bark is reddish-brown, the leaves are a dull red, and scarlet sap drips from the boughs.
+  description:
+  - header: Caustic Sap
+    text: >
+     Bloodbough shamblers constantly drip blood-red acidic sap from their branches,
+     killing off all other growth around them. This sap is also highly flammable,
+     so lighting fires near bloodboughs is inadvisable.
+  - header: Edible Nuts
+    text: >
+     Nuts from bloodbough trees are bright red and cashew-shaped, and also highly toxic.
+     Eating a nut raw causes [diceroll 1 6] poison damage and [diceroll 2 4] acid damage.
+     However, cooking the nuts renders them edible, and they are considered a delicacy in many places.
+     The most popular way to serve them is to roast them for a short time, but at a very
+     high temperature, so they acquire some surface charring without turning the entire nut
+     into a lump of charcoal. A single bloodbough tree yields about [diceroll 4 6 20] pounds of nuts,
+     with a pound of nuts being worth about 2 gc. Thick gloves are necessary in order to harvest
+     the nuts without losing digits to the acidic sap.
+- name: Fireroot Shambler
+  headername: Shambler, Fireroot
+  category: Shambler
+  size: large
+  type: plant
+  ac:
+  - 3
+  - natural armor
+  hd: 15
+  cr: 3
+  speed:
+   land: 15
+  stats:
+   str: 17
+   dex: 4
+   con: 14
+   int: 1
+   wis: 9
+   cha: 4
+  saves:
+  - str
+  - con
+  resist:
+  - cold
+  - piercing from non-magical weapons
+  vulnerable:
+  - fire
+  - slashing from magical weapons
+  senses:
+  - tremorsense 120 ft.
+  abilities:
+  - name: Rooted
+  actions:
+  - name: multiattack
+    effect: The fireroot shambler makes three root bulb attacks.
+  attacks:
+  - name: Root Bulb
+    type: mw
+    ability: str
+    reach: 10
+    target: one target
+    onhit: "[diceroll 1 6 str] bludgeoning damage plus 1 fire damage."
+  flavor: An unassuming conifer suddenly lashes out with a thick root, tipped with a glowing orange bulb.
+  description:
+  - header: Heated Root Tips
+    text: >
+     Fireroot trees grow in the far north, where their heat-generating root tips
+     allow them to extract nutrients from the frozen soil. [diceroll 2 4] root bulbs
+     can be harvested from a dead fireroot tree. A root bulb can be used like a club
+     ([diceroll 1 6] bludgeoning damage plus 1 fire damage) and sheds dim light in a
+     5-foot radius. A bulb loses its glow and fire damage after [diceroll 1 4 2] hours.
+  - header: Berries
+    text: >
+     Ripe berries from a fireroot tree are bright, almost glowing orange, and quite tasty.
+     When eaten, they grant the eater cold resistance for [diceroll 2 4] hours. Unripe berries
+     are blue, ice-cold, extremely sour, and if eaten give the eater cold vulnerability for
+     [diceroll 2 4] hours. Ripe berries are a valuable commodity in the northlands, and unripe
+     ones can fetch a high price in southern regions.

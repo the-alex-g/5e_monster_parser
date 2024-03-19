@@ -231,4 +231,5 @@ PREBAKED_ABILITIES = {
     "Earthwalk":"The [name] can walk through unworked earth as if it were air, leaving no trace of its passage.",
     "Siege Monster":"The [name] deals double damage to structures.",
     "Swarm":"The [name] can fit through any gap large enough for a [swarmsize] creature, cannot regain hit points or gain temporary hit points, takes twice as much damage from area-of-effect sources, can enter the spaces of other creatures, and other creatures can enter the swarm's space.",
+    "Rooted":"The [name] has advantage on saving throws made to resist being moved or knocked prone.",
 }
