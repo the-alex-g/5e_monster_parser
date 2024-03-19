@@ -223,4 +223,6 @@ PREBAKED_ABILITIES = {
     "Legendary Resistance":"If the [name] fails a saving throw, it can choose to succeed instead.",
     "Avoidance":"If the [name] is subject to an effect that allows it to make a Dexterity saving throw to take only half damage, it instead takes no damage if it succeeds on the saving throw, and only half damage if it fails.",
     "Frightful Presence":"Each creature of the [possessive [name]] choice that is within 120 feet and aware of it must succeed on a [save w/wis cha] or become frightened for 1 minute. A creature repeats the saving throw at the end of each of its turns, ending the effect on itself on a success. If the creature's saving throw is successful or the effect ends for it, the creature is immune to the [possessive [name]] Frightful Presence for the next 24 hours.",
+    "Earthwalk":"The [name] can walk through unworked earth as if it were air, leaving no trace of its passage.",
+    "Siege Monster":"The [name] deals double damage to structures.",
 }

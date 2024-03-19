@@ -70,14 +70,14 @@ monsters:
     reach: 10
     target: two targets
     onhit: >
-     [diceroll 4 4 dex] slashing damage plus [diceroll 1 10 0] necrotic damage.
+     [diceroll 4 4 dex] slashing damage plus [diceroll 1 10] necrotic damage.
      The beholder heals an amount equal to the amount of necrotic damage dealt.
   - name: Maw
     type: mw
     ability: dex
     reach: 5
     target: one target
-    onhit: "[diceroll 4 10 dex] slashing damage plus [diceroll 2 6 0] acid damage."
+    onhit: "[diceroll 4 10 dex] slashing damage plus [diceroll 2 6] acid damage."
   - name: Eye Bites
     type: mw
     ability: dex
@@ -91,11 +91,11 @@ monsters:
     target: two targets
     onhit: >
      [diceroll 4 4 dex] slashing damage
-     plus [diceroll 1 6 0] poison damage
-     plus [diceroll 1 4 0] necrotic damage,
+     plus [diceroll 1 6] poison damage
+     plus [diceroll 1 4] necrotic damage,
      and the target must succeed on a [save w/con con] or be poisoned.
-     While poisoned in this way, a creature takes [diceroll 1 4 0] poison damage
-     plus [diceroll 1 4 0] necrotic damage at the start of each of their turns, and cannot cast spells.
+     While poisoned in this way, a creature takes [diceroll 1 4] poison damage
+     plus [diceroll 1 4] necrotic damage at the start of each of their turns, and cannot cast spells.
      An affected creature can repeat the saving throw at the end of each of their turns,
      ending the effect on itself on a success.
   habitat:
@@ -242,7 +242,7 @@ monsters:
     type: rw
     ability: dex
     bonus: 2
-    reach: 30/60
+    range: 30/60
     target: one target
     onhit: "[diceroll 1 4 dex] piercing damage"
   - name: Dagger
@@ -429,7 +429,7 @@ monsters:
   - name: Electric Current
     effect: >
      Any creature that touches the zinc dragon or hits it with a metal
-     melee weapon suffers [diceroll 2 12 0] lightning damage. This effect
+     melee weapon suffers [diceroll 2 12] lightning damage. This effect
      extends to include any conductive material that the dragon is touching.
      For example, if the zinc dragon was in contact with a pool of water,
      and someone jumped into the water, they would be electrocuted. The
@@ -440,7 +440,7 @@ monsters:
     effect: >
      At the start of each turn that the dragon is in contact with a significant
      amount of water (submerged, in a rainstorm, was hit with a barrel of water
-     fired from a catapult), it takes [diceroll 6 6 0] necrotic damage.
+     fired from a catapult), it takes [diceroll 6 6] necrotic damage.
   actions:
   - name: multiattack
     effect: >
@@ -450,7 +450,7 @@ monsters:
   - name: Lightning Breath (Recharge 5-6)
     effect: >
      The dragon spits a 60-foot-long, 5-foot-wide line of crackling electricity.
-     All targets in the area take [diceroll 13 12 0] lightning damage, or half
+     All targets in the area take [diceroll 13 12] lightning damage, or half
      as much with a successful [save w/dex con] saving throw.
   attacks:
   - name: Bite
@@ -459,14 +459,14 @@ monsters:
     reach: 15
     target: one target
     onhit: >
-     [diceroll 2 8 str] piercing damage plus [diceroll 2 12 0] lightning damage.
+     [diceroll 2 8 str] piercing damage plus [diceroll 2 12] lightning damage.
   - name: Claw
     type: mw
     ability: str
     reach: 10
     target: one target
     onhit: >
-     [diceroll 2 6 str] slashing damage plus [diceroll 2 12 0] lightning damage.
+     [diceroll 2 6 str] slashing damage plus [diceroll 2 12] lightning damage.
   legendary-actions:
   - name: Flight
     effect: The dragon moves up to its flying speed.
@@ -476,10 +476,128 @@ monsters:
     cost: 3
     effect: >
      The dragon dives at least 100 feet straight towards a target and makes a
-     bite attack. This attack deals an additional [diceroll 3 8 0] piercing
+     bite attack. This attack deals an additional [diceroll 3 8] piercing
      damage on a hit.
   reactions:
   - name: Electric Transfer
     effect: >
      When a creature within 60 feet of the dragon deals lightning damage,
-     the dragon can deal [diceroll 2 12 0] to that creature.
+     the dragon can deal [diceroll 2 12] to that creature.
+  habitat:
+  - desert
+# ALPINE SPIRIT ########################################################
+- name: Alpine Spirit
+  size: large
+  type: elemental
+  alignment: lawful neutral
+  hd: 9
+  speed:
+   land: 30
+   climb: 30
+  ac:
+  - 5
+  - natural armor
+  stats:
+   str: 25
+   dex: 11
+   con: 24
+   int: 10
+   wis: 16
+   cha: 12
+  saves:
+  - str
+  - con
+  - wis
+  resist:
+  - poison
+  immune:
+  - acid
+  - fire
+  - bludgeoning, piercing, and slashing from non-magical weapons
+  senses:
+  - tremorsense 1/2 mile
+  languages:
+  - dwarvish
+  - elvish
+  - terran
+  cr: 10
+  abilities:
+  - name: Aegis of Fire
+    effect: >
+     Between sunrise and noon, the following effects are in place:
+     All creatures that start their turn within 20 feet of the alpine
+     spirit must make a [save w/con con] or suffer [diceroll 2 4] fire
+     damage; The alpine spirit cannot benefit from the hidden or invisible
+     conditions; and at the start of each of its turns, the alpine spirit
+     regains [diceroll 2 4] hit points.
+  - name: Aegis of Stone
+    effect: >
+     Between sunset and sunrise, the following effects are in place: The
+     ground within 60 feet of the alpine spirit is difficult terrain; the
+     alpine spirit gets +2 AC; and at the start of each of the alpine spirit’s
+     turns, it gains [diceroll 3 4] temporary hit points that last until the
+     start of its next turn.
+  - name: Aegis of Thunder
+    effect: >
+      Between noon and sunset, the following effects are in place: Non-magical
+      ranged attacks made against the alpine spirit have disadvantage; the area
+      within 60 feet of the alpine spirit is lightly obscured; and whenever a
+      creature within 60 feet of the alpine spirit would suffer fire damage,
+      that creature takes [diceroll 1 4] fewer points of damage.
+  - name: Earthwalk
+  - name: Siege Monster
+  actions:
+  - name: multiattack
+    effect: >
+     If Aegis of Fire is active, the alpine spirit makes one smash attack and
+     two scorch attacks; if Aegis of Stone is active, the alpine spirit makes two
+     smash attacks; and if Aegis of Thunder is active, the alpine spirit makes
+     one smash attack and one lightning bolt attack. The alpine spirit may always
+     make a throw boulder attack instead of a smash attack.
+  attacks:
+  - name: Lightning Bolt
+    type: rs
+    ability: wis
+    range: 120
+    target: one target
+    onhit: >
+     [diceroll 4 12] lightning damage plus [diceroll 2 6] thunder damage.
+    special: This attack can only be made if Aegis of Thunder is active.
+  - name: Scorch
+    type: rs
+    ability: wis
+    range: 60
+    target: one target
+    onhit: "[diceroll 4 6] fire damage."
+    special: This attack can only be made if Aegis of Fire is active.
+  - name: Smash
+    type: mw
+    ability: str
+    reach: 10
+    target: one target
+    onhit: "[diceroll 6 6 str] bludgeoning damage."
+  - name: Throw Boulder
+    type: rw
+    ability: str
+    range: 60/90
+    target: one target
+    onhit: "[diceroll 4 6 str] bludgeoning damage."
+  flavor: A towering stone figure looms against a fiery dawn.
+  description:
+  - header: One with the Mountains
+    text: >
+     An alpine spirit’s appearance and powers shift throughout the day,
+     even as the mountain’s do. In the morning, when the mountains are
+     bathed in crimson light, the spirit is wreathed in flames. In the
+     afternoon, when the mountains are crowned by storm clouds, so is
+     the alpine spirit. At night, when the dark mountains blend into the starry
+     sky, the alpine spirit blends with the mountains and draws further power
+     from its immovable stone.
+  - header: Caretakers of the Heights
+    text: >
+     Alpine spirits guard the mountain they dwell in from those who would disrespect
+     it. Occasionally, dwarves who delve too deep or too greedily awaken the wrath
+     of an alpine spirit. Alpine spirits also ward off flying creatures who would
+     make their lairs on mountain peaks.
+  habitat:
+  - mountain

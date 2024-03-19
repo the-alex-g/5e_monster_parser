@@ -48,15 +48,18 @@ def cr_to_string(cr):
         return cr
 
 
-def diceroll(num, size, bonus):
-    total = floor(num * (size / 2 + 0.5)) + bonus
+def diceroll(num, size, *bonuses):
+    total_bonus = 0
+    for bonus in bonuses:
+        total_bonus += bonus
+    total = floor(num * (size / 2 + 0.5)) + total_bonus
     string = str(total) + " (" + str(num) + "d" + str(size)
     if bonus != 0:
-        if bonus > 0:
+        if total_bonus > 0:
             string += " + "
         else:
             string += " - "
-        string += str(bonus)
+        string += str(abs(total_bonus))
     return string + ")"
 
 
@@ -243,13 +246,13 @@ def create_attack(attack, stats, profbonus):
         attack_string += format_bonus(bonus) + " to hit, reach " + str(attack["reach"]) + " ft."
     elif attack["type"] == "rw":
         attack_string += "Ranged Weapon Attack:} "
-        attack_string += format_bonus(bonus) + " to hit, range " + str(attack["reach"])
+        attack_string += format_bonus(bonus) + " to hit, range " + str(attack["range"] + " ft.")
     elif attack["type"] == "ms":
         attack_string += "Melee Spell Attack:} "
         attack_string += format_bonus(bonus) + " to hit, reach " + str(attack["reach"]) + " ft."
     elif attack["type"] == "rw":
         attack_string += "Ranged Spell Attack:} "
-        attack_string += format_bonus(bonus) + " to hit, range " + str(attack["reach"])
+        attack_string += format_bonus(bonus) + " to hit, range " + str(attack["range"] + " ft.")
         
     attack_string += ", " + attack["target"] + "." + NEWLINE + "\\textit{Hit:} " + resolve_functions(attack["onhit"], stats, profbonus)
     if "special" in attack:
