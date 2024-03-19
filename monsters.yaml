@@ -62,7 +62,7 @@ monsters:
   cr: 13
   abilities:
   - name: Antimagic Aura
-    effect: The area within 15 feet of the beholder is under the effect of an \textit{Antimagic Field}
+    effect: The area within 15 feet of the beholder is under the effect of an [spell Antimagic Field].
   attacks:
   - name: Draining Bites
     type: mw

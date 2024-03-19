@@ -2,6 +2,7 @@ import yaml
 from tables import *
 from math import floor
 
+MULTIATTACK_SPLICE_KEY = "\n%multiattack-splice-key\n"
 NEWLINE = "\\\\"
 LINEBREAK = "\\bigskip"
 PAGEBREAK = "\n\\clearpage\n"
@@ -14,6 +15,10 @@ PREAMBLE = """\\documentclass[letterpaper, 12pt, twocolumn]{book}
 \\begin{document}\\RaggedRight\\tableofcontents"""
 CONCLUSION = """\\end{document}"""
 SOURCE_YAML_NAME = "monsters"
+
+monsters_by_habitat = {}
+monsters_by_type = {}
+monsters_by_cr = {}
 
 
 def entry(header, body):
@@ -88,13 +93,21 @@ def ability_scores_to_bonuses(stats):
     return bonusdict
 
 
-def comma_separate(array):
+def separate(array, spacer):
     string = ""
     for item in array:
         if string != "":
-            string += ", "
+            string += spacer
         string += str(item)
     return string
+
+
+def comma_separate(array):
+    return separate(array, ",")
+
+
+def spell(*spellname):
+    return "\\textit{" + separate(spellname, " ") + "}"
 
 
 def skill_profs(skill_prof_list, stats, profbonus):
@@ -262,19 +275,19 @@ def spellcasting(slot_type, level, spells, stats, profbonus, name):
     bonus = stats[SPELLCASTING_ABILITY[slot_type]] + profbonus
     string += " (spell save DC " + str(8 + bonus) + ", spell attack bonus " + format_bonus(bonus) + "). "
     string += "The " + name.lower() + " has the following spells prepared:" + NEWLINE
-    string += "\\textbf{Cantrips:} \\textit{" + comma_separate(sorted(spells[0])) + "}"
+    string += "\\textbf{Cantrips:} " + spell(comma_separate(sorted(spells[0])))
     slots = SPELL_SLOTS[slot_type][level - 1]
     for i in range(0, len(slots)):
         slot_num = slots[i]
         string += NEWLINE + "\\textbf{" + format_index(i + 1) + " Level"
         if slot_num != 0:
             string += " (" + str(slot_num) + " slots)"
-        string += ":} \\textit{"
-        string += comma_separate(sorted(spells[i + 1])) + "}"
+        string += ":} " + spell(comma_separate(sorted(spells[i + 1])))
     return string + "}"
 
 
-def possessive(name):
+def possessive(*name):
+    name = separate(name, " ")
     if name[-1] == "s":
         return name + "'"
     else:
@@ -288,8 +301,7 @@ def innate_spellcasting(ability, spells, stats, profbonus, name):
     string += " (spell save DC " + str(8 + bonus) + ", spell attack bonus " + format_bonus(bonus) + "). "
     string += "The " + name.lower() + " can cast the following spells, requiring no material components:"
     for category in spells:
-        string += NEWLINE + "\\textbf{" + category["frequency"].title() + ":} \\textit{"
-        string += comma_separate(sorted(category["spells"])) + "}"
+        string += NEWLINE + "\\textbf{" + category["frequency"].title() + ":} " + spell(comma_separate(sorted(category["spells"])))
     return string + "}"
 
 
@@ -392,29 +404,40 @@ legendary actions at the start of its turn.""" + NEWLINE + LINEBREAK
 def reactions(actions, name, stats, profbonus):
     string = "\\textbf{Reactions}" + NEWLINE + "\\halfline"
     return string + format_actions(actions, name, stats, profbonus)
-        
+
+
+def monster_headername(monster):
+    if "headername" in monster:
+        return monster["headername"]
+    else:
+        return monster["name"]
+
+
+def monster_shortname(monster):
+    if "shortname" in monster:
+        return monster["shortname"]
+    else:
+        return monster["name"]
+
 
 def create_monster(monster, in_group=False):
     monster_string = ""
+    headername = monster_headername(monster)
+    shortname = monster_shortname(monster)
+    plainname = monster["name"]
     if not in_group:
-        monster_string = "\\section*{"
-        header_name = ""
-        if "headername" in monster:
-            monster_string += monster["headername"] + "}"
-            header_name = monster["headername"]
-        else:
-            monster_string += monster["name"] + "}"
-            header_name = monster["name"]
-        monster_string += "\\markboth{" + header_name + "}{" + header_name + "}"
-        monster_string += "\\addcontentsline{toc}{subsection}{" + header_name + "}"
+        monster_string = "\\section*{" + headername + "}"
+        monster_string += "\\markboth{" + headername + "}{" + headername + "}"
+        monster_string += "\\addcontentsline{toc}{subsection}{" + headername + "}"
+    monster_string += "\\label{" + headername + "}"
 
     if "flavor" in monster:
         monster_string += "\\textit{" + monster["flavor"] + "}" + NEWLINE + LINEBREAK
 
     if "description" in monster:
-        monster_string += description(monster["description"], monster["type"], monster["name"]) + LINEBREAK
+        monster_string += description(monster["description"], monster["type"], plainname) + LINEBREAK
 
-    monster_string += "\\textbf{" + monster["name"].upper() + "}" + NEWLINE
+    monster_string += "\\textbf{" + plainname.upper() + "}" + NEWLINE
     alignment = "unaligned"
     if "alignment" in monster:
         alignment = monster["alignment"]        
@@ -485,20 +508,20 @@ def create_monster(monster, in_group=False):
     monster_string += "\\textbf{Challenge} " + cr(monster["cr"]) + NEWLINE + LINEBREAK
 
     if "abilities" in monster:
-        monster_string += abilities(monster["abilities"], bonuses, profbonus, monster["name"])
+        monster_string += abilities(monster["abilities"], bonuses, profbonus, shortname)
 
     if "innate-spellcasting" in monster:
         ability = monster["innate-spellcasting"]
-        monster_string += innate_spellcasting(ability["ability"], ability["spells"], bonuses, profbonus, monster["name"])
+        monster_string += innate_spellcasting(ability["ability"], ability["spells"], bonuses, profbonus, shortname)
         monster_string += LINEBREAK
     
     if "spellcasting" in monster:
         ability = monster["spellcasting"]
-        monster_string += spellcasting(ability["type"], ability["level"], ability["spells"], bonuses, profbonus, monster["name"])
+        monster_string += spellcasting(ability["type"], ability["level"], ability["spells"], bonuses, profbonus, shortname)
         monster_string += LINEBREAK
     
     if "attacks" in monster or "actions" in monster:
-        monster_string += "\\textbf{Actions}" + NEWLINE + "\\halfline\n%mabp\n"
+        monster_string += "\\textbf{Actions}" + NEWLINE + "\\halfline" + MULTIATTACK_SPLICE_KEY
 
     if "attacks" in monster:
         attack_name_dict = {}
@@ -514,24 +537,47 @@ def create_monster(monster, in_group=False):
                 action_name_dict[action["name"]] = action
             else:
                 monster_string = monster_string.replace(
-                    "%mabp",
+                    MULTIATTACK_SPLICE_KEY,
                     entry("Multiattack", resolve_functions(action["effect"], bonuses, profbonus)) + LINEBREAK
                 )
         for action_name in sorted(action_name_dict):
             action = action_name_dict[action_name]
             if action_name in PREBAKED_ABILITIES:
                 raw_action = PREBAKED_ABILITIES[action_name]
-                raw_action = raw_action.replace("[name]", monster["name"].lower())
+                raw_action = raw_action.replace("[name]", shortname.lower())
                 action["effect"] = raw_action
             monster_string += entry(action["name"], resolve_functions(action["effect"], bonuses, profbonus)) + LINEBREAK
 
     if "reactions" in monster:
-        monster_string += reactions(monster["reactions"], monster["name"], bonuses, profbonus) + LINEBREAK
+        monster_string += reactions(monster["reactions"], shortname, bonuses, profbonus) + LINEBREAK
     
     if "legendary-actions" in monster:
-        monster_string += legendary_actions(monster["legendary-actions"], monster["name"], bonuses, profbonus)
+        monster_string += legendary_actions(monster["legendary-actions"], shortname, bonuses, profbonus)
     
     return monster_string
+
+
+def add_to_appendices(monster):
+    if "habitat" in monster:
+        for region in monster["habitat"]:
+            if region in monsters_by_habitat:
+                monsters_by_habitat[region].append(monstername)
+            else:
+                monsters_by_habitat[region] = [monstername]
+    elif "any" in monsters_by_habitat:
+        monsters_by_habitat["any"].append(monstername)
+    else:
+        monsters_by_habitat["any"] = [monstername]
+
+    if monster["type"] in monsters_by_type:
+        monsters_by_type[monster["type"]].append(monstername)
+    else:
+        monsters_by_type[monster["type"]] = [monstername]
+    monster_cr_string = "CR " + str(monster["cr"])
+    if monster_cr_string in monsters_by_cr:
+        monsters_by_cr[monster_cr_string].append(monstername)
+    else:
+        monsters_by_cr[monster_cr_string] = [monstername]
 
 
 def resolve_group(group, monsters):
@@ -552,14 +598,19 @@ def resolve_group(group, monsters):
     for monster in monsters:
         print(monster["name"])
         group_string += create_monster(monster, in_group=True) + LINEBREAK
+        add_to_appendices(monster)
     
     return group_string
 
 
-def create_appendix_table():
-    string = "\\begin{tabular*}{\\columnwidth}{@{\\extracolsep{\\fill}} clc}
-    string += "\\textbf{CR} & \\textbf{Name} & \\textbf{Page} \\
-    return string + "\\end{tabular*}"
+def create_appendix_table(table):
+    string = ""
+    for section in table:
+        string += "\\textbf{" + section + "}" + NEWLINE + "\\begin{tabular*}{\\columnwidth}{@{\\extracolsep{\\fill}} lc}"
+        for entry in table[section]:
+            string += NEWLINE + entry + "&\\pageref{" + entry + "}"
+        string += "\\end{tabular*}"
+    return string
 
 
 def create_doc(filedict):
@@ -567,20 +618,13 @@ def create_doc(filedict):
     latexfile.write(PREAMBLE)
 
     monster_name_dict = {}
-    monsters_by_habitat = {}
-    monsters_by_type = {}
-    monsters_by_cr = {}
     if "groups" in filedict:
         for group in filedict["groups"]:
             monster_name_dict[group["name"]] = [group]
     for monster in filedict["monsters"]:
         if check_missing_fields(monster):
             continue
-        monstername = ""
-        if "headername" in monster:
-            monstername = monster["headername"]
-        else:
-            monstername = monster["name"]
+        monstername = monster_headername(monster)
         if "group" in monster:
             monster_name_dict[monster["group"]].append(monster)
         else:
@@ -593,27 +637,12 @@ def create_doc(filedict):
             continue
         print(monster_name)
         monster = monster_name_dict[monster_name]
-        if "habitat" in monster:
-            for region in monster["habitat"]:
-                if region in monsters_by_habitat:
-                    monsters_by_habitat[region].append(monstername)
-                else:
-                    monsters_by_habitat[region] = [monstername]
-        elif "any" in monsters_by_habitat:
-            monsters_by_habitat["any"].append(monstername)
-        else:
-            monsters_by_habitat["any"] = [monstername]
-
-        if monster["type"] in monsters_by_type:
-            monsters_by_type[monster["type"]].append(monstername)
-        else:
-            monsters_by_type[monster["type"]] = [monstername]
-        if monster["cr"] in monsters_by_cr:
-            monsters_by_cr[monster["cr"]].append(monstername)
-        else:
-            monsters_by_cr[monster["cr"]] = [monstername]
+        add_to_appendices(monster)
         latexfile.write(create_monster(monster) + PAGEBREAK)
-
+    
+    latexfile.write(create_appendix_table(monsters_by_cr) + PAGEBREAK)
+    latexfile.write(create_appendix_table(monsters_by_habitat) + PAGEBREAK)
+    latexfile.write(create_appendix_table(monsters_by_type) + PAGEBREAK)
     latexfile.write(CONCLUSION)
     latexfile.close()
 
