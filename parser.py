@@ -356,20 +356,16 @@ def format_actions(actions, name, stats, profbonus):
         action_name_dict[action["name"]] = action
     for action_name in sorted(action_name_dict):
         action = action_name_dict[action_name]
-        action_string += "\\entry{" + action["name"]
-        if "uses" in action:
-            action_string += " (" + action["uses"].title() + ")"
-        # the "cost" clause is for legendary actions
-        elif "cost" in action:
-            action_string += " (Costs " + str(action["cost"]) + " Actions)"
-        action_string += "}{"
         if action_name in PREBAKED_ABILITIES:
             raw_action = PREBAKED_ABILITIES[action_name]
             raw_action = raw_action.replace("[name]", name.lower())
-            action_string += raw_action + "}"
-        else:
-            action_string += resolve_functions(action["effect"], stats, profbonus) + "}"
-        action_string += LINEBREAK
+            action["effect"] = raw_action
+        if "uses" in action:
+            action_name += " (" + action["uses"].title() + ")"
+        # the "cost" clause is for legendary actions
+        elif "cost" in action:
+            action_name += " (Costs " + str(action["cost"]) + " Actions)"
+        action_string += entry(action_name, resolve_functions(action["effect"], stats, profbonus)) + LINEBREAK
     return action_string
 
 
