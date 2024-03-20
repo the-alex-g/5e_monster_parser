@@ -76,7 +76,10 @@ def format_index(index):
 
 def save(ability, abilitybonus, profbonus):
     dc = 8 + abilitybonus + profbonus
-    return "DC " + str(dc) + " " + ABILITIES_SPELLOUT[ability[2:]] + " saving throw"
+    ability_name = ""
+    if ability != "w/none":
+        ability_name = ABILITIES_SPELLOUT[ability[2:]]
+    return "DC " + str(dc) + " " + ability_name + " saving throw"
 
 
 def hitpoints(num, size, conbonus):
@@ -127,6 +130,10 @@ def comma_separate(array):
 
 def spell(*spellname):
     return "\\textit{" + separate(spellname, " ") + "}"
+
+
+def monster(*monstername):
+    return "\\textbf{" + separate(monstername, " ") + "}"
 
 
 def skill_profs(skill_prof_list, stats, profbonus):
