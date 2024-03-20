@@ -662,9 +662,18 @@ def resolve_group(group, monsters):
                 if type(group[field]) == list:
                     for item in group[field]:
                         if field in monster:
+                            if type(item) == list:
+                                if "n/" + item["name"] in monster["field"]:
+                                    monster["field"].remove("n/" + item["name"])
+                                    continue
+                            elif type(item) == str:
+                                if "n/" + item in monster["field"]:
+                                    monster["field"].remove("n/" + item)
+                                    continue
                             monster[field].append(item)
                         else:
                             monster[field] = [item]
+
                 elif type(group[field]) == str:
                     if not field in monster:
                         monster[field] = group[field]

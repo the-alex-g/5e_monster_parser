@@ -1074,7 +1074,7 @@ monsters:
      The conduit can also destroy any lesser amnio within 60 feet of it at any time to immediately gain 2 memory points.
   - name: Memory Regeneration
     effect: The conduit regains [diceroll 1 4] memory points at the start of each of its turns.
-  acions:
+  actions:
   - name: Multiattack
     effect: The conduit makes three claw attacks and uses Memory Drain once.
   attacks:
@@ -1121,7 +1121,7 @@ monsters:
    int: 15
    wis: 11
    cha: 12
-  acions:
+  actions:
   - name: Multiattack
     effect: The eraser makes two claw attacks, one spit acid attack, and uses Memory Drain once.
   - name: Memory Wipe
@@ -1177,7 +1177,7 @@ monsters:
    int: 10
    wis: 10
    cha: 11
-  acions:
+  actions:
   - name: Multiattack
     effect: The fragment makes one claw attack and uses Memory Drain once.
   attacks:
@@ -1236,7 +1236,7 @@ monsters:
      to notice behavioral differences as well. The infiltrator reverts to its natural form when it dies. While mimicking a creature,
      the infiltrator uses its own stats, but has access to all weapon attacks that creature would normally have, and can understand
      all languages that the mimicked creature could speak.
-  acions:
+  actions:
   - name: Multiattack
     effect: The inflitrator makes two claw attacks (or other weapon attacks if shapeshifted) and uses Memory Drain once.
   attacks:
@@ -1285,7 +1285,7 @@ monsters:
    int: 10
    wis: 11
    cha: 11
-  acions:
+  actions:
   - name: Multiattack
     effect: The scourge makes two claw attacks (or other weapon attacks if shapeshifted) and uses Memory Drain once.
   - name: Acidify
@@ -1305,3 +1305,58 @@ monsters:
     range: 40/60
     target: one target
     onhit: "[diceroll 1 4 dex] acid damage, and the target takes [diceroll 1 4] acid damage at the end of their next turn."
+# NIGHTMARE AMNIO ####################################################################
+- name: Nightmare Amnio
+  headername: Amnio, Nightmare
+  category: Amnio
+  size: large
+  ac:
+  - 3
+  - natural armor
+  hd: 11
+  cr: 5
+  speed:
+   land: 40
+   climb: 35
+  languages:
+  - telepathy 60 ft
+  stats:
+   str: 17
+   dex: 13
+   con: 18
+   int: 17
+   wis: 10
+   cha: 13
+  resist:
+  - piercing
+  abilities:
+  - n/Memory Pool
+  - name: Acidic Coating
+    effect: Any creature that touches the nightmare or hits it with an unarmed attack suffers [diceroll 1 4] acid damage.
+  - name: Vile Presence
+    effect: >
+     At the start of the nightmare’s turn, all creatures within 40 ft that can see it must make a [save w/con con].
+     If they fail, they are poisoned and frightened of the nightmare until the start of the nightmare’s next turn.
+     If a creature succeeds on the saving throw, they are immune to the fear (but not the poison) inflicted by this
+     effect for twelve hours.
+  actions:
+  - name: Multiattack
+    effect: The nightmare makes three claw attacks.
+  - n/Memory Drain
+  attacks:
+  - name: Claw
+    type: mw
+    reach: 10
+    ability: str
+    target: one target
+    onhit: "[diceroll 1 8 str] slashing damage plus [diceroll 2 4] acid damage."
+  flavor: This nightmarish creature is completely covered in sticky black acid.
+  description:
+  - header: Shock Troops
+    text: >
+     Nightmares are the elite soldiers of the amnio armies, serving as shock troops and bodyguards for the conduits.
+     They are also quite intelligent, and often command swarms of fragments and scourges in combat.
+  - header: Destroyers of the Flesh
+    text: >
+     Uniquely among amnio, nightmares have no ability to destroy their enemies’ intellect; instead,
+     they specialize in annihilating their bodies.
