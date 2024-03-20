@@ -54,7 +54,7 @@ def diceroll(num, size, *bonuses):
         total_bonus += bonus
     total = floor(num * (size / 2 + 0.5)) + total_bonus
     string = str(total) + " (" + str(num) + "d" + str(size)
-    if bonus != 0:
+    if total_bonus != 0:
         if total_bonus > 0:
             string += " + "
         else:
@@ -122,7 +122,7 @@ def separate(array, spacer):
 
 
 def comma_separate(array):
-    return separate(array, ",")
+    return separate(array, ", ")
 
 
 def spell(*spellname):
@@ -246,13 +246,15 @@ def create_attack(attack, stats, profbonus):
         attack_string += format_bonus(bonus) + " to hit, reach " + str(attack["reach"]) + " ft."
     elif attack["type"] == "rw":
         attack_string += "Ranged Weapon Attack:} "
-        attack_string += format_bonus(bonus) + " to hit, range " + str(attack["range"] + " ft.")
+        attack_string += format_bonus(bonus) + " to hit, range " + str(attack["range"]) + " ft."
     elif attack["type"] == "ms":
         attack_string += "Melee Spell Attack:} "
         attack_string += format_bonus(bonus) + " to hit, reach " + str(attack["reach"]) + " ft."
-    elif attack["type"] == "rw":
+    elif attack["type"] == "rs":
         attack_string += "Ranged Spell Attack:} "
-        attack_string += format_bonus(bonus) + " to hit, range " + str(attack["range"] + " ft.")
+        attack_string += format_bonus(bonus) + " to hit, range " + str(attack["range"]) + " ft."
+    else:
+        print("ERROR: Unknown attack type \"" + attack["type"] + "\"")
         
     attack_string += ", " + attack["target"] + "." + NEWLINE + "\\textit{Hit:} " + resolve_functions(attack["onhit"], stats, profbonus)
     if "special" in attack:
@@ -278,7 +280,7 @@ def dmg_attributes(attributes):
 def cond_immunities(immunities, creature_type):
     default_immunities = []
     if creature_type in DEFAULT_IMMUNITIES:
-        default_immunities = DEFAULT_IMMUNITIES[creature_type]
+        default_immunities = DEFAULT_IMMUNITIES[creature_type].copy()
     for immunity in immunities:
         if immunity[0:1] == "n/":
             if immunity[2:] in default_immunities:
@@ -396,9 +398,9 @@ def abilities(abilities, stats, profbonus, name):
 def description(descriptions, monster_type, name):
     string = ""
     for description in descriptions:
-        string += "\\entry{" + description["header"] + "}{" + description["text"] + "}"
+        string += entry(description["header"], description["text"])
     if monster_type in NATURES:
-        description = NATURES[monster_type]
+        description = NATURES[monster_type].copy()
         description["text"] = description["text"].replace("[name]", name.lower())
         string += entry(description["header"], description["text"])
     return string
@@ -467,7 +469,7 @@ def create_monster(monster, in_group=False):
                     swarm_override = True
                     break
             if not swarm_override:
-                monster["abilities"].append(swarm_ability)
+                monster["abilities"].append({"name":"Swarm", "effect":swarm_ability})
         else:
             monster["abilities"] = [swarm_ability]
     else:
@@ -611,7 +613,9 @@ def add_to_appendices(monster):
 
 
 def resolve_group(group, monsters):
-    group_string = "\\section*{" + group["name"] + "}\\markboth{" + group["name"] + "}{" + group["name"] + "}"
+    group_string = "\\section*{" + group["name"] + "}"
+    if group["type"] == "group":
+        group_string += "\\markboth{" + group["name"] + "}{" + group["name"] + "}"
     group_string += "\\addcontentsline{toc}{subsection}{" + group["name"] + "}"
     if "flavor" in group:
         group_string += "\\textit{" + group["flavor"] + "}" + NEWLINE + LINEBREAK
@@ -625,9 +629,25 @@ def resolve_group(group, monsters):
             group_shortname = group["shortname"]
         group_string += description(group["description"], group_type, group_shortname) + LINEBREAK
 
+    monster_name_dict = {}
     for monster in monsters:
+        monster_name_dict[monster_headername(monster)] = monster
+    monsters_to_iterate = monster_name_dict
+    if "sorttype" in group:
+        if group["sorttype"] == "alphabetical":
+            monsters_to_iterate = sorted(monster_name_dict)
+    for monster_name in monsters_to_iterate:
+        monster = monster_name_dict[monster_name]
         print(monster["name"])
-        group_string += create_monster(monster, in_group=True) + LINEBREAK
+        if "abilities" in group:
+            for ability in group["abilities"]:
+                if "abilities" in monster:
+                    monster["abilities"].append(ability)
+                else:
+                    monster["abilities"] = [ability]
+        group_string += create_monster(monster, in_group=group["type"]=="group") + LINEBREAK
+        if group["type"] == "category":
+            group_string += PAGEBREAK
         add_to_appendices(monster)
     
     return group_string
@@ -654,13 +674,20 @@ def create_doc(filedict):
     monster_name_dict = {}
     if "groups" in filedict:
         for group in filedict["groups"]:
+            group["type"] = "group"
             monster_name_dict[group["name"]] = [group]
+    if "categories" in filedict:
+        for category in filedict["categories"]:
+            category["type"] = "category"
+            monster_name_dict[category["name"]] = [category]
     for monster in filedict["monsters"]:
         if check_missing_fields(monster):
             continue
         monstername = monster_headername(monster)
         if "group" in monster:
             monster_name_dict[monster["group"]].append(monster)
+        elif "category" in monster:
+            monster_name_dict[monster["category"]].append(monster)
         else:
             monster_name_dict[monstername] = monster
     

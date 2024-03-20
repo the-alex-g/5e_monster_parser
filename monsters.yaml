@@ -2,6 +2,7 @@
 groups:
 - name: Dragon, Zinc
   shortname: dragon
+  sorttype: listing order
   type: dragon
   flavor: This dragon’s brilliant silver scales practically glow in the blazing desert sun as it swoops overhead.
   description:
@@ -26,6 +27,14 @@ groups:
      the fact that any large amount of water sears their scales
      like acid. They go to great lengths to ensure that no one
      brings water into their domain.
+categories:
+- name: Shambler
+  sorttype: alphabetical
+  description:
+  - header: FOOPANTS
+    text: lorem ipsum x1000
+  abilities:
+  - name: Rooted
 monsters:
 # NULL BEHOLDER ########################################################################################################
 - name: Null Beholder
@@ -692,6 +701,8 @@ monsters:
      winters of the northern regions: when the weather turns cold, algae blooms enter a
      state of torpor, protecting them from the worst of the winter cold. However, a torpid
      algae bloom is much less dangerous than a fully awake one.
+  habitat:
+  - aquatic
 - name: Bloodbough Shambler
   headername: Shambler, Bloodbough
   category: Shambler
@@ -731,13 +742,12 @@ monsters:
      it bursts into flames. While burning, it takes [diceroll 4 6] fire damage
      at the start of each of its turns, its sap shower ability deals an additional
      [diceroll 2 4] fire damage, and its slam attacks deal an additional
-     [dicroll 1 8] fire damage. The fire is put out if the shambler takes 20 or
+     [diceroll 1 8] fire damage. The fire is put out if the shambler takes 20 or
      more cold damage in a single round.
   - name: Sap Shower
     effect: >
      Whenever a creature starts or ends its turn within 20 feet of the
      bloodbough shambler, it takes [diceroll 1 4] acid damage from dripping sap.
-  - name: Rooted
   actions:
   - name: multiattack
     effect: The bloodbough shambler makes three slam attacks.
@@ -758,13 +768,15 @@ monsters:
   - header: Edible Nuts
     text: >
      Nuts from bloodbough trees are bright red and cashew-shaped, and also highly toxic.
-     Eating a nut raw causes [diceroll 1 6] poison damage and [diceroll 2 4] acid damage.
+     Eating a nut raw causes 3 (1d6) poison damage and 5 (2d4) acid damage.
      However, cooking the nuts renders them edible, and they are considered a delicacy in many places.
      The most popular way to serve them is to roast them for a short time, but at a very
      high temperature, so they acquire some surface charring without turning the entire nut
-     into a lump of charcoal. A single bloodbough tree yields about [diceroll 4 6 20] pounds of nuts,
+     into a lump of charcoal. A single bloodbough tree yields about 34 (4d6 + 20) pounds of nuts,
      with a pound of nuts being worth about 2 gc. Thick gloves are necessary in order to harvest
      the nuts without losing digits to the acidic sap.
+  habitat:
+  - grasslands
 - name: Fireroot Shambler
   headername: Shambler, Fireroot
   category: Shambler
@@ -795,8 +807,6 @@ monsters:
   - slashing from magical weapons
   senses:
   - tremorsense 120 ft.
-  abilities:
-  - name: Rooted
   actions:
   - name: multiattack
     effect: The fireroot shambler makes three root bulb attacks.
@@ -812,14 +822,16 @@ monsters:
   - header: Heated Root Tips
     text: >
      Fireroot trees grow in the far north, where their heat-generating root tips
-     allow them to extract nutrients from the frozen soil. [diceroll 2 4] root bulbs
+     allow them to extract nutrients from the frozen soil. 5 (2d4) root bulbs
      can be harvested from a dead fireroot tree. A root bulb can be used like a club
-     ([diceroll 1 6] bludgeoning damage plus 1 fire damage) and sheds dim light in a
-     5-foot radius. A bulb loses its glow and fire damage after [diceroll 1 4 2] hours.
+     (1d6 bludgeoning damage plus 1 fire damage) and sheds dim light in a
+     5-foot radius. A bulb loses its glow and fire damage after 4 (1d4 + 2) hours.
   - header: Berries
     text: >
      Ripe berries from a fireroot tree are bright, almost glowing orange, and quite tasty.
-     When eaten, they grant the eater cold resistance for [diceroll 2 4] hours. Unripe berries
+     When eaten, they grant the eater cold resistance for 5 (2d4) hours. Unripe berries
      are blue, ice-cold, extremely sour, and if eaten give the eater cold vulnerability for
-     [diceroll 2 4] hours. Ripe berries are a valuable commodity in the northlands, and unripe
+     5 (2d4) hours. Ripe berries are a valuable commodity in the northlands, and unripe
      ones can fetch a high price in southern regions.
+  habitat:
+  - arctic
