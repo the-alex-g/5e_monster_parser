@@ -29,6 +29,24 @@ groups:
      brings water into their domain.
   abilities:
   - name: Avoidance
+  - name: Electric Current
+    effect: >
+     Any creature that touches the zinc dragon or hits it with a metal
+     melee weapon suffers [lightning] lightning damage. This effect
+     extends to include any conductive material that the dragon is touching.
+     For example, if the zinc dragon was in contact with a pool of water,
+     and someone jumped into the water, they would be electrocuted. The
+     zinc dragon can suppress this effect at any time.
+  - name: Water Weakness
+    effect: >
+     At the start of each turn that the dragon is in contact with a significant
+     amount of water (submerged, in a rainstorm, was hit with a barrel of water
+     fired from a catapult), it takes [waterdamage] necrotic damage.
+  reactions:
+  - name: Electric Transfer
+    effect: >
+     When a creature within 60 feet of the dragon deals lightning damage,
+     the dragon can deal [lightning] to that creature.
   habitat:
   - desert
   saves:
@@ -48,6 +66,13 @@ groups:
   - auran
   - common
   - draconic
+  actions:
+  - name: Lightning Breath
+    uses: recharge 5-6
+    effect: >
+     The dragon spits a [linelength]-foot-long, 5-foot-wide line of crackling electricity.
+     All targets in the area take [breathweapon] lightning damage, or half
+     as much with a successful [save w/dex con] saving throw.
 categories:
 - name: Shambler
   sorttype: alphabetical
@@ -152,7 +177,7 @@ monsters:
      but will accept any creature that decides to follow and worship it.
      A null beholder spends most of its time prowling through dark places in search of its next meal.
   actions:
-  - name: multiattack
+  - name: Multiattack
     effect: The null beholder makes one maw attack and two other melee attacks.
 # STONE SLUG ####################################################################
 - name: Stone Slug
@@ -193,7 +218,7 @@ monsters:
      without squeezing.
   - name: Stone Eater
     effect: >
-     The stone slug can burrow through solid rock at half their burrow speed,
+     The stone slug can burrow through solid rock at half its burrow speed,
      leaving a tunnel a little bit less than 10 feet in diameter behind.
   attacks:
   - name: Flail
@@ -266,7 +291,7 @@ monsters:
      attacks made with thrown weapons.
   - name: Nimble Escape
   actions:
-  - name: multiattack
+  - name: Multiattack
     effect: The hedgehog goblin makes two thrown hedgehog attacks.
   attacks:
   - name: Thrown Hedgehog
@@ -419,6 +444,11 @@ monsters:
   group: Dragon, Zinc
   size: gargantuan
   alignment: chaotic neutral
+  params:
+   lightning: "[diceroll 2 12]"
+   breathweapon: "[diceroll 13 12]"
+   waterdamage: "[diceroll 6 6]"
+   linelength: 60
   ac:
   - 10
   - natural armor
@@ -437,33 +467,14 @@ monsters:
   - darkvision 120 ft
   cr: 22
   abilities:
-  - name: Electric Current
-    effect: >
-     Any creature that touches the zinc dragon or hits it with a metal
-     melee weapon suffers [diceroll 2 12] lightning damage. This effect
-     extends to include any conductive material that the dragon is touching.
-     For example, if the zinc dragon was in contact with a pool of water,
-     and someone jumped into the water, they would be electrocuted. The
-     zinc dragon can suppress this effect at any time.
   - name: Legendary Resistance
     uses: 3/day
-  - name: Water Weakness
-    effect: >
-     At the start of each turn that the dragon is in contact with a significant
-     amount of water (submerged, in a rainstorm, was hit with a barrel of water
-     fired from a catapult), it takes [diceroll 6 6] necrotic damage.
   actions:
-  - name: multiattack
+  - name: Multiattack
     effect: >
      The dragon can use its Frightful Presence. It then makes one bite attack
      and two claw attacks.
   - name: Frightful Presence
-  - name: Lightning Breath
-    uses: recharge 5-6
-    effect: >
-     The dragon spits a 60-foot-long, 5-foot-wide line of crackling electricity.
-     All targets in the area take [diceroll 13 12] lightning damage, or half
-     as much with a successful [save w/dex con] saving throw.
   attacks:
   - name: Bite
     type: mw
@@ -471,14 +482,14 @@ monsters:
     reach: 15
     target: one target
     onhit: >
-     [diceroll 2 8 str] piercing damage plus [diceroll 2 12] lightning damage.
+     [diceroll 2 8 str] piercing damage plus [lightning] lightning damage.
   - name: Claw
     type: mw
     ability: str
     reach: 10
     target: one target
     onhit: >
-     [diceroll 2 6 str] slashing damage plus [diceroll 2 12] lightning damage.
+     [diceroll 2 6 str] slashing damage plus [lightning] lightning damage.
   legendary-actions:
   - name: Flight
     effect: The dragon moves up to its flying speed.
@@ -490,17 +501,17 @@ monsters:
      The dragon dives at least 100 feet straight towards a target and makes a
      bite attack. This attack deals an additional [diceroll 3 8] piercing
      damage on a hit.
-  reactions:
-  - name: Electric Transfer
-    effect: >
-     When a creature within 60 feet of the dragon deals lightning damage,
-     the dragon can deal [diceroll 2 12] to that creature.
 # ADULT ZINC DRAGON ####################################################
 - name: Adult Zinc Dragon
   headername: Dragon, Zinc, Adult
   group: Dragon, Zinc
   size: huge
   alignment: chaotic neutral
+  params:
+   lightning: "[diceroll 2 10]"
+   breathweapon: "[diceroll 9 12]"
+   waterdamage: "[diceroll 6 6]"
+   linelength: 50
   ac:
   - 7
   - natural armor
@@ -519,48 +530,24 @@ monsters:
   - darkvision 100 ft.
   cr: 15
   abilities:
-  - name: Electric Current
-    effect: >
-     Any creature that touches the zinc dragon or hits it with a metal melee
-     weapon suffers [diceroll 2 10] lightning damage. This effect extends to
-     include any conductive material that the dragon is touching. For example,
-     if the zinc dragon was in contact with a pool of water, and someone jumped
-     into the water, they would be electrocuted. The zinc dragon can suppress
-     this effect at any time.
   - name: Legendary Resistance
     uses: 3/day
-  - name: Water Weakness
-    effect: >
-     At the start of each turn that the dragon is in contact with a significant
-     amount of water (submerged, in a rainstorm, was hit with a barrel of water
-     fired from a catapult), it takes [diceroll 6 6] ]necrotic damage.
   actions:
-  - name: multiattack
+  - name: Multiattack
     effect: The dragon can use its Frightful Presence. It then makes one bite attack and two claw attacks.
-  - name: Lightning Breath
-    uses: recharge 5-6
-    effect: >
-     The dragon spits a 50-foot-long, 5-foot-wide line of crackling electricity. All targets in the area
-     take [diceroll 9 12] lightning damage, or half as much with a successful [save w/dex con].
-  - name: Frightful Presence
   attacks:
   - name: Claw
     type: mw
     ability: str
     reach: 5
     target: one target
-    onhit: "[diceroll 1 8 str] slashing damage plus [diceroll 2 10] lightning damage."
+    onhit: "[diceroll 1 8 str] slashing damage plus [lightning] lightning damage."
   - name: Bite
     type: mw
     ability: str
     reach: 10
     target: one target
-    onhit: "[diceroll 1 10 str] piercing damage plus [diceroll 2 10] lightning damage."
-  reactions:
-  - name: Electric Transfer
-    effect: >
-     When a creature within 60 feet of the dragon deals lightning damage,
-     the dragon can deal [diceroll 2 10] lighting damage to that creature.
+    onhit: "[diceroll 1 10 str] piercing damage plus [lightning] lightning damage."
   legendary-actions:
   - name: Flight
     effect: The dragon moves up to its flying speed.
@@ -580,6 +567,11 @@ monsters:
   ac:
   - 5
   - natural armor
+  params:
+   lightning: "[diceroll 2 8]"
+   breathweapon: "[diceroll 6 12]"
+   waterdamage: "[diceroll 4 6]"
+   linelength: 30
   hd: 9
   speed:
    land: 40
@@ -594,52 +586,33 @@ monsters:
   senses:
   - darkvision 80 ft.
   cr: 10
-  abilities:
-  - name: Electric Current
-    effect: >
-     Any creature that touches the zinc dragon or hits it with a metal melee
-     weapon suffers [diceroll 2 8] lightning damage. This effect extends to
-     include any conductive material that the dragon is touching. For example,
-     if the zinc dragon was in contact with a pool of water, and someone jumped
-     into the water, they would be electrocuted. The zinc dragon can suppress
-     this effect at any time.
-  - name: Water Weakness
-    effect: >
-     At the start of each turn that the dragon is in contact with a significant
-     amount of water (submerged, in a rainstorm, was hit with a barrel of water
-     fired from a catapult), it takes [diceroll 4 6] necrotic damage.
   actions:
-  - name: multiattack
+  - name: Multiattack
     effect: The dragon makes one bite attack and two claw attacks.
-  - name: Lightning Breath
-    uses: recharge 5-6
-    effect: >
-     The dragon spits a 30-foot-long, 5-foot-wide line of crackling electricity. All targets in the area
-     take [diceroll 6 12] lightning damage, or half as much with a successful [save w/dex con].
   attacks:
   - name: Claw
     type: mw
     ability: str
     reach: 5
     target: one target
-    onhit: "[diceroll 1 8 str] slashing damage plus [diceroll 2 8] lightning damage."
+    onhit: "[diceroll 1 8 str] slashing damage plus [lightning] lightning damage."
   - name: Bite
     type: mw
     ability: str
     reach: 10
     target: one target
-    onhit: "[diceroll 1 10 str] piercing damage plus [diceroll 2 8] lightning damage."
-  reactions:
-  - name: Electric Transfer
-    effect: >
-     When a creature within 60 feet of the dragon deals lightning damage,
-     the dragon can deal [diceroll 2 8] lighting damage to that creature.
+    onhit: "[diceroll 1 10 str] piercing damage plus [lightning] lightning damage."
 # ZINC DRAGON WYRMLING ##################################################
 - name: Zinc Dragon Wyrmling
   headername: Dragon, Zinc, Wyrmling
   group: Dragon, Zinc
   size: medium
   alignment: chaotic neutral
+  params:
+   lightning: "[diceroll 1 12]"
+   breathweapon: "[diceroll 3 12]"
+   waterdamage: "[diceroll 3 6]"
+   linelength: 15
   ac:
   - 4
   - natural armor
@@ -657,38 +630,13 @@ monsters:
   senses:
   - darkvision 60 ft.
   cr: 4
-  abilities:
-  - name: Electric Current
-    effect: >
-     Any creature that touches the zinc dragon or hits it with a metal melee
-     weapon suffers [diceroll 1 12] lightning damage. This effect extends to
-     include any conductive material that the dragon is touching. For example,
-     if the zinc dragon was in contact with a pool of water, and someone jumped
-     into the water, they would be electrocuted. The zinc dragon can suppress
-     this effect at any time.
-  - name: Water Weakness
-    effect: >
-     At the start of each turn that the dragon is in contact with a significant
-     amount of water (submerged, in a rainstorm, was hit with a barrel of water
-     fired from a catapult), it takes [diceroll 3 6] necrotic damage.
-  actions:
-  - name: Lightning Breath
-    uses: recharge 5-6
-    effect: >
-     The dragon spits a 15-foot-long, 5-foot-wide line of crackling electricity. All targets in the area
-     take [diceroll 3 12] lightning damage, or half as much with a successful [save w/dex con].
   attacks:
   - name: Bite
     type: mw
     ability: str
     reach: 5
     target: one target
-    onhit: "[diceroll 1 8 str] piercing damage plus [diceroll 1 12] lightning damage."
-  reactions:
-  - name: Electric Transfer
-    effect: >
-     When a creature within 60 feet of the dragon deals lightning damage,
-     the dragon can deal [diceroll 2 8] lighting damage to that creature.
+    onhit: "[diceroll 1 8 str] piercing damage plus [lightning] lightning damage."
 # ALPINE SPIRIT ########################################################
 - name: Alpine Spirit
   size: large
@@ -751,7 +699,7 @@ monsters:
   - name: Earthwalk
   - name: Siege Monster
   actions:
-  - name: multiattack
+  - name: Multiattack
     effect: >
      If Aegis of Fire is active, the alpine spirit makes one smash attack and
      two scorch attacks; if Aegis of Stone is active, the alpine spirit makes two
@@ -865,7 +813,7 @@ monsters:
      7 (-2), and it makes attacks with disadvantage. If the algae bloom takes 10 or more
      fire and/or radiant damage in a single round while in torpor, it exits torpor.
   actions:
-  - name: multiattack
+  - name: Multiattack
     effect: The algae bloom makes two slam attacks and two tainted water attacks.
   attacks:
   - name: Tainted Water
@@ -943,7 +891,7 @@ monsters:
      Whenever a creature starts or ends its turn within 20 feet of the
      bloodbough shambler, it takes [diceroll 1 4] acid damage from dripping sap.
   actions:
-  - name: multiattack
+  - name: Multiattack
     effect: The bloodbough shambler makes three slam attacks.
   attacks:
   - name: Slam
@@ -1001,7 +949,7 @@ monsters:
   senses:
   - tremorsense 120 ft.
   actions:
-  - name: multiattack
+  - name: Multiattack
     effect: The fireroot shambler makes three root bulb attacks.
   attacks:
   - name: Root Bulb

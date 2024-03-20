@@ -236,7 +236,13 @@ def create_stat_table(scores, bonuses):
     return table
 
 
-def create_attack(attack, stats, profbonus):
+def parse_string(string, stats, profbonus, params):
+    for key in params:
+        string = string.replace("[" + key + "]", str(params[key]))
+    return resolve_functions(string, stats, profbonus)
+
+
+def create_attack(attack, stats, profbonus, params):
     attack_string = "\\entry{" + attack["name"] + "}{\\textit{"
     bonus = stats[attack["ability"]] + profbonus
     if "bonus" in attack:
@@ -256,9 +262,9 @@ def create_attack(attack, stats, profbonus):
     else:
         print("ERROR: Unknown attack type \"" + attack["type"] + "\"")
         
-    attack_string += ", " + attack["target"] + "." + NEWLINE + "\\textit{Hit:} " + resolve_functions(attack["onhit"], stats, profbonus)
+    attack_string += ", " + attack["target"] + "." + NEWLINE + "\\textit{Hit:} " + parse_string(attack["onhit"], stats, profbonus, params)
     if "special" in attack:
-        attack_string += NEWLINE + resolve_functions(attack["special"], stats, profbonus)
+        attack_string += NEWLINE + parse_string(attack["special"], stats, profbonus, params)
     return attack_string + "}"
 
 
@@ -371,7 +377,7 @@ def check_missing_fields(monster):
     return error
 
 
-def format_actions(actions, name, stats, profbonus):
+def format_actions(actions, stats, profbonus, params):
     action_string = ""
     action_name_dict = {}
     for action in actions:
@@ -379,49 +385,47 @@ def format_actions(actions, name, stats, profbonus):
     for action_name in sorted(action_name_dict):
         action = action_name_dict[action_name]
         if action_name in PREBAKED_ABILITIES and not "effect" in action:
-            raw_action = PREBAKED_ABILITIES[action_name]
-            raw_action = raw_action.replace("[name]", name.lower())
-            action["effect"] = raw_action
+            action["effect"] = PREBAKED_ABILITIES[action_name]
         if "uses" in action:
             action_name += " (" + action["uses"].title() + ")"
         # the "cost" clause is for legendary actions
         elif "cost" in action:
             action_name += " (Costs " + str(action["cost"]) + " Actions)"
-        action_string += entry(action_name, resolve_functions(action["effect"], stats, profbonus)) + LINEBREAK
+        action_string += entry(action_name, parse_string(action["effect"], stats, profbonus, params)) + LINEBREAK
     return action_string
 
 
-def abilities(abilities, stats, profbonus, name):
-    return format_actions(abilities, name, stats, profbonus)
+def abilities(abilities, stats, profbonus, params):
+    return format_actions(abilities, stats, profbonus, params)
 
 
-def description(descriptions, monster_type, name):
+def description(descriptions, monster_type, name, include_default=True):
     string = ""
     for description in descriptions:
         string += entry(description["header"], description["text"])
-    if monster_type in NATURES:
+    if monster_type in NATURES and include_default:
         description = NATURES[monster_type].copy()
         description["text"] = description["text"].replace("[name]", name.lower())
         string += entry(description["header"], description["text"])
     return string
 
 
-def legendary_actions(actions, name, stats, profbonus):
-    string = "\\textbf{Legendary Actions}" + NEWLINE + "\\halfline The " + name.lower() + " can take "
+def legendary_actions(actions, stats, profbonus, params):
+    string = "\\textbf{Legendary Actions}" + NEWLINE + "\\halfline The " + params["name"] + " can take "
     if "uses" in actions:
         string += str(actions["uses"])
         actions = actions["actions"]
     else:
         string += "3"
     string += """ legendary actions, choosing from the options below. Only one legendary action option can
-be used at a time, and only at the end of another creature's turn. The """ + name.lower() + """ regains spent
+be used at a time, and only at the end of another creature's turn. The """ + params["name"] + """ regains spent
 legendary actions at the start of its turn.""" + NEWLINE + LINEBREAK
-    return string + format_actions(actions, name, stats, profbonus)
+    return string + format_actions(actions, stats, profbonus, params)
 
 
-def reactions(actions, name, stats, profbonus):
+def reactions(actions, stats, profbonus, params):
     string = "\\textbf{Reactions}" + NEWLINE + "\\halfline"
-    return string + format_actions(actions, name, stats, profbonus)
+    return string + format_actions(actions, stats, profbonus, params)
 
 
 def monster_headername(monster):
@@ -438,16 +442,29 @@ def monster_shortname(monster):
         return monster["name"]
 
 
+def create_header(name, label=True):
+    header = "\\section*{" + name + "}\\label{" + name + "}"
+    if label:
+        header += "\\markboth{" + name + "}{" + name + "}"
+    header += "\\addcontentsline{toc}{subsection}{" + name + "}\\halfline" + LINEBREAK
+    return header
+
+
 def create_monster(monster, in_group=False):
+    if check_missing_fields(monster):
+        return ""
     monster_string = ""
     headername = monster_headername(monster)
     shortname = monster_shortname(monster)
     plainname = monster["name"]
+    params = {"name":shortname.lower()}
+    if "params" in monster:
+        for param in monster["params"]:
+            params[param] = monster["params"][param]
     if not in_group:
-        monster_string = "\\section*{" + headername + "}"
-        monster_string += "\\markboth{" + headername + "}{" + headername + "}"
-        monster_string += "\\addcontentsline{toc}{subsection}{" + headername + "}"
-    monster_string += "\\label{" + headername + "}"
+        monster_string = create_header(headername)
+    else:
+        monster_string += "\\label{" + headername + "}"
 
     if "flavor" in monster:
         monster_string += "\\textit{" + monster["flavor"] + "}" + NEWLINE + LINEBREAK
@@ -539,7 +556,7 @@ def create_monster(monster, in_group=False):
     monster_string += "\\textbf{Challenge} " + cr(monster["cr"]) + NEWLINE + LINEBREAK
 
     if "abilities" in monster:
-        monster_string += abilities(monster["abilities"], bonuses, profbonus, shortname)
+        monster_string += abilities(monster["abilities"], bonuses, profbonus, params)
 
     if "innate-spellcasting" in monster:
         ability = monster["innate-spellcasting"]
@@ -559,31 +576,25 @@ def create_monster(monster, in_group=False):
         for attack in monster["attacks"]:
             attack_name_dict[attack["name"]] = attack
         for attack_name in sorted(attack_name_dict):
-            monster_string += create_attack(attack_name_dict[attack_name], bonuses, profbonus) + LINEBREAK
+            monster_string += create_attack(attack_name_dict[attack_name], bonuses, profbonus, params) + LINEBREAK
 
     if "actions" in monster:
         action_name_dict = {}
         for action in monster["actions"]:
-            if action["name"].lower() != "multiattack":
-                action_name_dict[action["name"]] = action
-            else:
+            if action["name"] == "Multiattack":
                 monster_string = monster_string.replace(
                     MULTIATTACK_SPLICE_KEY,
-                    entry("Multiattack", resolve_functions(action["effect"], bonuses, profbonus)) + LINEBREAK
+                    format_actions([action], bonuses, profbonus, params)
                 )
-        for action_name in sorted(action_name_dict):
-            action = action_name_dict[action_name]
-            if action_name in PREBAKED_ABILITIES:
-                raw_action = PREBAKED_ABILITIES[action_name]
-                raw_action = raw_action.replace("[name]", shortname.lower())
-                action["effect"] = raw_action
-            monster_string += entry(action["name"], resolve_functions(action["effect"], bonuses, profbonus)) + LINEBREAK
+                monster["actions"].remove(action)
+                break
+        monster_string += format_actions(monster["actions"], bonuses, profbonus, params)
 
     if "reactions" in monster:
-        monster_string += reactions(monster["reactions"], shortname, bonuses, profbonus) + LINEBREAK
+        monster_string += reactions(monster["reactions"], bonuses, profbonus, params)
     
     if "legendary-actions" in monster:
-        monster_string += legendary_actions(monster["legendary-actions"], shortname, bonuses, profbonus)
+        monster_string += legendary_actions(monster["legendary-actions"], bonuses, profbonus, params)
     
     return monster_string
 
@@ -613,10 +624,8 @@ def add_to_appendices(monster):
 
 
 def resolve_group(group, monsters):
-    group_string = "\\section*{" + group["name"] + "}"
-    if group["type"] == "group":
-        group_string += "\\markboth{" + group["name"] + "}{" + group["name"] + "}"
-    group_string += "\\addcontentsline{toc}{subsection}{" + group["name"] + "}"
+    is_in_group = group["group_type"] == "group"
+    group_string = create_header(group["name"], label=is_in_group)
     if "flavor" in group:
         group_string += "\\textit{" + group["flavor"] + "}" + NEWLINE + LINEBREAK
 
@@ -627,7 +636,7 @@ def resolve_group(group, monsters):
             group_type = group["type"]
         if "shortname" in group:
             group_shortname = group["shortname"]
-        group_string += description(group["description"], group_type, group_shortname) + LINEBREAK
+        group_string += description(group["description"], group_type, group_shortname, include_default=is_in_group) + LINEBREAK
 
     monster_name_dict = {}
     for monster in monsters:
@@ -642,7 +651,7 @@ def resolve_group(group, monsters):
 
         # Copy group attributes to monster
         for field in group:
-            if not field in ["name", "sorttype", "flavor", "description"]:
+            if not field in ["name", "sorttype", "flavor", "description", "group_type"]:
                 if type(group[field]) == list:
                     for item in group[field]:
                         if field in monster:
@@ -651,10 +660,10 @@ def resolve_group(group, monsters):
                             monster[field] = [item]
                 elif type(group[field]) == str:
                     if not field in monster:
-                        monster[field] = item
+                        monster[field] = group[field]
         
-        group_string += create_monster(monster, in_group=group["type"]=="group") + LINEBREAK
-        if group["type"] == "category":
+        group_string += create_monster(monster, in_group=is_in_group) + LINEBREAK
+        if group["group_type"] == "category":
             group_string += PAGEBREAK
         add_to_appendices(monster)
     
@@ -682,15 +691,13 @@ def create_doc(filedict):
     monster_name_dict = {}
     if "groups" in filedict:
         for group in filedict["groups"]:
-            group["type"] = "group"
+            group["group_type"] = "group"
             monster_name_dict[group["name"]] = [group]
     if "categories" in filedict:
         for category in filedict["categories"]:
-            category["type"] = "category"
+            category["group_type"] = "category"
             monster_name_dict[category["name"]] = [category]
     for monster in filedict["monsters"]:
-        if check_missing_fields(monster):
-            continue
         monstername = monster_headername(monster)
         if "group" in monster:
             monster_name_dict[monster["group"]].append(monster)
