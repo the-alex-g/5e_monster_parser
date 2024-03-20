@@ -639,12 +639,20 @@ def resolve_group(group, monsters):
     for monster_name in monsters_to_iterate:
         monster = monster_name_dict[monster_name]
         print(monster["name"])
-        if "abilities" in group:
-            for ability in group["abilities"]:
-                if "abilities" in monster:
-                    monster["abilities"].append(ability)
-                else:
-                    monster["abilities"] = [ability]
+
+        # Copy group attributes to monster
+        for field in group:
+            if not field in ["name", "sorttype", "flavor", "description"]:
+                if type(group[field]) == list:
+                    for item in group[field]:
+                        if field in monster:
+                            monster[field].append(item)
+                        else:
+                            monster[field] = [item]
+                elif type(group[field]) == str:
+                    if not field in monster:
+                        monster[field] = item
+        
         group_string += create_monster(monster, in_group=group["type"]=="group") + LINEBREAK
         if group["type"] == "category":
             group_string += PAGEBREAK

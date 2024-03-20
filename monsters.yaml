@@ -27,11 +27,33 @@ groups:
      the fact that any large amount of water sears their scales
      like acid. They go to great lengths to ensure that no one
      brings water into their domain.
+  abilities:
+  - name: Avoidance
+  habitat:
+  - desert
+  saves:
+  - dex
+  - con
+  - wis
+  - cha
+  skills:
+  - acrobatics
+  - perception
+  - performance
+  resist:
+  - fire
+  immune:
+  - lightning
+  languages:
+  - auran
+  - common
+  - draconic
 categories:
 - name: Shambler
   sorttype: alphabetical
+  type: plant
   description:
-  - header: FOOPANTS
+  - header: Foopants
     text: lorem ipsum x1000
   abilities:
   - name: Rooted
@@ -394,10 +416,8 @@ monsters:
 # ANCIENT ZINC DRAGON ####################################
 - name: Ancient Zinc Dragon
   headername: Dragon, Zinc, Ancient
-  shortname: dragon
   group: Dragon, Zinc
   size: gargantuan
-  type: dragon
   alignment: chaotic neutral
   ac:
   - 10
@@ -413,28 +433,10 @@ monsters:
    int: 17
    wis: 16
    cha: 22
-  saves:
-  - dex
-  - con
-  - wis
-  - cha
-  skills:
-  - acrobatics
-  - perception
-  - performance
-  resist:
-  - fire
-  immune:
-  - lightning
   senses:
-  - blindsight 120 ft
-  languages:
-  - auran
-  - common
-  - draconic
+  - darkvision 120 ft
   cr: 22
   abilities:
-  - name: Avoidance
   - name: Electric Current
     effect: >
      Any creature that touches the zinc dragon or hits it with a metal
@@ -456,7 +458,8 @@ monsters:
      The dragon can use its Frightful Presence. It then makes one bite attack
      and two claw attacks.
   - name: Frightful Presence
-  - name: Lightning Breath (Recharge 5-6)
+  - name: Lightning Breath
+    uses: recharge 5-6
     effect: >
      The dragon spits a 60-foot-long, 5-foot-wide line of crackling electricity.
      All targets in the area take [diceroll 13 12] lightning damage, or half
@@ -492,8 +495,200 @@ monsters:
     effect: >
      When a creature within 60 feet of the dragon deals lightning damage,
      the dragon can deal [diceroll 2 12] to that creature.
-  habitat:
-  - desert
+# ADULT ZINC DRAGON ####################################################
+- name: Adult Zinc Dragon
+  headername: Dragon, Zinc, Adult
+  group: Dragon, Zinc
+  size: huge
+  alignment: chaotic neutral
+  ac:
+  - 7
+  - natural armor
+  hd: 15
+  speed:
+   land: 40
+   fly: 90
+  stats:
+   str: 23
+   dex: 21
+   con: 20
+   int: 16
+   wis: 16
+   cha: 20
+  senses:
+  - darkvision 100 ft.
+  cr: 15
+  abilities:
+  - name: Electric Current
+    effect: >
+     Any creature that touches the zinc dragon or hits it with a metal melee
+     weapon suffers [diceroll 2 10] lightning damage. This effect extends to
+     include any conductive material that the dragon is touching. For example,
+     if the zinc dragon was in contact with a pool of water, and someone jumped
+     into the water, they would be electrocuted. The zinc dragon can suppress
+     this effect at any time.
+  - name: Legendary Resistance
+    uses: 3/day
+  - name: Water Weakness
+    effect: >
+     At the start of each turn that the dragon is in contact with a significant
+     amount of water (submerged, in a rainstorm, was hit with a barrel of water
+     fired from a catapult), it takes [diceroll 6 6] ]necrotic damage.
+  actions:
+  - name: multiattack
+    effect: The dragon can use its Frightful Presence. It then makes one bite attack and two claw attacks.
+  - name: Lightning Breath
+    uses: recharge 5-6
+    effect: >
+     The dragon spits a 50-foot-long, 5-foot-wide line of crackling electricity. All targets in the area
+     take [diceroll 9 12] lightning damage, or half as much with a successful [save w/dex con].
+  - name: Frightful Presence
+  attacks:
+  - name: Claw
+    type: mw
+    ability: str
+    reach: 5
+    target: one target
+    onhit: "[diceroll 1 8 str] slashing damage plus [diceroll 2 10] lightning damage."
+  - name: Bite
+    type: mw
+    ability: str
+    reach: 10
+    target: one target
+    onhit: "[diceroll 1 10 str] piercing damage plus [diceroll 2 10] lightning damage."
+  reactions:
+  - name: Electric Transfer
+    effect: >
+     When a creature within 60 feet of the dragon deals lightning damage,
+     the dragon can deal [diceroll 2 10] lighting damage to that creature.
+  legendary-actions:
+  - name: Flight
+    effect: The dragon moves up to its flying speed.
+  - name: Claw
+    effect: The dragon makes a claw attack.
+  - name: Dive
+    cost: 3
+    effect: >
+     The dragon dives at least 100 feet straight towards a target and makes
+     a bite attack. This attack deals an additional [diceroll 2 8] piercing damage on a hit.
+# YOUNG ZINC DRAGON ##################################################
+- name: Young Zinc Dragon
+  headername: Dragon, Zinc, Young
+  group: Dragon, Zinc
+  size: large
+  alignment: chaotic neutral
+  ac:
+  - 5
+  - natural armor
+  hd: 9
+  speed:
+   land: 40
+   fly: 90
+  stats:
+   str: 21
+   dex: 22
+   con: 19
+   int: 16
+   wis: 16
+   cha: 19
+  senses:
+  - darkvision 80 ft.
+  cr: 10
+  abilities:
+  - name: Electric Current
+    effect: >
+     Any creature that touches the zinc dragon or hits it with a metal melee
+     weapon suffers [diceroll 2 8] lightning damage. This effect extends to
+     include any conductive material that the dragon is touching. For example,
+     if the zinc dragon was in contact with a pool of water, and someone jumped
+     into the water, they would be electrocuted. The zinc dragon can suppress
+     this effect at any time.
+  - name: Water Weakness
+    effect: >
+     At the start of each turn that the dragon is in contact with a significant
+     amount of water (submerged, in a rainstorm, was hit with a barrel of water
+     fired from a catapult), it takes [diceroll 4 6] necrotic damage.
+  actions:
+  - name: multiattack
+    effect: The dragon makes one bite attack and two claw attacks.
+  - name: Lightning Breath
+    uses: recharge 5-6
+    effect: >
+     The dragon spits a 30-foot-long, 5-foot-wide line of crackling electricity. All targets in the area
+     take [diceroll 6 12] lightning damage, or half as much with a successful [save w/dex con].
+  attacks:
+  - name: Claw
+    type: mw
+    ability: str
+    reach: 5
+    target: one target
+    onhit: "[diceroll 1 8 str] slashing damage plus [diceroll 2 8] lightning damage."
+  - name: Bite
+    type: mw
+    ability: str
+    reach: 10
+    target: one target
+    onhit: "[diceroll 1 10 str] piercing damage plus [diceroll 2 8] lightning damage."
+  reactions:
+  - name: Electric Transfer
+    effect: >
+     When a creature within 60 feet of the dragon deals lightning damage,
+     the dragon can deal [diceroll 2 8] lighting damage to that creature.
+# ZINC DRAGON WYRMLING ##################################################
+- name: Zinc Dragon Wyrmling
+  headername: Dragon, Zinc, Wyrmling
+  group: Dragon, Zinc
+  size: medium
+  alignment: chaotic neutral
+  ac:
+  - 4
+  - natural armor
+  hd: 6
+  speed:
+   land: 30
+   fly: 70
+  stats:
+   str: 17
+   dex: 20
+   con: 16
+   int: 14
+   wis: 15
+   cha: 16
+  senses:
+  - darkvision 60 ft.
+  cr: 4
+  abilities:
+  - name: Electric Current
+    effect: >
+     Any creature that touches the zinc dragon or hits it with a metal melee
+     weapon suffers [diceroll 1 12] lightning damage. This effect extends to
+     include any conductive material that the dragon is touching. For example,
+     if the zinc dragon was in contact with a pool of water, and someone jumped
+     into the water, they would be electrocuted. The zinc dragon can suppress
+     this effect at any time.
+  - name: Water Weakness
+    effect: >
+     At the start of each turn that the dragon is in contact with a significant
+     amount of water (submerged, in a rainstorm, was hit with a barrel of water
+     fired from a catapult), it takes [diceroll 3 6] necrotic damage.
+  actions:
+  - name: Lightning Breath
+    uses: recharge 5-6
+    effect: >
+     The dragon spits a 15-foot-long, 5-foot-wide line of crackling electricity. All targets in the area
+     take [diceroll 3 12] lightning damage, or half as much with a successful [save w/dex con].
+  attacks:
+  - name: Bite
+    type: mw
+    ability: str
+    reach: 5
+    target: one target
+    onhit: "[diceroll 1 8 str] piercing damage plus [diceroll 1 12] lightning damage."
+  reactions:
+  - name: Electric Transfer
+    effect: >
+     When a creature within 60 feet of the dragon deals lightning damage,
+     the dragon can deal [diceroll 2 8] lighting damage to that creature.
 # ALPINE SPIRIT ########################################################
 - name: Alpine Spirit
   size: large
@@ -707,7 +902,6 @@ monsters:
   headername: Shambler, Bloodbough
   category: Shambler
   size: huge
-  type: plant
   ac:
   - 3
   - natural armor
@@ -781,7 +975,6 @@ monsters:
   headername: Shambler, Fireroot
   category: Shambler
   size: large
-  type: plant
   ac:
   - 3
   - natural armor
