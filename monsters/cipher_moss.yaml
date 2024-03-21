@@ -1,0 +1,94 @@
+name: Cipher Moss
+type: plant
+size: huge
+alignment: neutral
+cr: 4
+speed:
+ land: 0
+stats:
+ str: 15
+ dex: 1
+ con: 16
+ int: 20
+ wis: 20
+ cha: 11
+saves:
+- con
+- int
+- wis
+cond-immune:
+- prone
+- charmed
+- frightened
+vulnerable:
+- fire
+immune:
+- psychic
+senses:
+- blindsight 60 ft (blind beyond this radius)
+languages:
+- telepathy 60 ft
+abilities:
+- name: Information Saturation
+  effect: >
+   The first time each round that an intelligent creature touches the moss with its bare skin,
+   it is subject to the moss’s Psychic Crush ability.
+- name: Fragile Intellect
+  effect: >
+   For every 8 points of damage the cipher moss has suffered, its Int and Wis scores are reduced by one, to a minimum of [stat 1]
+   for Int or [stat 10] for Wis.
+- name: Low Profile
+  effect: >
+   The cipher moss covers the surface that it grows on, but because it is no more than a foot deep, other creatures can move through
+   the space it occupies as if it were difficult terrain. Until the moss makes its powers known, it looks like an ordinary bed of moss.
+   It can be identified with a successful [check 16 nature].
+actions:
+- name: Absorb Thoughts
+  effect: >
+   One living creature within 60 feet of the moss must make an Intelligence saving throw, where the DC is equal to 10 + the moss’s Int
+   bonus. If the creature fails its save, the moss regains [diceroll 1 12 con] hit points. If the moss gains at least 10 hit points, its Int
+   score increases by one. If the moss’s Wis score is less than its Int score after the Int increase, the moss’s Wis score also increases
+   by one. Both scores have a maximum of 20.
+- name: Psychic Crush
+  effect: >
+   One creature within 60 feet of the moss must make an Intelligence saving throw, where the DC is equal to 10 + the moss’s Int bonus.
+   If the creature fails the check, it takes 8d6 psychic damage and is stunned for one minute. At the end of each of the creature’s turns,
+   it can repeat the saving throw, ending the stunned effect on a success. On a success, the creature takes half as much damage and may
+   make a second saving throw. If this second saving throw succeeds, the creature gets a +1 bonus to Int and Wis checks for the next 24
+   hours. This bonus is not cumulative.
+attacks:
+- name: Envelop
+  type: mw
+  ability: str
+  reach: 0
+  target: one creature in the moss' space.
+  onhit: >
+   [diceroll 2 6 str] bludgeoning damage and the target is grappled by the moss. While the target is grappled, it is also
+   restrained, and takes [diceroll 1 6] bludgeoning damage at the start of each of the moss’s turns. The moss can have up to one
+   Large creature, four Medium or Small creatures, or sixteen Tiny creatures enveloped at the same time.
+reactions:
+- name: Spell Mimicry
+  effect: >
+   This reaction can be taken when another creature casts a spell within 60 feet of the moss. The moss must make an Intelligence check,
+   where the DC is 10 + the level of the spell (cantrips are level 0). On a success, the moss memorizes the spell. The moss can cast a
+   memorized spell once, and then forgets it. The cipher moss can only have one memorized spell at a time. When casting memorized spells,
+   the moss does not require any components. The moss’s spellcasting ability is Intelligence (spell save DC 10 + Int, spell attack bonus
+   2 + Int).
+flavor: This thick bed of dark green moss appears no different from any other at first sight, but any creature that touches it is crushed under the weight of a thousand years of memories.
+description:
+- header: Knowledge Harvesters
+  text: >
+   Cipher mosses absorb and record the thoughts, words, and actions of those around them. Any creature that touches a cipher moss can
+   then extract the information stored within. This means that small patches of cipher moss are extremely useful for spying on people,
+   and are often planted by unsavory characters in places where sensitive information is likely to be shared. However, a patch of moss
+   left unattended will start to grow, albeit slowly; after a few centuries, cipher mosses can reach incredible sizes. As the size of the
+   moss increases, so does its capacity to store information. Eventually, the moss evolves a rudimentary self-awareness.
+- header: Ancient Records
+  text: >
+   Although ancient cipher mosses are extremely intelligent, their minds are very slow, and the things they ponder are incomprehensible to
+   other beings. However, it is possible (though difficult) for a person to bargain with one in exchange for information, or simply safe
+   passage.
+- header: Sedentary Watchers
+  text: >
+   Cipher mosses are usually content to remain in one place, but are capable of moving at a rate of about 1 foot every hour. A cipher moss
+   looks much like any other mat of moss, but can be identified by its darker shade of green and the blueish tips of the newest growth.

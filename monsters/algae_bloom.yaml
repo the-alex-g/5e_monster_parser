@@ -54,7 +54,7 @@ abilities:
     If the algae bloom suffers 10 or more cold damage in a single round, it enters a
     state of torpor. While in torpor, the algae bloom loses its cold and necrotic
     vulnerabilities, its movement speed is halved, its Dexterity score is reduced to
-    7 (-2), and it makes attacks with disadvantage. If the algae bloom takes 10 or more
+    [stat 7], and it makes attacks with disadvantage. If the algae bloom takes 10 or more
     fire and/or radiant damage in a single round while in torpor, it exits torpor.
 actions:
 - name: Multiattack

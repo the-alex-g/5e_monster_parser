@@ -33,7 +33,7 @@ abilities:
 - name: Mimicry
   effect: >
     The infiltrator can mimic a person that a creature within 30 ft has a memory of. The mimicry is fairly accurate, requiring a
-    DC 12 Wisdom (Perception) check to detect any physical inaccuracies. Creatures who know the mimicked person well are likely
+    [check 12 perception] to detect any physical inaccuracies. Creatures who know the mimicked person well are likely
     to notice behavioral differences as well. The infiltrator reverts to its natural form when it dies. While mimicking a creature,
     the infiltrator uses its own stats, but has access to all weapon attacks that creature would normally have, and can understand
     all languages that the mimicked creature could speak.

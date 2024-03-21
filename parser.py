@@ -83,6 +83,11 @@ def save(ability, abilitybonus, profbonus):
     return "DC " + str(dc) + " " + ability_name + " saving throw"
 
 
+def check(dc, *skill):
+    skill = separate(skill, " ")
+    return "DC " + str(dc) + " " + ABILITIES_SPELLOUT[SKILL_ABILITY[skill]] + " (" + SKILL_PRETTYNAME[skill] + ") check"
+
+
 def hitpoints(num, size, conbonus):
     return diceroll(num, HIT_DIE_SIZE[size], conbonus * num)
 
@@ -114,6 +119,10 @@ def ability_scores_to_bonuses(stats):
     for ability in stats:
         bonusdict[ability] = score_to_bonus(stats[ability])
     return bonusdict
+
+
+def stat(score):
+    return str(score) + " (" + format_bonus(score_to_bonus(score)) + ")"
 
 
 def separate(array, spacer):
