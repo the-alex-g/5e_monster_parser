@@ -1,0 +1,79 @@
+name: Belfry Screecher
+size: medium
+type: monstrosity
+alignment: chaotic evil
+ac:
+- 2
+- natural armor
+hd: 7
+cr: 2
+speed:
+ land: 30
+ fly: 60
+ climb: 30
+stats:
+ str: 16
+ dex: 17
+ con: 15
+ int: 7
+ wis: 13
+ cha: 14
+saves:
+- str
+- dex
+- con
+- wis
+vulnerable:
+- fire
+- radiant
+resist:
+- acid
+- bludgeoning
+- cold
+- lightning
+- thunder
+cond-immune:
+- deafened
+senses:
+- darkvision 60 ft
+abilities:
+- name: Stench
+actions:
+- name: Multiattack
+  effect: >
+   The belfry screecher makes two talons attacks, and then either makes an acidic bile attack, uses Call of Doom, or uses Horrid Shriek.
+- name: Call of Doom
+  uses: recharge 5-6
+  effect: >
+   One creature within 30 feet of the screecher must make a [save w/con cha]. On a failure, that creature is frightened of the screecher
+   and gains vulnerability to acid, cold, lightning, and thunder damage. At the end of each of its turns, an affected creature may repeat
+   its saving throw, ending the effect on itself on a success.
+- name: Horrid Shriek
+  effect: >
+   All creatures within 30 feet of the screecher that can hear it must make a [save w/con cha], taking [diceroll 2 6] thunder damage
+   and being deafened for [diceroll 1 10] rounds on a failure, or half as much damage and not being deafened on a success.
+attacks:
+- name: Talons
+  type: mw
+  ability: str
+  reach: 5
+  target: one target
+  onhit: "[diceroll 2 4 str] piercing damage."
+- name: Acidic Bile
+  type: rw
+  ability: dex
+  range: 10/30
+  target: one target
+  onhit: "[diceroll 2 4] acid damage, and the target takes [diceroll 1 4] acid damage at the start of their next turn."
+flavor: A hideous, vulture-like creature, covered in ragged black feathers, utters an unearthly shriek from its perch in the bell tower.
+description:
+- header: Attic Dwellers
+  text: >
+   As their name implies, belfry screechers often lurk in lofty attics, eating the bats, pigeons, and hawks that would otherwise make
+   their homes there. The racket they make is horrific from a distance, and deadly at close range.
+- header: Defilers
+  text: >
+   Belfry screechers are particularly fond of roosting in the bell towers of temples dedicated to good-aligned deities, disrupting the
+   daily duties of the priests below with their incessant cries.
+habitat:
+- urban

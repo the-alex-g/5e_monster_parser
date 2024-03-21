@@ -242,4 +242,5 @@ PREBAKED_ABILITIES = {
     "Siege Monster":"The [name] deals double damage to structures.",
     "Swarm":"The [name] can fit through any gap large enough for a [swarmsize] creature, cannot regain hit points or gain temporary hit points, takes twice as much damage from area-of-effect sources, can enter the spaces of other creatures, and other creatures can enter the swarm's space.",
     "Rooted":"The [name] has advantage on saving throws made to resist being moved or knocked prone.",
+    "Stench":"Any creature other than a [name] that starts its turn within 5 feet of the [name] must succeed on a [save w/con con], being poisoned until the start of the creature’s next turn. On a successful saving throw, the creature is immune to the stench of all [name]s for 1 hour."
 }
