@@ -1,0 +1,87 @@
+name: Darkling Ooze
+size: large
+type: ooze
+alignment: neutral evil
+cr: 7
+ac:
+- 1
+- natural armor
+hd: 9
+speed:
+ land: 20
+ climb: 20
+stats:
+ str: 15
+ dex: 12
+ con: 18
+ int: 10
+ wis: 11
+ cha: 11
+saves:
+- str
+- dex
+- con
+- cha
+resist:
+- acid
+- necrotic
+- radiant
+- bludgeoning, piercing, and slashing from non-magical weapons
+cond-immune:
+- poisoned
+senses:
+- blindsight 120 ft. (blind beyond this radius)
+languages:
+- telepathy 100 ft
+abilities:
+- name: Putrid Light
+  effect: >
+   The darkling ooze sheds dim light in a 15-foot radius. This light counts as sunlight for the purposes of light sensitivites or
+   weaknesses. The ooze can turn this light on or off at any time.
+- name: Radiance Absorption
+  effect: >
+   Whenever the darkling ooze takes radiant damage, it gains temporary hit points equal to the amount of damage it took. These temporary
+   hit points last for one minute.
+- name: Shadow Melding
+  effect: While in an area of darkness, the ooze is invisible, unless it is glowing. Darkvision does not overcome this invisibility.
+- name: Spider Climb
+actions:
+- name: Multiattack
+  effect: The darkling ooze makes four tentacle attacks.
+- name: Dark Vapors
+  uses: recharge 6
+  effect: >
+   The darkling ooze and all creatures within 5 feet of it are poisoned and gain [diceroll 2 10] temporary hit points that
+   last for one minute. Affected creatures may make a [save w/con con], negating the effect on a success.
+- name: Shadow Teleportation
+  uses: recharge 6
+  effect: >
+   The darkling ooze teleports up to 60 feet in any direction. It can take along one creature that it is grappling.
+   Both the start point and the end point must be in darkness.
+- name: Eldritch Discharge
+  effect: >
+   The darkling ooze suddenly emits a blinding flash of unwholesome light. All creatures within 20 feet suffer damage equal to
+   the ooze’s temporary hit points and are blinded and poisoned for [diceroll 1 4] rounds. Half of the damage is radiant,
+   and half is necrotic. A successful [save w/con con] halves the damage and negates the blindness, but not the poison.
+   The ooze then loses all of its temporary hit points.
+attacks:
+- name: Tentacle
+  type: mw
+  reach: 10
+  ability: str
+  target: one target
+  onhit: >
+   [diceroll 3 4 str] acid damage plus [diceroll 3 6] necrotic damage, and the ooze may grapple the target. The ooze may have
+   up to two creatures grappled at any one time.
+flavor: A pool of shadowy black jelly, emitting a sickly orange glow from its center, suddenly appears and lashes out with its four tentacles.
+description:
+- header: Hunters in the Dark
+  text: >
+   Darkling oozes prowl the Underdark, where their ability to unleash bursts of blinding light is especially devastating to
+   the light-sensitive creatures that dwell there. The oozes usually hunt alone, using their fortifying vapors before teleporting
+   next to their target and blasting them with eldritch light. If their victim resists their radiant burst or poses a serious threat to
+   the ooze, it will teleport away at the nearest opportunity.
+- header: Unwholesome Radiance
+  text: >
+   A darkling ooze emits a steady, orange glow from its center. This glow makes those who look at it sick, and affects creatures
+   with an aversion to sunlight as if it were, in fact, sunlight.

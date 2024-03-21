@@ -1,0 +1,45 @@
+name: Decorator Crab
+headername: Crab, Decorator
+shortname: crab
+size: medium
+type: beast
+cr: 1
+ac:
+- 3
+- natural armor
+hd: 2
+speed:
+ land: 30
+ climb: 25
+ swim: 20
+stats:
+ str: 13
+ dex: 15
+ con: 15
+ int: 1
+ wis: 12
+ cha: 2
+skills:
+- stealth
+abilities:
+- name: Amphibious
+- name: Anemones
+  effect: >
+   Whenever a creature hits the crab with a melee attack, the attacker must make a [save w/dex con],
+   taking [diceroll 1 4] poison damage on a failure.
+- name: Camouflaged Shell
+  effect: While in a natural, aquatic environment, the crab can take the Hide action as a bonus action.
+attacks:
+- name: Claw
+  type: mw
+  ability: dex
+  reach: 5
+  target: one target
+  onhit: >
+   [diceroll 1 6 dex] slashing damage and the crab may grapple the target. The crab has two claws, each of which can grapple one target.
+flavor: This crab has several large anemones attached to its shell, providing both protection and camouflage.
+description:
+- header: Ambush Predators
+  text: >
+   Decorator crabs attach aquatic debris of all sorts to their shells, allowing them to hide very well in plain sight.
+   They spend most of their time lying in wait for potential prey to swim past their hideouts.

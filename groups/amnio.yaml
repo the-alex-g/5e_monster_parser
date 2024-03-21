@@ -46,8 +46,6 @@ abilities:
     \item For each memory point that the amnio spends, it gets +1 AC until the start of its next turn.
     \item For each memory point that the amnio spends, it gets +1 to any one check or saving throw. Use of this ability must be declared before any dice are rolled.
     \item For every two memory points that the amnio spends, it can make one attack.
-    \item For every three memory points that the amnio spends, one [monster Fragment] with [diceroll 1 6 3] health remaining
-    appears in an unoccupied space within 30 feet.
     \end{itemize}
 actions:
 - name: Memory Drain

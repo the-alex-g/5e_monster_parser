@@ -1,0 +1,46 @@
+name: Spawner Amnio
+headername: Amnio, Spawner
+group: Amnio
+params:
+ draintargets: 3
+ memorymax: 20
+tags:
+- greater
+ac:
+- 3
+- natural armor
+cr: 8
+hd: 14
+speed:
+ land: 30
+stats:
+ str: 16
+ dex: 11
+ con: 15
+ int: 13
+ wis: 11
+ cha: 14
+languages:
+- telepathy 60 ft
+abilities:
+- name: Spawning Nexus
+  effect: >
+   Whenever a humanoid within 60 feet of the spawner fails an Int, Wis, or Cha check by at least 3, a Fragment with [diceroll 1 6 3]
+   health remaining appears in an unoccupied space within 10 feet of the target. If the humanoid failed the check by 6 or more,
+   a Scourge with [diceroll 2 8 2] health appears instead.
+actions:
+- name: Multiattack
+  effect: The spawner makes three claw attacks and uses Memory Drain once.
+attacks:
+- name: Claw
+  type: mw
+  reach: 10
+  target: one target
+  ability: str
+  onhit: "[diceroll 2 8 str] slashing damage."
+flavor: Shards of ivory energy swirl around this towering fiend.
+description:
+- header: Progenitors of the Horde
+  text: >
+   Spawners create lesser amnio out of the stray thoughts of nearby humanoids, allowing the ivory horde to reinforce itself in the
+   middle of battle. Opposing armies soon found out that they could not turn back the horde until they had destroyed the spawners.

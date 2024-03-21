@@ -5,13 +5,11 @@ params:
   draintargets: 2
   memorymax: 10
 size: medium
-tags:
-- greater
 ac:
 - 3
 - natural armor
 hd: 9
-cr: 3
+cr: 4
 speed:
   land: 30
   climb: 30

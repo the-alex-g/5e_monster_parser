@@ -26,21 +26,27 @@ stats:
   cha: 11
 actions:
 - name: Multiattack
-  effect: The scourge makes two claw attacks (or other weapon attacks if shapeshifted) and uses Memory Drain once.
+  effect: The scourge makes three claw attacks and uses Memory Drain once.
 - name: Acidify
   effect: >
     This action can only be taken if the scourge could use its spit acid attack. Using this action expends the spit acid
-    attack. The next three Claw attacks that deal damage deal an additional [diceroll 1 4] acid damage.
+    attack. The next three Claw attacks that hit deal [diceroll 1 4] acid damage in addition to any other damage.
 attacks:
 - name: Claw
   type: mw
   reach: 5
   ability: dex
   target: one target
-  onhit: "[diceroll 1 6 dex] slashing damage plus [diceroll 1 4] acid damage."
+  onhit: "[diceroll 2 4 dex] slashing damage."
 - name: Spit Acid (Recharge 5-6)
   type: rw
   ability: dex
   range: 40/60
   target: one target
   onhit: "[diceroll 1 4 dex] acid damage, and the target takes [diceroll 1 4] acid damage at the end of their next turn."
+flavor: This mass of clicking, insectile appendages defies comprehension.
+description:
+- header: Soldiers of Oblivion
+  text: >
+   Together with the fragments, scourges form the bulk of the amnio hordes. Usually serving under nightmare commanders, the scourges
+   lived up to their name by spreading death and oblivion across the land.

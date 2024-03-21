@@ -11,7 +11,7 @@ ac:
 - 3
 - natural armor
 hd: 14
-cr: 7
+cr: 8
 speed:
   land: 30
   hover: 30
