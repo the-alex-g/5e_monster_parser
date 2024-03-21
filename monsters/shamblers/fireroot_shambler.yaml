@@ -1,0 +1,57 @@
+name: Fireroot Shambler
+headername: Shambler, Fireroot
+group: Shambler
+size: large
+ac:
+- 3
+- natural armor
+hd: 15
+cr: 3
+speed:
+  land: 15
+stats:
+  str: 17
+  dex: 4
+  con: 14
+  int: 1
+  wis: 9
+  cha: 4
+saves:
+- str
+- con
+resist:
+- cold
+- piercing from non-magical weapons
+vulnerable:
+- fire
+- slashing from magical weapons
+senses:
+- tremorsense 120 ft.
+actions:
+- name: Multiattack
+  effect: The fireroot shambler makes three root bulb attacks.
+attacks:
+- name: Root Bulb
+  type: mw
+  ability: str
+  reach: 10
+  target: one target
+  onhit: "[diceroll 1 6 str] bludgeoning damage plus 1 fire damage."
+flavor: An unassuming conifer suddenly lashes out with a thick root, tipped with a glowing orange bulb.
+description:
+- header: Heated Root Tips
+  text: >
+    Fireroot trees grow in the far north, where their heat-generating root tips
+    allow them to extract nutrients from the frozen soil. 5 (2d4) root bulbs
+    can be harvested from a dead fireroot tree. A root bulb can be used like a club
+    (1d6 bludgeoning damage plus 1 fire damage) and sheds dim light in a
+    5-foot radius. A bulb loses its glow and fire damage after 4 (1d4 + 2) hours.
+- header: Berries
+  text: >
+    Ripe berries from a fireroot tree are bright, almost glowing orange, and quite tasty.
+    When eaten, they grant the eater cold resistance for 5 (2d4) hours. Unripe berries
+    are blue, ice-cold, extremely sour, and if eaten give the eater cold vulnerability for
+    5 (2d4) hours. Ripe berries are a valuable commodity in the northlands, and unripe
+    ones can fetch a high price in southern regions.
+habitat:
+- arctic

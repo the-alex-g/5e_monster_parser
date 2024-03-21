@@ -1,0 +1,61 @@
+name: Infiltrator Amnio
+headername: Amnio, Infiltrator
+group: Amnio
+params:
+  draintargets: 2
+  memorymax: 10
+size: medium
+tags:
+- shapechanger
+ac:
+- 2
+- natural armor
+hd: 6
+cr: 2
+speed:
+  land: 30
+senses:
+- darkvision 60 ft
+languages:
+- telepathy 60 ft
+stats:
+  str: 10
+  dex: 14
+  con: 17
+  int: 13
+  wis: 11
+  cha: 15
+abilities:
+- name: Dampening Aura
+  effect: All humanoids within 20 feet get -1 to their Int, Wis, and Cha checks.
+- name: Passive Harvesting
+  effect: Whenever a humanoid within 20 feet of the eraser fails an Int, Wis, or Cha check, the eraser gains one memory point.
+- name: Mimicry
+  effect: >
+    The infiltrator can mimic a person that a creature within 30 ft has a memory of. The mimicry is fairly accurate, requiring a
+    DC 12 Wisdom (Perception) check to detect any physical inaccuracies. Creatures who know the mimicked person well are likely
+    to notice behavioral differences as well. The infiltrator reverts to its natural form when it dies. While mimicking a creature,
+    the infiltrator uses its own stats, but has access to all weapon attacks that creature would normally have, and can understand
+    all languages that the mimicked creature could speak.
+actions:
+- name: Multiattack
+  effect: The inflitrator makes two claw attacks (or other weapon attacks if shapeshifted) and uses Memory Drain once.
+attacks:
+- name: Claw (Natural Form Only)
+  type: mw
+  reach: 5
+  ability: dex
+  target: one target
+  onhit: "[diceroll 1 6 dex] slashing damage plus [diceroll 1 4] acid damage."
+flavor: >
+  Unlike most amnio, this one is clearly humanoid in silhouette. Like the erasers, where a person’s face should be,
+  there is a blank white mask.
+description:
+- header: Spies for the Horde
+  text: >
+    Using their ability to mimic humanoids with reasonable accuracy, infiltrators were able to bypass security measures that were
+    thought insurmountable, often retrieving secrets without anyone knowing that they had been and gone.
+- header: Distracting Presence
+  text: >
+    Creatures that stand near an infiltrator have a hard time thinking straight, with their minds feeling fuzzy as if they were drunk.
+    However, affected creatures rarely suspect the true cause of their difficulty.

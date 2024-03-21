@@ -1,0 +1,57 @@
+name: Adult Zinc Dragon
+headername: Dragon, Zinc, Adult
+group: Dragon, Zinc
+sortindex: 1
+size: huge
+alignment: chaotic neutral
+params:
+  lightning: "[diceroll 2 10]"
+  breathweapon: "[diceroll 9 12]"
+  waterdamage: "[diceroll 6 6]"
+  linelength: 50
+ac:
+- 7
+- natural armor
+hd: 15
+speed:
+  land: 40
+  fly: 90
+stats:
+  str: 23
+  dex: 21
+  con: 20
+  int: 16
+  wis: 16
+  cha: 20
+senses:
+- darkvision 100 ft.
+cr: 15
+abilities:
+- name: Legendary Resistance
+  uses: 3/day
+actions:
+- name: Multiattack
+  effect: The dragon can use its Frightful Presence. It then makes one bite attack and two claw attacks.
+attacks:
+- name: Claw
+  type: mw
+  ability: str
+  reach: 5
+  target: one target
+  onhit: "[diceroll 1 8 str] slashing damage plus [lightning] lightning damage."
+- name: Bite
+  type: mw
+  ability: str
+  reach: 10
+  target: one target
+  onhit: "[diceroll 1 10 str] piercing damage plus [lightning] lightning damage."
+legendary-actions:
+- name: Flight
+  effect: The dragon moves up to its flying speed.
+- name: Claw
+  effect: The dragon makes a claw attack.
+- name: Dive
+  cost: 3
+  effect: >
+    The dragon dives at least 100 feet straight towards a target and makes
+    a bite attack. This attack deals an additional [diceroll 2 8] piercing damage on a hit.

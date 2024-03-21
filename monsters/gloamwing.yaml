@@ -1,0 +1,56 @@
+name: Gloamwing
+size: small
+type: elemental
+cr: 1/4
+hd: 6
+speed:
+  land: 5
+  fly: 40
+stats:
+  str: 4
+  dex: 15
+  con: 11
+  int: 3
+  wis: 13
+  cha: 10
+saves:
+- dex
+vulnerable:
+- necrotic
+immune:
+- radiant
+- bludgeoning, piercing, and slashing from non-magical weapons
+senses:
+- darkvision 120 ft
+abilities:
+- name: Cyclical Immunities
+  effect: >
+    During the day, the gloamwing is immune to fire damage.
+    At night, it has immunity to cold damage. This immunity
+    is in addition to any other immunities.
+- name: Glow
+  effect: >
+    A gloamwing sheds bright light for 10 feet and dim light
+    for an additional 20 feet. This light is golden in color
+    during the day, and silver at night.
+attacks:
+- name: Suntouch
+  type: mw
+  ability: dex
+  reach: 5
+  target: one target
+  onhit: >
+    [diceroll 1 4 dex] radiant damage, plus one fire damage during
+    the day, or one cold damage at night.
+flavor: >
+  A glowing shape, similar to a huge swallowtail butterfly, glides
+  past. It seems to swim through the air on glimmering wings.
+description:
+- header: Spirits of the Sun and Stars
+  text: >
+    Gloamwings are classified as elementals, but are intimately
+    connected to the movements of the sun and moon. Their migration
+    patterns follow the paths of celestial objects, and their glow
+    changes from a brilliant golden color during the day to a solemn
+    silver tone at night. During dusk and dawn, gloamwings of both
+    hues can be seen, mingling the light of the sun and moon.

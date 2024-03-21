@@ -1,0 +1,44 @@
+name: Young Zinc Dragon
+headername: Dragon, Zinc, Young
+group: Dragon, Zinc
+sortindex: 2
+size: large
+alignment: chaotic neutral
+ac:
+- 5
+- natural armor
+params:
+  lightning: "[diceroll 2 8]"
+  breathweapon: "[diceroll 6 12]"
+  waterdamage: "[diceroll 4 6]"
+  linelength: 30
+hd: 9
+speed:
+  land: 40
+  fly: 90
+stats:
+  str: 21
+  dex: 22
+  con: 19
+  int: 16
+  wis: 16
+  cha: 19
+senses:
+- darkvision 80 ft.
+cr: 10
+actions:
+- name: Multiattack
+  effect: The dragon makes one bite attack and two claw attacks.
+attacks:
+- name: Claw
+  type: mw
+  ability: str
+  reach: 5
+  target: one target
+  onhit: "[diceroll 1 8 str] slashing damage plus [lightning] lightning damage."
+- name: Bite
+  type: mw
+  ability: str
+  reach: 10
+  target: one target
+  onhit: "[diceroll 1 10 str] piercing damage plus [lightning] lightning damage."

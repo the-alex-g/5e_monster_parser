@@ -1,0 +1,95 @@
+name: Null Beholder
+headername: Beholder, Null
+type: aberration
+size: large
+alignment: chaotic evil
+hd: 24
+stats:
+ str: 11
+ dex: 14
+ con: 19
+ int: 18
+ wis: 15
+ cha: 11
+speed:
+ land: 0
+ fly-hover: 35
+saves:
+- str
+- con
+- int
+skills:
+- arcana
+- intimidation
+- stealth
+immune:
+- necrotic
+senses:
+- blindsight 120 ft.
+languages:
+- common
+- deep speech
+cr: 13
+abilities:
+- name: Antimagic Aura
+  effect: The area within 15 feet of the beholder is under the effect of an [spell Antimagic Field].
+attacks:
+- name: Draining Bites
+  type: mw
+  ability: dex
+  reach: 10
+  target: two targets
+  onhit: >
+    [diceroll 4 4 dex] slashing damage plus [diceroll 1 10] necrotic damage.
+    The beholder heals an amount equal to the amount of necrotic damage dealt.
+- name: Maw
+  type: mw
+  ability: dex
+  reach: 5
+  target: one target
+  onhit: "[diceroll 4 10 dex] slashing damage plus [diceroll 2 6] acid damage."
+- name: Eye Bites
+  type: mw
+  ability: dex
+  reach: 10
+  target: four targets
+  onhit: "[diceroll 4 4 dex] slashing damage."
+- name: Venomous Bites
+  type: mw
+  ability: dex
+  reach: 10
+  target: two targets
+  onhit: >
+    [diceroll 4 4 dex] slashing damage
+    plus [diceroll 1 6] poison damage
+    plus [diceroll 1 4] necrotic damage,
+    and the target must succeed on a [save w/con con] or be poisoned.
+    While poisoned in this way, a creature takes [diceroll 1 4] poison damage
+    plus [diceroll 1 4] necrotic damage at the start of each of their turns, and cannot cast spells.
+    An affected creature can repeat the saving throw at the end of each of their turns,
+    ending the effect on itself on a success.
+habitat:
+- underground
+flavor: >
+  This monstrosity is nothing but mouths;
+  eight tentacles, each tipped with a snapping mouth,
+  emerge from a round body with a single, massive maw.
+description:
+- header: Distant Relatives
+  text: >
+    Although null beholders bear some resemblance to normal beholders,
+    their behaviors differ wildly. A null beholder has little concern for its personal safety,
+    staying to fight obviously superior forces if there is a chance that it gets to eat fresh meat.
+- header: Unknown Origins
+  text: >
+    Some scholars theorize that null beholders result from
+    a regular beholder being bathed in negative energy;
+    others postulate that they form when a true beholder dreams of starvation.
+- header: Tireless Hunters
+  text: >
+    Null beholders rarely establish a permanent lair and do not seek out servants,
+    but will accept any creature that decides to follow and worship it.
+    A null beholder spends most of its time prowling through dark places in search of its next meal.
+actions:
+- name: Multiattack
+  effect: The null beholder makes one maw attack and two other melee attacks.

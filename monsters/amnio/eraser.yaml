@@ -1,0 +1,59 @@
+name: Eraser Amnio
+headername: Amnio, Eraser
+group: Amnio
+params:
+  draintargets: 2
+  memorymax: 10
+size: medium
+tags:
+- greater
+ac:
+- 3
+- natural armor
+hd: 9
+cr: 3
+speed:
+  land: 30
+  climb: 30
+cond-immune:
+- petrified
+senses:
+- darkvision 120 ft
+languages:
+- telepathy 40 ft
+stats:
+  str: 11
+  dex: 15
+  con: 19
+  int: 15
+  wis: 11
+  cha: 12
+actions:
+- name: Multiattack
+  effect: The eraser makes two claw attacks, one spit acid attack, and uses Memory Drain once.
+- name: Memory Wipe
+  uses: 1/day
+  effect: >
+    One humanoid within 30 feet of the eraser must make a [save w/int int] On a failure, the target takes [diceroll 4 6]
+    psychic damage and loses its last hour of memory. On a success, the target takes half as much damage and suffers no
+    memory loss. For every 5 damage the target suffered, the eraser may create one Fragment with 5 health remaining in an
+    empty space within 10 feet of the target.
+attacks:
+- name: Claw
+  type: mw
+  reach: 5
+  ability: dex
+  target: one target
+  onhit: "[diceroll 1 6 dex] slashing damage plus [diceroll 1 4] acid damage."
+- name: Spit Acid
+  type: rw
+  range: 40/60
+  ability: dex
+  target: one target
+  onhit: "[diceroll 1 4 dex] acid damage, and the target takes [diceroll 1 4] acid damage at the end of their next turn."
+flavor: Where this long-limbed fiend’s face might be, there is a featureless mask of bone.
+description:
+- header: Torturers
+  text: >
+    The erasers served as the torturers of the Ivory Mage, extracting secrets from the minds of captured enemies.
+    The erasers were rarely employed in open combat, instead operating in small groups to capture opposing officials.

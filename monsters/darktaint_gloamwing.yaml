@@ -1,0 +1,50 @@
+name: Darktaint Gloamwing
+headername: Gloamwing, Darktaint
+size: small
+type: elemental
+alignment: neutral evil
+cr: 1/4
+hd: 4
+speed:
+  land: 5
+  fly: 40
+stats:
+  str: 4
+  dex: 15
+  con: 12
+  int: 3
+  wis: 13
+  cha: 10
+saves:
+- dex
+vulnerable:
+- radiant
+immune:
+- necrotic
+- bludgeoning, piercing, and slashing from non-magical weapons
+senses:
+- darkvision 120 ft
+abilities:
+- name: Aura of Darkness
+  effect: >
+    The darktaint gloamwing reduces the light level of non-magical
+    light by one in a 10-foot radius around it (bright light becomes
+    dim light and dim light becomes darkness). While in natural darkness
+    (before the reduction), the gloamwing can take the Hide action as a
+    bonus action.
+- name: Sunlight Sensitivity
+attacks:
+- name: Draining Touch
+  type: mw
+  ability: dex
+  reach: 5
+  target: one target
+  onhit: "[diceroll 1 4 dex] necrotic damage."
+flavor: A batlike shred of shadow flutters through the air, casting a shroud of darkness around it.
+description:
+- header: Corrupted Gloamwings
+  text: >
+    A gloamwing deprived too long of natural light, or one exposed to energies
+    from the Plane of Shadow, becomes a twisted, evil creature of darkness.
+    Although not particularly dangerous individually, swarms of tainted
+    gloamwings pose a significant threat to travelers after dark.

@@ -1,4 +1,5 @@
 import yaml
+import os
 from tables import *
 from math import floor
 
@@ -356,30 +357,31 @@ def check_missing_fields(monster):
     error = False
     monster_name = ""
     if not "name" in monster:
-        print("Unnamed monster!")
+        print("ERROR: " + "Unnamed monster!")
         error = True
     else:
         monster_name = monster["name"]
+        print(monster_name)
         if not "cr" in monster:
-            print(monster_name + " does not have a CR")
+            print("ERROR: " + monster_name + " does not have a CR")
             error = True
         if not "size" in monster:
-            print(monster_name + " does not have a size")
+            print("ERROR: " + monster_name + " does not have a size")
             error = True
         if not "type" in monster:
-            print(monster_name + " does not have a type")
+            print("ERROR: " + monster_name + " does not have a type")
             error = True
         if not "hd" in monster:
-            print(monster_name + " does not have hit dice")
+            print("ERROR: " + monster_name + " does not have hit dice")
             error = True
         if not "speed" in monster:
-            print(monster_name + " does not have a speed")
+            print("ERROR: " + monster_name + " does not have a speed")
             error = True
         elif not "land" in monster["speed"]:
-            print(monster_name + " does not have a land speed")
+            print("ERROR: " + monster_name + " does not have a land speed")
             error = True
         if not "stats" in monster:
-            print(monster_name + " does not have ability scores")
+            print("ERROR: " + monster_name + " does not have ability scores")
             error = True
     return error
 
@@ -449,15 +451,15 @@ def monster_shortname(monster):
         return monster["name"]
 
 
-def create_header(name, label=True):
+def create_header(name, mark=True):
     header = "\\section*{" + name + "}\\label{" + name + "}"
-    if label:
+    if mark:
         header += "\\markboth{" + name + "}{" + name + "}"
     header += "\\addcontentsline{toc}{subsection}{" + name + "}\\halfline" + LINEBREAK
     return header
 
 
-def create_monster(monster, in_group=False):
+def create_monster(monster, header=True):
     if check_missing_fields(monster):
         return ""
     monster_string = ""
@@ -468,7 +470,7 @@ def create_monster(monster, in_group=False):
     if "params" in monster:
         for param in monster["params"]:
             params[param] = monster["params"][param]
-    if not in_group:
+    if header:
         monster_string = create_header(headername)
     else:
         monster_string += "\\label{" + headername + "}"
@@ -631,8 +633,8 @@ def add_to_appendices(monster):
 
 
 def resolve_group(group, monsters):
-    is_in_group = group["group_type"] == "group"
-    group_string = create_header(group["name"], label=is_in_group)
+    include_monster_headers = group["include-monster-headers"]
+    group_string = create_header(group["name"], mark=not include_monster_headers)
     if "flavor" in group:
         group_string += "\\textit{" + group["flavor"] + "}" + NEWLINE + LINEBREAK
 
@@ -643,22 +645,25 @@ def resolve_group(group, monsters):
             group_type = group["type"]
         if "shortname" in group:
             group_shortname = group["shortname"]
-        group_string += description(group["description"], group_type, group_shortname, include_default=is_in_group) + LINEBREAK
+        group_string += description(group["description"], group_type, group_shortname, include_default=not include_monster_headers) + LINEBREAK
 
-    monster_name_dict = {}
-    for monster in monsters:
-        monster_name_dict[monster_headername(monster)] = monster
-    monsters_to_iterate = monster_name_dict
+    monster_dict = {}
     if "sorttype" in group:
         if group["sorttype"] == "alphabetical":
-            monsters_to_iterate = sorted(monster_name_dict)
-    for monster_name in monsters_to_iterate:
-        monster = monster_name_dict[monster_name]
-        print(monster["name"])
-
+            for monster in monsters:
+                monster_dict[monster_headername(monster)] = monster
+        elif group["sorttype"] == "index":
+            for monster in monsters:
+                if monster["sortindex"] in monster_dict:
+                    print("Duplicate indicies in group " + group["name"])
+                else:
+                    monster_dict[monster["sortindex"]] = monster
+    
+    for index in sorted(monster_dict):
+        monster = monster_dict[index]
         # Copy group attributes to monster
         for field in group:
-            if not field in ["name", "sorttype", "flavor", "description", "group_type"]:
+            if not field in ["name", "sorttype", "flavor", "description", "include-monster-headers"]:
                 if type(group[field]) == list:
                     for item in group[field]:
                         if field in monster:
@@ -678,7 +683,7 @@ def resolve_group(group, monsters):
                     if not field in monster:
                         monster[field] = group[field]
         
-        group_string += create_monster(monster, in_group=is_in_group) + LINEBREAK
+        group_string += create_monster(monster, header=include_monster_headers) + LINEBREAK
         add_to_appendices(monster)
     
     return group_string
@@ -698,25 +703,39 @@ def create_appendix_table(table):
     return string
 
 
-def create_doc(filedict):
+def open_yaml(filepath):
+    with open(filepath) as stream:
+        try:
+            return yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc, " in file ", filepath)
+
+
+def get_yaml_from_directory(dirname):
+    yaml_list = []
+    if os.path.isdir(dirname):
+        for item in os.listdir(dirname):
+            path = os.path.join(dirname, item)
+            if os.path.isfile(path):
+                yaml_list.append(open_yaml(path))
+            elif os.path.isdir(path):
+                for yaml_dir in get_yaml_from_directory(path):
+                    yaml_list.append(yaml_dir)
+    return yaml_list
+
+
+def create_doc():
     latexfile = open("monsters.tex", "w")
     latexfile.write(PREAMBLE)
 
     monster_name_dict = {}
-    if "groups" in filedict:
-        for group in filedict["groups"]:
-            group["group_type"] = "group"
-            monster_name_dict[group["name"]] = [group]
-    if "categories" in filedict:
-        for category in filedict["categories"]:
-            category["group_type"] = "category"
-            monster_name_dict[category["name"]] = [category]
-    for monster in filedict["monsters"]:
+    for group in get_yaml_from_directory("groups"):
+        monster_name_dict[group["name"]] = [group]
+    
+    for monster in get_yaml_from_directory("monsters"):
         monstername = monster_headername(monster)
         if "group" in monster:
             monster_name_dict[monster["group"]].append(monster)
-        elif "category" in monster:
-            monster_name_dict[monster["category"]].append(monster)
         else:
             monster_name_dict[monstername] = monster
     
@@ -725,10 +744,9 @@ def create_doc(filedict):
             group = monster_name_dict[monster_name]
             latexfile.write(resolve_group(group[0], group[1:]) + PAGEBREAK)
             continue
-        print(monster_name)
         monster = monster_name_dict[monster_name]
-        add_to_appendices(monster)
         latexfile.write(create_monster(monster) + PAGEBREAK)
+        add_to_appendices(monster)
         
     latexfile.write("\\markboth{Appendicies}{Appendicies}")
     latexfile.write(create_appendix_table(monsters_by_cr) + PAGEBREAK)
@@ -738,8 +756,4 @@ def create_doc(filedict):
     latexfile.close()
 
 
-with open(SOURCE_YAML_NAME + ".yaml") as stream:
-    try:
-        create_doc(yaml.safe_load(stream))
-    except yaml.YAMLError as exc:
-        print(exc)
+create_doc()

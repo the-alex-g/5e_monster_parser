@@ -1,0 +1,53 @@
+name: Conduit Amnio
+headername: Amnio, Conduit
+group: Amnio
+params:
+  draintargets: 3
+  memorymax: 40
+size: large
+tags:
+- greater
+ac:
+- 3
+- natural armor
+hd: 14
+cr: 7
+speed:
+  land: 30
+  hover: 30
+cond-immune:
+- petrified
+senses:
+- darkvision 120 ft
+languages:
+- telepathy 120 ft
+stats:
+  str: 14
+  dex: 11
+  con: 20
+  int: 19
+  wis: 11
+  cha: 14
+abilities:
+- name: Assimilation
+  effect: >
+    The conduit can use the memory points of other amnio within 30 feet as if they were its own, and vice versa.
+    The conduit can also destroy any lesser amnio within 60 feet of it at any time to immediately gain 2 memory points.
+- name: Memory Regeneration
+  effect: The conduit regains [diceroll 1 4] memory points at the start of each of its turns.
+actions:
+- name: Multiattack
+  effect: The conduit makes three claw attacks and uses Memory Drain once.
+attacks:
+- name: Claw
+  type: mw
+  reach: 10
+  ability: str
+  target: one target
+  onhit: "[diceroll 2 10 str] slashing damage plus [diceroll 1 4] acid damage."
+flavor: The hole in the chest of this spiny monstrosity seems to be a gate to another world.
+description:
+- header: Source of Power
+  text: >
+    The conduits serve as generals in the Ivory Mage’s hordes. Their ability to pull psychic energy directly from the vaults of
+    Ishkindil and distribute it among their minions made them an invaluable component of the amnio armies.

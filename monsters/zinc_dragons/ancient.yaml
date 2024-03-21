@@ -1,0 +1,63 @@
+name: Ancient Zinc Dragon
+headername: Dragon, Zinc, Ancient
+group: Dragon, Zinc
+sortindex: 0
+size: gargantuan
+alignment: chaotic neutral
+params:
+  lightning: "[diceroll 2 12]"
+  breathweapon: "[diceroll 13 12]"
+  waterdamage: "[diceroll 6 6]"
+  linelength: 60
+ac:
+- 10
+- natural armor
+speed:
+  land: 40
+  fly: 90
+hd: 12
+stats:
+  str: 24
+  dex: 20
+  con: 25
+  int: 17
+  wis: 16
+  cha: 22
+senses:
+- darkvision 120 ft
+cr: 22
+abilities:
+- name: Legendary Resistance
+  uses: 3/day
+actions:
+- name: Multiattack
+  effect: >
+    The dragon can use its Frightful Presence. It then makes one bite attack
+    and two claw attacks.
+- name: Frightful Presence
+attacks:
+- name: Bite
+  type: mw
+  ability: str
+  reach: 15
+  target: one target
+  onhit: >
+    [diceroll 2 8 str] piercing damage plus [lightning] lightning damage.
+- name: Claw
+  type: mw
+  ability: str
+  reach: 10
+  target: one target
+  onhit: >
+    [diceroll 2 6 str] slashing damage plus [lightning] lightning damage.
+legendary-actions:
+- name: Flight
+  effect: The dragon moves up to its flying speed.
+- name: Claw
+  effect: The dragon makes a claw attack.
+- name: Dive
+  cost: 3
+  effect: >
+    The dragon dives at least 100 feet straight towards a target and makes a
+    bite attack. This attack deals an additional [diceroll 3 8] piercing
+    damage on a hit.

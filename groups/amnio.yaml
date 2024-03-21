@@ -1,0 +1,60 @@
+name: Amnio
+sorttype: alphabetical
+include-monster-headers: True
+type: fiend
+alignment: neutral evil
+tags:
+- amnio
+saves:
+- con
+- int
+- cha
+resist:
+- cold
+- fire
+immune:
+- poison
+- psychic
+- acid
+cond-immune:
+- stunned
+description:
+- header: Created Servants
+  text: >
+    The amnio are a type of neutral evil fiend that were originally created by the Ivory Mage,
+    a wizard-king of some ancient kingdom. He managed to ascend to low-level godhood by harnessing
+    the thoughts of his subjects through an arcane ritual, turning their bodies into mindless thralls
+    and absorbing their minds to fuel his ascension. The Ivory Mage then proceeded to strip the thoughts
+    from other unfortunate beings throughout reality, forming them into fiendish servants.
+- header: Floating Fortress
+  text: >
+    Eventually, he managed to harvest enough thoughts to unmoor his citadel of Ishkindil from the Material
+    Plane, turning it into a floating fortress capable of shifting between the lower planes.
+- header: Chitinous Fiends
+  text: >
+    The amnio take the form of spiky, spindly beings composed of chitin the color of bleached bone.
+    Several types also drip a black, sticky acid from pores on their surface.
+abilities:
+- name: Memory Pool
+  effect: >
+    The amnio has a pool of memory points that it can spend at any time to activate one of the effects below.
+    Each effect can be activated only once between turns, and no more than 10 memory points can be spent on any
+    single effect. The amnio can never have more than [memorymax] memory points at one time. \begin{itemize}
+    \item For each memory point that the amnio spends, it heals 1d4 hit points.
+    \item One creature within 30 feet of the amnio must make a DC 10 + X Wisdom saving throw,
+    taking Xd4 psychic damage on a failure, where X is the number of memory points that the amnio spent.
+    \item For each memory point that the amnio spends, it gets +1 AC until the start of its next turn.
+    \item For each memory point that the amnio spends, it gets +1 to any one check or saving throw. Use of this ability must be declared before any dice are rolled.
+    \item For every two memory points that the amnio spends, it can make one attack.
+    \item For every three memory points that the amnio spends, one [monster Fragment] with [diceroll 1 6 3] health remaining
+    appears in an unoccupied space within 30 feet.
+    \end{itemize}
+actions:
+- name: Memory Drain
+  effect: >
+    Up to [draintargets] humanoids within 30 feet of the amnio must make a [save w/none int], using their highest attribute out
+    of Int, Wis, or Cha. If the creature fails the saving throw, the attribute score for the attribute used to make the save is
+    reduced by one, to a minimum of one, and the amnio gains one memory point. If the target’s Int, Wis, and Cha scores are all
+    equal to one, the target is dominated by the amnio and forced to obey their commands for as long as all their Int, Wis, and
+    Cha scores are equal to one. Every day, if the target is not dominated by an amnio, their lowest attribute score out of Int,
+    Wis, or Cha is increased by one, to a maximum of the original value.

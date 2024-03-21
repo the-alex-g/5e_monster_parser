@@ -1,0 +1,73 @@
+name: Bloodbough Shambler
+headername: Shambler, Bloodbough
+group: Shambler
+size: huge
+ac:
+- 3
+- natural armor
+hd: 19
+speed:
+  land: 15
+saves:
+- str
+- con
+immune:
+- acid
+- psychic
+resist:
+- piercing from non-magical weapons
+vulnerable:
+- fire
+- slashing from magical weapons
+senses:
+- tremorsense 120 ft.
+stats:
+  str: 17
+  dex: 4
+  con: 14
+  int: 1
+  wis: 9
+  cha: 4
+cr: 4
+abilities:
+- name: Flammable Sap
+  effect: >
+    If the bloodbough shambler takes 5 or more fire damage in a single round,
+    it bursts into flames. While burning, it takes [diceroll 4 6] fire damage
+    at the start of each of its turns, its sap shower ability deals an additional
+    [diceroll 2 4] fire damage, and its slam attacks deal an additional
+    [diceroll 1 8] fire damage. The fire is put out if the shambler takes 20 or
+    more cold damage in a single round.
+- name: Sap Shower
+  effect: >
+    Whenever a creature starts or ends its turn within 20 feet of the
+    bloodbough shambler, it takes [diceroll 1 4] acid damage from dripping sap.
+actions:
+- name: Multiattack
+  effect: The bloodbough shambler makes three slam attacks.
+attacks:
+- name: Slam
+  type: mw
+  reach: 20
+  ability: str
+  target: one target
+  onhit: "[diceroll 1 8 str] bludgeoning damage plus [diceroll 1 4] acid damage."
+flavor: Everything about this tree is red---the bark is reddish-brown, the leaves are a dull red, and scarlet sap drips from the boughs.
+description:
+- header: Caustic Sap
+  text: >
+    Bloodbough shamblers constantly drip blood-red acidic sap from their branches,
+    killing off all other growth around them. This sap is also highly flammable,
+    so lighting fires near bloodboughs is inadvisable.
+- header: Edible Nuts
+  text: >
+    Nuts from bloodbough trees are bright red and cashew-shaped, and also highly toxic.
+    Eating a nut raw causes 3 (1d6) poison damage and 5 (2d4) acid damage.
+    However, cooking the nuts renders them edible, and they are considered a delicacy in many places.
+    The most popular way to serve them is to roast them for a short time, but at a very
+    high temperature, so they acquire some surface charring without turning the entire nut
+    into a lump of charcoal. A single bloodbough tree yields about 34 (4d6 + 20) pounds of nuts,
+    with a pound of nuts being worth about 2 gc. Thick gloves are necessary in order to harvest
+    the nuts without losing digits to the acidic sap.
+habitat:
+- grasslands

@@ -1,0 +1,35 @@
+name: Zinc Dragon Wyrmling
+headername: Dragon, Zinc, Wyrmling
+group: Dragon, Zinc
+sortindex: 3
+size: medium
+alignment: chaotic neutral
+params:
+  lightning: "[diceroll 1 12]"
+  breathweapon: "[diceroll 3 12]"
+  waterdamage: "[diceroll 3 6]"
+  linelength: 15
+ac:
+- 4
+- natural armor
+hd: 6
+speed:
+  land: 30
+  fly: 70
+stats:
+  str: 17
+  dex: 20
+  con: 16
+  int: 14
+  wis: 15
+  cha: 16
+senses:
+- darkvision 60 ft.
+cr: 4
+attacks:
+- name: Bite
+  type: mw
+  ability: str
+  reach: 5
+  target: one target
+  onhit: "[diceroll 1 8 str] piercing damage plus [lightning] lightning damage."

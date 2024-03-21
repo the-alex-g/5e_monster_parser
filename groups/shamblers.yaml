@@ -1,0 +1,9 @@
+name: Shambler
+sorttype: alphabetical
+include-monster-headers: True
+type: plant
+description:
+- header: Foopants
+  text: lorem ipsum x1000
+abilities:
+- name: Rooted

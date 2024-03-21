@@ -1,0 +1,74 @@
+name: Dragon, Zinc
+shortname: dragon
+include-monster-headers: False
+sorttype: index
+type: dragon
+flavor: This dragon’s brilliant silver scales practically glow in the blazing desert sun as it swoops overhead.
+description:
+- header: Mercurial Temperament
+  text: >
+    Zinc dragons are unpredictable, jumping from one thing to
+    another with little regard for anything other than their
+    immediate interests. However, they are also exceedingly
+    vain and take great pride in their acrobatic skill and
+    mirrorlike scales. Any creature that compliments them
+    often and profusely stays in their good graces longer than
+    they would otherwise.
+- header: Desert Dwellers
+  text: >
+    Zinc dragons live in the deepest parts of the desert,
+    usually establishing their lairs far from any settlements.
+    Occasionally, blue dragons and zinc dragons fight over
+    territory, but such conflicts are relatively rare.
+- header: Hatred of Water
+  text: >
+    Zinc dragons have an intense fear of water, stemming from
+    the fact that any large amount of water sears their scales
+    like acid. They go to great lengths to ensure that no one
+    brings water into their domain.
+abilities:
+- name: Avoidance
+- name: Electric Current
+  effect: >
+    Any creature that touches the zinc dragon or hits it with a metal
+    melee weapon suffers [lightning] lightning damage. This effect
+    extends to include any conductive material that the dragon is touching.
+    For example, if the zinc dragon was in contact with a pool of water,
+    and someone jumped into the water, they would be electrocuted. The
+    zinc dragon can suppress this effect at any time.
+- name: Water Weakness
+  effect: >
+    At the start of each turn that the dragon is in contact with a significant
+    amount of water (submerged, in a rainstorm, was hit with a barrel of water
+    fired from a catapult), it takes [waterdamage] necrotic damage.
+reactions:
+- name: Electric Transfer
+  effect: >
+    When a creature within 60 feet of the dragon deals lightning damage,
+    the dragon can deal [lightning] to that creature.
+habitat:
+- desert
+saves:
+- dex
+- con
+- wis
+- cha
+skills:
+- acrobatics
+- perception
+- performance
+resist:
+- fire
+immune:
+- lightning
+languages:
+- auran
+- common
+- draconic
+actions:
+- name: Lightning Breath
+  uses: recharge 5-6
+  effect: >
+    The dragon spits a [linelength]-foot-long, 5-foot-wide line of crackling electricity.
+    All targets in the area take [breathweapon] lightning damage, or half
+    as much with a successful [save w/dex con] saving throw.

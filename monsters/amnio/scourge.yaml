@@ -1,0 +1,46 @@
+name: Scourge Amnio
+headername: Amnio, Scourge
+group: Amnio
+params:
+  draintargets: 1
+  memorymax: 5
+size: medium
+tags:
+- lesser
+ac:
+- 3
+- natural armor
+hd: 7
+cr: 2
+speed:
+  land: 35
+  climb: 30
+languages:
+- telepathy 40 ft
+stats:
+  str: 12
+  dex: 12
+  con: 15
+  int: 10
+  wis: 11
+  cha: 11
+actions:
+- name: Multiattack
+  effect: The scourge makes two claw attacks (or other weapon attacks if shapeshifted) and uses Memory Drain once.
+- name: Acidify
+  effect: >
+    This action can only be taken if the scourge could use its spit acid attack. Using this action expends the spit acid
+    attack. The next three Claw attacks that deal damage deal an additional [diceroll 1 4] acid damage.
+attacks:
+- name: Claw
+  type: mw
+  reach: 5
+  ability: dex
+  target: one target
+  onhit: "[diceroll 1 6 dex] slashing damage plus [diceroll 1 4] acid damage."
+- name: Spit Acid (Recharge 5-6)
+  type: rw
+  ability: dex
+  range: 40/60
+  target: one target
+  onhit: "[diceroll 1 4 dex] acid damage, and the target takes [diceroll 1 4] acid damage at the end of their next turn."

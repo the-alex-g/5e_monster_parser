@@ -25,19 +25,19 @@ abilities:
    At the start of each of the ooze’s turns, roll on the following table twice. The first roll is a damage immunity
    and the second roll is a damage vulnerability. These modifications last until the start of the ooze’s next turn.
    \begin{tabular}{|l|l|}
-   \hline \\
+   \hline
    d6 & Damage Type \\
-   \hline \\
+   \hline
    1 & Acid \\
-   \hline \\
+   \hline
    2 & Cold \\
-   \hline\\
+   \hline
    3 & Fire \\
-   \hline \\
+   \hline
    4 & Lightning \\
-   \hline \\
+   \hline
    5 & Necrotic \\
-   \hline \\
+   \hline
    6 & Poison \\
    \hline
    \end{tabular}
@@ -54,8 +54,8 @@ attacks:
 flavor: A rounded ooze, covered with iridescent colors like a soap bubble, slimes across the ground.
 description:
 - header: Alchemical Accident
-  text: >
-   The first alchemical oozes were created as the result of a misguided attempt to create a magical servant in convenient bottled form.
+  text: The first alchemical oozes were created as the result of a misguided attempt to create a magical servant in convenient bottled form.
 - header: Unpredictable
-  text: >
-   Alchemical oozes are constantly changing. What hurts an ooze one minute might be completely ineffective against it the next.
+  text: Alchemical oozes are constantly changing. What hurts an ooze one minute might be completely ineffective against it the next.
+habitat:
+- urban

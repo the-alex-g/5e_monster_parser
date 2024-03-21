@@ -1,0 +1,45 @@
+name: Fragment Amnio
+headername: Amnio, Fragment
+group: Amnio
+params:
+  draintargets: 1
+  memorymax: 2
+size: small
+tags:
+- lesser
+ac:
+- 3
+- natural armor
+hd: 2
+cr: 1/4
+speed:
+  land: 35
+  climb: 30
+languages:
+- telepathy 30 ft
+stats:
+  str: 9
+  dex: 14
+  con: 15
+  int: 10
+  wis: 10
+  cha: 11
+actions:
+- name: Multiattack
+  effect: The fragment makes one claw attack and uses Memory Drain once.
+attacks:
+- name: Claw
+  type: mw
+  reach: 5
+  ability: dex
+  target: one target
+  onhit: "[diceroll 1 4 dex] slashing damage."
+flavor: A twisted, spiky shape skitters across the ground on four insectile legs.
+description:
+- header: Expendable Minions
+  text: Fragments are the weakest of the amnio, and, along with the scourges, form the bulk of the amnio hordes.
+- header: Fragment of Thought
+  text: >
+    Fragments are created from snippets of thought that would otherwise be discarded by the more powerful amnio,
+    almost as a byproduct of creating more other amnio. As a result of their incidental nature, fragments are neither
+    intelligent nor powerful.

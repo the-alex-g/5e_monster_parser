@@ -1,0 +1,76 @@
+name: Hedgehog Goblin
+headername: Goblin, Hedgehog
+cr: 1
+size: small
+type: humanoid
+alignment: neutral evil
+tags:
+- goblinoid
+hd: 2
+speed:
+  land: 30
+stats:
+  str: 8
+  dex: 15
+  con: 10
+  int: 10
+  wis: 9
+  cha: 15
+skills:
+- stealth
+senses:
+- darkvision 60 ft.
+languages:
+- common
+- goblin
+abilities:
+- name: Bag of Hedgehogs
+  effect: >
+    When the hedgehog goblin dies, the hedgehogs it is carrying
+    escape. Treat the area within 5 feet of the goblin's body as
+    filled with caltrops until the end of the next round.
+- name: Expert Thrower
+  effect: >
+    The hedgehog goblin adds double its proficiency bonus to
+    attacks made with thrown weapons.
+- name: Nimble Escape
+actions:
+- name: Multiattack
+  effect: The hedgehog goblin makes two thrown hedgehog attacks.
+attacks:
+- name: Thrown Hedgehog
+  type: rw
+  ability: dex
+  bonus: 2
+  range: 30/60
+  target: one target
+  onhit: "[diceroll 1 4 dex] piercing damage"
+- name: Dagger
+  type: mw
+  ability: dex
+  reach: 5
+  target: one target
+  onhit: "[diceroll 1 4 dex] bludgeoning damage"
+flavor: >
+  This goblin is just like any other... except that it
+  carries a bag full of hedgehogs, which it can throw with
+  perfect accuracy.
+habitat:
+- grasslands
+- underground
+description:
+- header: Masterful Thrower
+  text: >
+    Hedgehog goblins are uncannily good at throwing things,
+    especially hedgehogs. Especially creative chieftains
+    can give their hedgehog goblins more dangerous projectiles,
+    such as experimental grenades, to take advantage of their
+    unusual skill.
+- header: Obsessed with Hedgehogs
+  text: >
+    As their name would suggest, hedgehog goblins are totally obsessed with
+    hedgehogs. Most of their time is spent scouring the area around the
+    goblin's lair for new hedgehogs to add to their collection.
+    Hedgehog goblins do not take particularly good care of their hedgehogs,
+    though; they just keep them alive long enough to find something to throw
+    them at.
