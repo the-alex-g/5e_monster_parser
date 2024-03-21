@@ -662,13 +662,13 @@ def resolve_group(group, monsters):
                 if type(group[field]) == list:
                     for item in group[field]:
                         if field in monster:
-                            if type(item) == list:
-                                if "n/" + item["name"] in monster["field"]:
-                                    monster["field"].remove("n/" + item["name"])
+                            if type(item) == dict:
+                                if "n/" + item["name"] in monster[field]:
+                                    monster[field].remove("n/" + item["name"])
                                     continue
                             elif type(item) == str:
-                                if "n/" + item in monster["field"]:
-                                    monster["field"].remove("n/" + item)
+                                if "n/" + item in monster[field]:
+                                    monster[field].remove("n/" + item)
                                     continue
                             monster[field].append(item)
                         else:
@@ -679,8 +679,6 @@ def resolve_group(group, monsters):
                         monster[field] = group[field]
         
         group_string += create_monster(monster, in_group=is_in_group) + LINEBREAK
-        if group["group_type"] == "category":
-            group_string += PAGEBREAK
         add_to_appendices(monster)
     
     return group_string
