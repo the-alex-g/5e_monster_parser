@@ -193,6 +193,12 @@ DEFAULT_IMMUNITIES = {
     "fiend":[
         "poisoned",
         "exhaustion",
+    ],
+    "ooze":[
+        "blinded",
+        "deafened",
+        "exhaustion",
+        "prone",
     ]
 }
 NATURES = {
