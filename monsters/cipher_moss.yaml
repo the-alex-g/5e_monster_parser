@@ -3,6 +3,7 @@ type: plant
 size: huge
 alignment: neutral
 cr: 4
+hd: 16
 speed:
  land: 0
 stats:

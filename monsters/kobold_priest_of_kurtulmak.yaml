@@ -53,6 +53,7 @@ attacks:
 - name: Tail Barb
   type: mw
   ability: dex
+  reach: 5
   target: one target
   onhit: >
    [diceroll 1 4 dex] slashing damage and the target must succeed on a [save w/con con] or be poisoned for one minute. An affected

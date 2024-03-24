@@ -281,8 +281,8 @@ def reactions(actions, stats, params):
 def create_header(name, mark=True):
     header = "\\section*{" + name + "}\\label{" + name + "}"
     if mark:
-        header += "\\markboth{" + name + "}{" + name + "}"
-    header += "\\addcontentsline{toc}{subsection}{" + name + "}\\halfline" + LINEBREAK
+        header += "\\markboth{" + name + "}{" + name + "}\\addcontentsline{toc}{subsection}{" + name + "}"
+    header += "\\halfline" + LINEBREAK
     return header
 
 
@@ -290,23 +290,23 @@ def create_monster(monster, header=True):
     if check_missing_fields(monster):
         return ""
     monster_string = ""
-    headername = headername(monster)
-    shortname = shortname(monster)
+    header_name = headername(monster)
+    short_name = shortname(monster)
     plainname = monster["name"]
 
     scores = monster["stats"]
     bonuses = ability_scores_to_bonuses(scores)
     profbonus = cr_to_prof(monster["cr"])
 
-    params = {"name":shortname, "profbonus":profbonus}
+    params = {"name":short_name, "profbonus":profbonus}
 
     if "params" in monster:
         for param in monster["params"]:
             params[param] = monster["params"][param]
     if header:
-        monster_string = create_header(headername)
+        monster_string = create_header(header_name)
     else:
-        monster_string += "\\label{" + headername + "}"
+        monster_string += "\\label{" + header_name + "}"
 
     if "flavor" in monster:
         monster_string += "\\textit{" + monster["flavor"] + "}" + NEWLINE + LINEBREAK
@@ -320,7 +320,7 @@ def create_monster(monster, header=True):
         alignment = monster["alignment"]
     if "swarm" in monster:
         monster_string += "\\textit{" + monster["size"].title() + " Swarm of " + (monster["swarm"] + " " + monster["type"]).title() + "s"
-        swarm_ability = PREBAKED_ABILITIES["Swarm"].replace("[name]", shortname).replace("[swarmsize]", monster["swarm"].title())
+        swarm_ability = PREBAKED_ABILITIES["Swarm"].replace("[name]", short_name).replace("[swarmsize]", monster["swarm"].title())
         if "abilities" in monster:
             swarm_override = False
             for ability in monster["abilities"]:
@@ -398,12 +398,12 @@ def create_monster(monster, header=True):
 
     if "innate-spellcasting" in monster:
         ability = monster["innate-spellcasting"]
-        monster_string += innate_spellcasting(ability["ability"], ability["spells"], bonuses, profbonus, shortname)
+        monster_string += innate_spellcasting(ability["ability"], ability["spells"], bonuses, profbonus, short_name)
         monster_string += LINEBREAK
     
     if "spellcasting" in monster:
         ability = monster["spellcasting"]
-        monster_string += spellcasting(ability["type"], ability["level"], ability["spells"], bonuses, profbonus, shortname)
+        monster_string += spellcasting(ability["type"], ability["level"], ability["spells"], bonuses, profbonus, short_name)
         monster_string += LINEBREAK
     
     if "attacks" in monster or "actions" in monster:
@@ -483,7 +483,7 @@ def resolve_group(group, monsters):
         elif group["sorttype"] == "index":
             for monster in monsters:
                 if monster["sortindex"] in monster_dict:
-                    print("Duplicate indicies in group " + group["name"])
+                    print("ERROR: Duplicate indicies in group " + group["name"])
                 else:
                     monster_dict[monster["sortindex"]] = monster
     
@@ -551,6 +551,10 @@ def get_yaml_from_directory(dirname):
     return yaml_list
 
 
+def create_alphabetic_header(letter):
+    return "\\addcontentsline{toc}{section}{" + letter + "}"
+
+
 def create_doc():
     latexfile = open("monsters.tex", "w")
     latexfile.write(PREAMBLE)
@@ -565,8 +569,13 @@ def create_doc():
             monster_name_dict[monster["group"]].append(monster)
         else:
             monster_name_dict[monstername] = monster
-    
+
+    current_alphabet_letter = "A"
+    latexfile.write(create_alphabetic_header("A"))
     for monster_name in sorted(monster_name_dict):
+        if monster_name[0] != current_alphabet_letter:
+            current_alphabet_letter = monster_name[0]
+            latexfile.write(create_alphabetic_header(current_alphabet_letter))
         if type(monster_name_dict[monster_name]) == list:
             group = monster_name_dict[monster_name]
             latexfile.write(resolve_group(group[0], group[1:]) + PAGEBREAK)

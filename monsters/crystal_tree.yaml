@@ -39,17 +39,17 @@ actions:
   effect: The crystal tree makes three constrict attacks.
 - name: Crystal Rain
   effect: >
-   All creatures within 15 feet of the tree are hit by a shower of leaves. Roll once on the following table for each target to 
-   determine what damage the target suffers. A successful [save w/dex str] halves the damage.
-   [dicetable 8 effect
+   All creatures within 15 feet of the tree are hit by a shower of leaves. Each affected creature takes [diceroll 2 4] piercing damage. Additionally, roll once on the following
+   table for each target to determine what extra damage the target may take. A successful [save w/dex str] halves the damage.
+   [dicetable 8 Effect
+   no extra damage &
    [diceroll 2 4] piercing damage &
-   [diceroll 4 4] piercing damage &
-   [diceroll 2 4] piercing damage plus [diceroll 2 8] necrotic damage &
-   [diceroll 2 4] piercing damage plus [diceroll 2 8] radiant damage &
-   [diceroll 2 4] piercing damage plus [diceroll 4 4] acid damage &
-   [diceroll 2 4] piercing damage plus [diceroll 2 12] lightning damage &
-   [diceroll 2 4] piercing damage plus [diceroll 3 6] fire damage &
-   [diceroll 2 4] piercing damage plus [diceroll 3 6] cold damage]
+   [diceroll 2 8] necrotic damage &
+   [diceroll 2 8] radiant damage &
+   [diceroll 4 4] acid damage &
+   [diceroll 2 12] lightning damage &
+   [diceroll 3 6] fire damage &
+   [diceroll 3 6] cold damage]
 attacks:
 - name: Constrict
   type: mw
@@ -60,3 +60,4 @@ attacks:
    [diceroll 2 8 str] bludgeoning damage and the target is grappled by the tree. Until this grapple ends, the target is restrained.
    The tree has three root tendrils, and each one can grapple a creature. A root tendril that is grappling a creature cannot attack any
    other creature.
+flavor: This tree's trunk is made of twisted silver wire, and its leaves are cut from every imaginable variety of crystal.

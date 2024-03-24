@@ -49,7 +49,7 @@ def bind(*stuff):
 
 def dicetable(diesize, title, *entries):
     endline = "\\\\\\hline"
-    tablestring = "\\begin{tabular}{|l|l|}\\hline1d" + str(diesize) + "&" + title + endline
+    tablestring = "\\\\\\begin{tabular}{|l|l|}\\hline1d" + str(diesize) + "&" + title + endline
     entry_strings = []
     entry_string = ""
     for item in entries:

@@ -4,6 +4,7 @@ group: Amnio
 params:
  draintargets: 3
  memorymax: 20
+size: large
 tags:
 - greater
 ac:
