@@ -199,6 +199,14 @@ DEFAULT_IMMUNITIES = {
         "deafened",
         "exhaustion",
         "prone",
+    ],
+    "construct":[
+        "charmed",
+        "frightened",
+        "exhaustion",
+        "paralyzed",
+        "petrified",
+        "poisoned"
     ]
 }
 NATURES = {
@@ -245,4 +253,7 @@ PREBAKED_ABILITIES = {
     "Stench":"Any creature other than a [name] that starts its turn within 5 feet of the [name] must succeed on a [save w/con con], being poisoned until the start of the creature’s next turn. On a successful saving throw, the creature is immune to the stench of all [name]s for 1 hour.",
     "Amphibious":"The [name] can breathe both air and water with equal ease.",
     "Aquatic":"The [name] can only breathe underwater.",
+    "Pack Tactics":"The [name] has advantage on an attack roll against a creature if at least one of the [possessive [name]] allies is within 5 feet of the creature and the ally isn't incapacitated.",
+    "Magic Resistance":"The [name] has advantage on saving throws to resist spells and other magical effects.",
+    "Immutable Form":"The [name] is immune to spells and other effects that would alter its form.",
 }

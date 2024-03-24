@@ -1,7 +1,8 @@
 import yaml
 import os
+import brand
 from tables import *
-from math import floor
+from parser_utility import *
 
 MULTIATTACK_SPLICE_KEY = "\n%multiattack-splice-key\n"
 NEWLINE = "\\\\"
@@ -26,70 +27,8 @@ def entry(header, body):
     return "\\entry{" + header + "}{" + body + "}"
 
 
-def cr_to_prof(cr):
-    if type(cr) == str:
-        return 2
-    else:
-        return max(2, floor((cr - 1) / 4) + 2)
-
-
-def cr_to_digit(cr):
-    if type(cr) == int:
-        return cr
-    else:
-        return 1 / int(cr[-1])
-
-
-def cr_to_string(cr):
-    if type(cr) == int:
-        return str(cr)
-    elif type(cr) == float:
-        return {0.125:"1/8", 0.25:"1/4", 0.5:"1/2"}[cr]
-    else:
-        return cr
-
-
-def diceroll(num, size, *bonuses):
-    total_bonus = 0
-    for bonus in bonuses:
-        total_bonus += bonus
-    total = floor(num * (size / 2 + 0.5)) + total_bonus
-    string = str(total) + " (" + str(num) + "d" + str(size)
-    if total_bonus != 0:
-        if total_bonus > 0:
-            string += " + "
-        else:
-            string += " - "
-        string += str(abs(total_bonus))
-    return string + ")"
-
-
-def format_index(index):
-    if index == 1:
-        return "1st"
-    elif index == 2:
-        return "2nd"
-    elif index == 3:
-        return "3rd"
-    else:
-        return str(index) + "th"
-
-
-def save(ability, abilitybonus, profbonus):
-    dc = 8 + abilitybonus + profbonus
-    ability_name = ""
-    if ability != "w/none":
-        ability_name = ABILITIES_SPELLOUT[ability[2:]]
-    return "DC " + str(dc) + " " + ability_name + " saving throw"
-
-
-def check(dc, *skill):
-    skill = separate(skill, " ")
-    return "DC " + str(dc) + " " + ABILITIES_SPELLOUT[SKILL_ABILITY[skill]] + " (" + SKILL_PRETTYNAME[skill] + ") check"
-
-
 def hitpoints(num, size, conbonus):
-    return diceroll(num, HIT_DIE_SIZE[size], conbonus * num)
+    return brand.diceroll(num, HIT_DIE_SIZE[size], conbonus * num)
 
 
 def ac(dex, bonus, reason):
@@ -101,49 +40,6 @@ def ac(dex, bonus, reason):
 
 def cr(cr):
     return str(cr) + " (" + CR_TO_XP[cr] + " XP)"
-
-
-def score_to_bonus(score):
-    return floor(score / 2) - 5
-
-
-def format_bonus(bonus):
-    if bonus >= 0:
-        return "+" + str(bonus)
-    else:
-        return str(bonus)
-
-
-def ability_scores_to_bonuses(stats):
-    bonusdict = {}
-    for ability in stats:
-        bonusdict[ability] = score_to_bonus(stats[ability])
-    return bonusdict
-
-
-def stat(score):
-    return str(score) + " (" + format_bonus(score_to_bonus(score)) + ")"
-
-
-def separate(array, spacer):
-    string = ""
-    for item in array:
-        if string != "":
-            string += spacer
-        string += str(item)
-    return string
-
-
-def comma_separate(array):
-    return separate(array, ", ")
-
-
-def spell(*spellname):
-    return "\\textit{" + separate(spellname, " ") + "}"
-
-
-def monster(*monstername):
-    return "\\textbf{" + separate(monstername, " ") + "}"
 
 
 def skill_profs(skill_prof_list, stats, profbonus):
@@ -180,57 +76,6 @@ def save_profs(save_prof_list, stats, profbonus):
     return save_profs_string
 
 
-def format_and_execute(field, stats, profbonus):
-    formatted_field = ""
-    in_function_body = False
-    arg_text = ""
-    function_name = ""
-    # the extra space at the end of field
-    # causes the last argument to be processed
-    for char in field + " ":
-        if char == " ":
-            if in_function_body:
-                if formatted_field[-1] != "(":
-                    formatted_field += ", "
-                if arg_text in ABILITY_LIST:
-                    arg_text = str(stats[arg_text])
-                elif not arg_text.isdigit():
-                    formatted_field += "\""
-                    arg_text += "\""
-                formatted_field += arg_text
-                arg_text = ""
-            else:
-                formatted_field += "("
-                in_function_body = True
-        else:
-            if in_function_body:
-                arg_text += char
-            else:
-                formatted_field += char
-                function_name += char
-    if function_name == "save":
-        formatted_field += ", " + str(profbonus)
-    return eval(formatted_field + ")")
-
-
-def resolve_functions(string, stats, profbonus):
-    updated_string = ""
-    field = ""
-    field_started = False
-    for char in string:
-        if char == "[":
-            field_started = True
-        elif char == "]":
-            field_started = False
-            updated_string += format_and_execute(field, stats, profbonus)
-            field = ""
-        elif field_started:
-            field += char
-        else:
-            updated_string += char
-    return updated_string
-
-
 def create_stat_table(scores, bonuses):
     table = """\\smallskip
     \\begin{footnotesize}
@@ -253,15 +98,9 @@ def create_stat_table(scores, bonuses):
     return table
 
 
-def parse_string(string, stats, profbonus, params):
-    for key in params:
-        string = string.replace("[" + key + "]", str(params[key]))
-    return resolve_functions(string, stats, profbonus)
-
-
-def create_attack(attack, stats, profbonus, params):
+def create_attack(attack, stats, params):
     attack_string = "\\entry{" + attack["name"] + "}{\\textit{"
-    bonus = stats[attack["ability"]] + profbonus
+    bonus = stats[attack["ability"]] + params["profbonus"]
     if "bonus" in attack:
         bonus += attack["bonus"]
     if attack["type"] == "mw":
@@ -279,9 +118,9 @@ def create_attack(attack, stats, profbonus, params):
     else:
         print("ERROR: Unknown attack type \"" + attack["type"] + "\"")
         
-    attack_string += ", " + attack["target"] + "." + NEWLINE + "\\textit{Hit:} " + parse_string(attack["onhit"], stats, profbonus, params)
+    attack_string += ", " + attack["target"] + "." + NEWLINE + "\\textit{Hit:} " + brand.parse_string(attack["onhit"], stats, params)
     if "special" in attack:
-        attack_string += NEWLINE + parse_string(attack["special"], stats, profbonus, params)
+        attack_string += NEWLINE + brand.parse_string(attack["special"], stats, params)
     return attack_string + "}"
 
 
@@ -315,38 +154,31 @@ def cond_immunities(immunities, creature_type):
 
 def spellcasting(slot_type, level, spells, stats, profbonus, name):
     string = "\\entry{Spellcasting}{"
-    string += "The " + name.lower() + " is a " + format_index(level)
+    string += "The " + name + " is a " + format_index(level)
     string += "-level spellcaster. Its spellcasting ability is " + ABILITIES_SPELLOUT[SPELLCASTING_ABILITY[slot_type]]
     bonus = stats[SPELLCASTING_ABILITY[slot_type]] + profbonus
     string += " (spell save DC " + str(8 + bonus) + ", spell attack bonus " + format_bonus(bonus) + "). "
-    string += "The " + name.lower() + " has the following spells prepared:" + NEWLINE
-    string += "\\textbf{Cantrips:} " + spell(comma_separate(sorted(spells[0])))
+    string += "The " + name + " has the following spells prepared:" + NEWLINE
+    string += "\\textbf{Cantrips:} " + brand.spell(comma_separate(sorted(spells[0])))
     slots = SPELL_SLOTS[slot_type][level - 1]
     for i in range(0, len(slots)):
         slot_num = slots[i]
         string += NEWLINE + "\\textbf{" + format_index(i + 1) + " Level"
         if slot_num != 0:
             string += " (" + str(slot_num) + " slots)"
-        string += ":} " + spell(comma_separate(sorted(spells[i + 1])))
+        string += ":} " + brand.spell(comma_separate(sorted(spells[i + 1])))
     return string + "}"
 
-
-def possessive(*name):
-    name = separate(name, " ")
-    if name[-1] == "s":
-        return name + "'"
-    else:
-        return name + "'s"
 
 
 def innate_spellcasting(ability, spells, stats, profbonus, name):
     string = "\\entry{Innate Spellcasting}{"
-    string += "The " + possessive(name.lower()) + " spellcasting ability is " + ABILITIES_SPELLOUT[ability]
+    string += "The " + possessive(name) + " spellcasting ability is " + ABILITIES_SPELLOUT[ability]
     bonus = stats[ability] + profbonus
     string += " (spell save DC " + str(8 + bonus) + ", spell attack bonus " + format_bonus(bonus) + "). "
-    string += "The " + name.lower() + " can cast the following spells, requiring no material components:"
+    string += "The " + name + " can cast the following spells, requiring no material components:"
     for category in spells:
-        string += NEWLINE + "\\textbf{" + category["frequency"].title() + ":} " + spell(comma_separate(sorted(category["spells"])))
+        string += NEWLINE + "\\textbf{" + category["frequency"].title() + ":} " + brand.spell(comma_separate(sorted(category["spells"])))
     return string + "}"
 
 
@@ -395,7 +227,7 @@ def check_missing_fields(monster):
     return error
 
 
-def format_actions(actions, stats, profbonus, params):
+def format_actions(actions, stats, params):
     action_string = ""
     action_name_dict = {}
     for action in actions:
@@ -409,12 +241,12 @@ def format_actions(actions, stats, profbonus, params):
         # the "cost" clause is for legendary actions
         elif "cost" in action:
             action_name += " (Costs " + str(action["cost"]) + " Actions)"
-        action_string += entry(action_name, parse_string(action["effect"], stats, profbonus, params)) + LINEBREAK
+        action_string += entry(action_name, brand.parse_string(action["effect"], stats, params)) + LINEBREAK
     return action_string
 
 
-def abilities(abilities, stats, profbonus, params):
-    return format_actions(abilities, stats, profbonus, params)
+def abilities(abilities, stats, params):
+    return format_actions(abilities, stats, params)
 
 
 def description(descriptions, monster_type, name, include_default=True):
@@ -423,12 +255,12 @@ def description(descriptions, monster_type, name, include_default=True):
         string += entry(description["header"], description["text"])
     if monster_type in NATURES and include_default:
         description = NATURES[monster_type].copy()
-        description["text"] = description["text"].replace("[name]", name.lower())
+        description["text"] = description["text"].replace("[name]", name)
         string += entry(description["header"], description["text"])
     return string
 
 
-def legendary_actions(actions, stats, profbonus, params):
+def legendary_actions(actions, stats, params):
     string = "\\textbf{Legendary Actions}" + NEWLINE + "\\halfline The " + params["name"] + " can take "
     if "uses" in actions:
         string += str(actions["uses"])
@@ -438,26 +270,12 @@ def legendary_actions(actions, stats, profbonus, params):
     string += """ legendary actions, choosing from the options below. Only one legendary action option can
 be used at a time, and only at the end of another creature's turn. The """ + params["name"] + """ regains spent
 legendary actions at the start of its turn.""" + NEWLINE + LINEBREAK
-    return string + format_actions(actions, stats, profbonus, params)
+    return string + format_actions(actions, stats, params)
 
 
-def reactions(actions, stats, profbonus, params):
+def reactions(actions, stats, params):
     string = "\\textbf{Reactions}" + NEWLINE + "\\halfline"
-    return string + format_actions(actions, stats, profbonus, params)
-
-
-def monster_headername(monster):
-    if "headername" in monster:
-        return monster["headername"]
-    else:
-        return monster["name"]
-
-
-def monster_shortname(monster):
-    if "shortname" in monster:
-        return monster["shortname"]
-    else:
-        return monster["name"]
+    return string + format_actions(actions, stats, params)
 
 
 def create_header(name, mark=True):
@@ -472,10 +290,16 @@ def create_monster(monster, header=True):
     if check_missing_fields(monster):
         return ""
     monster_string = ""
-    headername = monster_headername(monster)
-    shortname = monster_shortname(monster)
+    headername = headername(monster)
+    shortname = shortname(monster)
     plainname = monster["name"]
-    params = {"name":shortname.lower()}
+
+    scores = monster["stats"]
+    bonuses = ability_scores_to_bonuses(scores)
+    profbonus = cr_to_prof(monster["cr"])
+
+    params = {"name":shortname, "profbonus":profbonus}
+
     if "params" in monster:
         for param in monster["params"]:
             params[param] = monster["params"][param]
@@ -496,7 +320,7 @@ def create_monster(monster, header=True):
         alignment = monster["alignment"]
     if "swarm" in monster:
         monster_string += "\\textit{" + monster["size"].title() + " Swarm of " + (monster["swarm"] + " " + monster["type"]).title() + "s"
-        swarm_ability = PREBAKED_ABILITIES["Swarm"].replace("[name]", shortname.lower()).replace("[swarmsize]", monster["swarm"].title())
+        swarm_ability = PREBAKED_ABILITIES["Swarm"].replace("[name]", shortname).replace("[swarmsize]", monster["swarm"].title())
         if "abilities" in monster:
             swarm_override = False
             for ability in monster["abilities"]:
@@ -512,10 +336,6 @@ def create_monster(monster, header=True):
     if "tags" in monster:
         monster_string += " (" + comma_separate(sorted(monster["tags"])) + ")"
     monster_string +=  ", " + alignment.title() + "}" + NEWLINE
-
-    scores = monster["stats"]
-    bonuses = ability_scores_to_bonuses(scores)
-    profbonus = cr_to_prof(monster["cr"])
 
     acbonus = 0
     acreason = ""
@@ -574,7 +394,7 @@ def create_monster(monster, header=True):
     monster_string += "\\textbf{Challenge} " + cr(monster["cr"]) + NEWLINE + LINEBREAK
 
     if "abilities" in monster:
-        monster_string += abilities(monster["abilities"], bonuses, profbonus, params)
+        monster_string += abilities(monster["abilities"], bonuses, params)
 
     if "innate-spellcasting" in monster:
         ability = monster["innate-spellcasting"]
@@ -594,7 +414,7 @@ def create_monster(monster, header=True):
         for attack in monster["attacks"]:
             attack_name_dict[attack["name"]] = attack
         for attack_name in sorted(attack_name_dict):
-            monster_string += create_attack(attack_name_dict[attack_name], bonuses, profbonus, params) + LINEBREAK
+            monster_string += create_attack(attack_name_dict[attack_name], bonuses, params) + LINEBREAK
 
     if "actions" in monster:
         action_name_dict = {}
@@ -602,23 +422,24 @@ def create_monster(monster, header=True):
             if action["name"] == "Multiattack":
                 monster_string = monster_string.replace(
                     MULTIATTACK_SPLICE_KEY,
-                    format_actions([action], bonuses, profbonus, params)
+                    format_actions([action], bonuses, params)
                 )
                 monster["actions"].remove(action)
                 break
-        monster_string += format_actions(monster["actions"], bonuses, profbonus, params)
+        monster_string += format_actions(monster["actions"], bonuses, params)
 
     if "reactions" in monster:
-        monster_string += reactions(monster["reactions"], bonuses, profbonus, params)
+        monster_string += reactions(monster["reactions"], bonuses, params)
     
     if "legendary-actions" in monster:
-        monster_string += legendary_actions(monster["legendary-actions"], bonuses, profbonus, params)
+        monster_string += legendary_actions(monster["legendary-actions"], bonuses, params)
     
+    add_to_appendices(monster)
     return monster_string
 
 
 def add_to_appendices(monster):
-    monstername = monster_headername(monster)
+    monstername = headername(monster)
     if "habitat" in monster:
         for region in monster["habitat"]:
             if region in monsters_by_habitat:
@@ -649,18 +470,16 @@ def resolve_group(group, monsters):
 
     if "description" in group:
         group_type = ""
-        group_shortname = group["name"]
+        group_shortname = shortname(group)
         if "type" in group:
             group_type = group["type"]
-        if "shortname" in group:
-            group_shortname = group["shortname"]
         group_string += description(group["description"], group_type, group_shortname, include_default=not include_monster_headers) + LINEBREAK
 
     monster_dict = {}
     if "sorttype" in group:
         if group["sorttype"] == "alphabetical":
             for monster in monsters:
-                monster_dict[monster_headername(monster)] = monster
+                monster_dict[headername(monster)] = monster
         elif group["sorttype"] == "index":
             for monster in monsters:
                 if monster["sortindex"] in monster_dict:
@@ -693,7 +512,6 @@ def resolve_group(group, monsters):
                         monster[field] = group[field]
         
         group_string += create_monster(monster, header=include_monster_headers) + LINEBREAK
-        add_to_appendices(monster)
     
     return group_string
 
@@ -742,7 +560,7 @@ def create_doc():
         monster_name_dict[group["name"]] = [group]
     
     for monster in get_yaml_from_directory("monsters"):
-        monstername = monster_headername(monster)
+        monstername = headername(monster)
         if "group" in monster:
             monster_name_dict[monster["group"]].append(monster)
         else:
@@ -755,7 +573,6 @@ def create_doc():
             continue
         monster = monster_name_dict[monster_name]
         latexfile.write(create_monster(monster) + PAGEBREAK)
-        add_to_appendices(monster)
         
     latexfile.write("\\markboth{Appendicies}{Appendicies}")
     latexfile.write(create_appendix_table(monsters_by_cr) + PAGEBREAK)
