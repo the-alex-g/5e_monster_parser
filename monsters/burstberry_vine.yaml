@@ -1,0 +1,52 @@
+name: Burstberry Vine
+size: small
+type: plant
+speed:
+ land: 5
+ climb: 5
+stats:
+ str: 11
+ dex: 12
+ con: 11
+ int: 1
+ wis: 3
+ cha: 3
+cr: 1/4
+hd: 8
+skills:
+- stealth
+- stealth
+vulnerable:
+- fire
+resist:
+- bludgeoning
+- lightning
+- piercing
+- thunder
+abilities:
+- name: Lightning Absorption
+  effect: >
+   The first exploding berries attack that the burstberry vine makes after taking lightning damage deals [diceroll 1 8] lightning damage
+   instead of [diceroll 1 4].
+- name: Spider Climb
+attacks:
+- name: Exploding Berries
+  type: rw
+  ability: dex
+  range: 30/60
+  target: one target
+  onhit: >
+   [diceroll 1 4] lightning damage plus [diceroll 1 4] thunder damage, and all creatures within 5 feet of the target must succeed on a
+   [save w/dex con] or take half as much damage.
+flavor: This vine sports clusters of vibrant, cyan berries.
+description:
+- header: Explosive Berries
+  text: >
+   The distinctive berries of a burstberry vine explode violently at the slightest touch. Many people have tried to harvest the berries,
+   but so far, no one has found a way to collect them without them exploding... or even a way to get close enough to the vine without
+   being attacked.
+- header: Empowered by Lightning
+  text: >
+   Burstberry vines seem to be able to absorb electrical energy to fuel their explosive berries. Because of this affinity, some
+   scholars suggest that the vines may be distantly related to shambling mounds. Indeed, there have been somewhat disturbing reports
+   of the two creatures forming a symbiotic relationship, with burstberry vines growing atop shambling mounds.

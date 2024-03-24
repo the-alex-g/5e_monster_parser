@@ -1,0 +1,62 @@
+name: Crystal Tree
+type: construct
+size: huge
+cr: 5
+ac:
+- 6
+- natural armor
+hd: 6
+speed:
+ land: 5
+stats:
+ str: 18
+ dex: 6
+ con: 14
+ int: 1
+ wis: 3
+ cha: 3
+saves:
+- str
+- con
+- wis
+resist:
+- acid
+- cold
+- fire
+- thunder
+- bludgeoning, piercing, and slashing from non-magical weapons
+immune:
+- poison
+- psychic
+senses:
+- blindsight 60 ft
+- tremorsense 120 ft
+abilities:
+- name: Rooted
+- name: Immutable Form
+actions:
+- name: Multiattack
+  effect: The crystal tree makes three constrict attacks.
+- name: Crystal Rain
+  effect: >
+   All creatures within 15 feet of the tree are hit by a shower of leaves. Roll once on the following table for each target to 
+   determine what damage the target suffers. A successful [save w/dex str] halves the damage.
+   [dicetable 8 effect
+   [diceroll 2 4] piercing damage &
+   [diceroll 4 4] piercing damage &
+   [diceroll 2 4] piercing damage plus [diceroll 2 8] necrotic damage &
+   [diceroll 2 4] piercing damage plus [diceroll 2 8] radiant damage &
+   [diceroll 2 4] piercing damage plus [diceroll 4 4] acid damage &
+   [diceroll 2 4] piercing damage plus [diceroll 2 12] lightning damage &
+   [diceroll 2 4] piercing damage plus [diceroll 3 6] fire damage &
+   [diceroll 2 4] piercing damage plus [diceroll 3 6] cold damage]
+attacks:
+- name: Constrict
+  type: mw
+  ability: str
+  reach: 15
+  target: one target
+  onhit: >
+   [diceroll 2 8 str] bludgeoning damage and the target is grappled by the tree. Until this grapple ends, the target is restrained.
+   The tree has three root tendrils, and each one can grapple a creature. A root tendril that is grappling a creature cannot attack any
+   other creature.

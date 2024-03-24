@@ -1,0 +1,69 @@
+name: Kobold Priest of Kurtulmak
+shortname: kobold
+type: humanoid
+size: small
+tags:
+- kobold
+alignment: lawful evil
+cr: 3
+hd: 4
+speed:
+ land: 30
+stats:
+ str: 7
+ dex: 15
+ con: 10
+ int: 10
+ wis: 10
+ cha: 10
+senses:
+- darkvision 60 ft
+languages:
+- common
+- draconic
+- infernal
+abilities:
+- name: Pack Tactics
+- name: Sunlight Sensitivity
+- name: Wrath of Kurtulmak
+  effect: >
+   The kobold has advantage on attack rolls against gnomes, and gnomes have disadvantage on saving throws against the kobold priest’s
+   spells. The kobold has advantage on checks made to avoid being surprised.
+spellcasting:
+ type: cleric
+ level: 5
+ spells:
+ - - light
+   - resistance
+   - sacred flame
+ - - cure wounds
+   - divine favor
+   - shield of faith
+ - - lesser restoration
+   - spiritual weapon
+ - - crusader's mantle
+   - spirit guardians
+attacks:
+- name: Spear
+  type: mw
+  ability: dex
+  reach: 5
+  target: one target
+  onhit: "[diceroll 1 6 dex] piercing damage."
+- name: Tail Barb
+  type: mw
+  ability: dex
+  target: one target
+  onhit: >
+   [diceroll 1 4 dex] slashing damage and the target must succeed on a [save w/con con] or be poisoned for one minute. An affected
+   creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.
+actions:
+- name: Limited Imprisonment
+  uses: 1/day
+  effect: >
+   The kobold casts [spell imprisonment] (save DC 10), requiring no material components. The type of imprisonment is always Hedged Prison,
+   with the prison appearing as a labyrinthine cavern system. The creature is released either after one hour has passed, after a creature
+   sacrifices a gnome to Kurtulmak with the intent of releasing the imprisoned creature, or after the kobold priest dies. A creature
+   targeted by the spell in this way is immune to further castings by the kobold priest for the next [diceroll 1 4 1] days,
+   instead of permanently.
+flavor: This kobold wears a green facemask, carries a spear, and has a wicked-looking barb affixed to the tip of its tail.

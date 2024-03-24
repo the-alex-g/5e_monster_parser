@@ -1,0 +1,82 @@
+name: Destroying Angel
+type: fey
+size: large
+alignment: chaotic evil
+cr: 17
+hd: 24
+ac:
+- 2
+- natural armor
+speed:
+ land: 30
+ fly: 40
+immune:
+- poison
+resist:
+- cold
+- fire
+- necrotic
+- radiant
+cond-immune:
+- charmed
+- exhaustion
+- frightened
+- paralyzed
+- poisoned
+senses:
+- blindsight 60 ft
+- tremorsense 120 ft
+languages:
+- common
+- celestial
+- elvish
+- terran
+stats:
+ str: 19
+ dex: 17
+ con: 24
+ int: 13
+ wis: 16
+ cha: 14
+saves:
+- str
+- dex
+- con
+abilities:
+- name: Magic Resistance
+actions:
+- name: Multiattack
+  effect: The destroying angel makes four dread blade attacks, or two dread blade attacks and either a Deadly Spores or Purge action.
+- name: Deadly Spores
+  uses: recharge 4-6
+  effect: >
+   The area within 15 feet of the destroying angel becomes suffused with poisonous spores. Any living creatures that start or end
+   their turns in that area must make a [save w/con con] or become poisoned. Creatures that do not need to breathe or are holding their
+   breath have advantage on their save. While poisoned in this way, a creature takes [diceroll 4 6] poison damage at the start of each of
+   its turns. An affected creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.
+   The spore cloud remains for [diceroll 2 6] rounds, or until dispersed by strong wind.
+- name: Purge
+  uses: recharge 6
+  effect: >
+   All creatures in a 15-foot-radius sphere centered on a point within 60 feet of the destroying angel take [diceroll 3 8] radiant damage
+   plus [diceroll 3 8] radiant damage for each of the following conditions that the creature has: frightened, poisoned, and paralyzed.
+   A successful [save w/cha wis] halves the damage. All affected creatures lose their frightened, poisoned, and paralyzed conditions,
+   and any non-magical diseases they are suffering from are cured.
+attacks:
+- name: Dread Blade
+  type: mw
+  ability: str
+  reach: 10
+  target: one target
+  onhit: >
+   [diceroll 1 12 str] slashing damage and the target must make a [save w/con con], taking [diceroll 2 6] poison damage and [diceroll 2 6]
+   necrotic damage on a failure, or half as much damage on a success. If the creature fails the saving throw, it becomes frightened of the
+   destroying angel. If it is already frightened and poisoned, it becomes paralyzed. At the start of the creature’s turn, it can repeat
+   the saving throw, ending the effect on a success.
+flavor: Countless diaphanous wings frame this many-limbed fungal horror.
+description:
+- header: Messenger of Ruin
+  text: >
+   These hulking fey serve as harbingers of death and decay, annihilating entire villages with their ability to spread fear and poison.
+   A destroying angel will use its terrifying swords and toxic spores to incapacitate its opponents, and then finish them off by searing
+   the disease from their flesh.

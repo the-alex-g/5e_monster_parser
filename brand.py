@@ -43,6 +43,10 @@ def monster(*monstername):
     return "\\textbf{" + separate(monstername, " ") + "}"
 
 
+def bind(*stuff):
+    return "<" + separate(stuff, " ") + ">"
+
+
 def dicetable(diesize, title, *entries):
     endline = "\\\\\\hline"
     tablestring = "\\begin{tabular}{|l|l|}\\hline1d" + str(diesize) + "&" + title + endline
@@ -64,20 +68,24 @@ def dicetable(diesize, title, *entries):
 def format_and_execute(field, stats, profbonus):
     formatted_field = ""
     in_function_body = False
+    in_string_block = False
     arg_text = ""
     function_name = ""
     # the extra space at the end of field
     # causes the last argument to be processed
     for char in field + " ":
-        if char == " ":
+        if char == "<":
+            in_string_block = True
+        elif char == ">":
+            in_string_block = False
+        elif char == " " and not in_string_block:
             if in_function_body:
                 if formatted_field[-1] != "(":
                     formatted_field += ", "
                 if arg_text in ABILITY_LIST:
                     arg_text = str(stats[arg_text])
                 elif not arg_text.isdigit():
-                    formatted_field += "\""
-                    arg_text += "\""
+                    arg_text = "\"" + arg_text + "\""
                 formatted_field += arg_text
                 arg_text = ""
             else:
