@@ -1,0 +1,55 @@
+name: Skeletal Abomination
+type: undead
+size: large
+alignment: chaotic evil
+cr: 2
+ac:
+- 2
+- natural armor
+hd: 12
+stats:
+ str: 17
+ dex: 12
+ con: 13
+ int: 5
+ wis: 7
+ cha: 4
+speed:
+ land: 35
+senses:
+- darkvision 60 ft
+vulnerable:
+- bludgeoning
+immune:
+- poison
+abilities:
+- name: Skeletal Aggregate
+  effect: The skeletal abomination can fit into spaces only large enough for a Medium creature without squeezing.
+- name: Fragile Construction
+  effect: >
+   Whenever the skeletal abomination takes 10 or more damage from a single source, its movement speed is reduced by 5 feet (to a minumum
+   of 5 feet) and it makes one less attack each time it takes the multiattack action (to a minimum of one attack).
+actions:
+- name: Multiattack
+  effect: The skeletal abomination makes four slash attacks.
+attacks:
+- name: Slash
+  type: mw
+  ability: str
+  onhit: "[diceroll 1 8 str] slashing damage."
+flavor: A mass of bones rises up, lashing out with razor-sharp appendages.
+description:
+- header: Bone Amalgamation
+  text: >
+   Skeletal abominations are created from several creature's remains, occasionally arising out of mass graves. They are, like most
+   undead, mindless brutes bent on the destruction of all life.
+- header: Fragile
+  text: >
+   Because skeletal abominations are made from a patchwork of bones, they are less structurally sound than regular skeletons.
+   Heavy damage to a skeletal abomination can cause bones to break off, reducing the abomination's combat effectiveness. However,
+   few soldiers can survive a fight with a skeletal abomination long enough to incapacitate it.
+- header: Mindless Rage
+  text: >
+   Skeletal abominations are less reliable than most undead; they have even been known to ignore orders if they have a chance to
+   destroy something living. In combat, they simply charge into the fight and try to inflict as much damage as possible before they
+   are destroyed.

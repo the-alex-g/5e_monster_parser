@@ -1,0 +1,40 @@
+name: Boneblight Skeleton
+headername: Skeleton, Boneblight
+size: medium
+type: undead
+alignment: lawful evil
+cr: 1/4
+ac:
+- 1
+- natural armor
+stats:
+ str: 11
+ dex: 12
+ con: 16
+ int: 6
+ wis: 8
+ cha: 5
+immune: poison
+vulnerable: bludgeoning
+senses:
+- darkvision 60 ft.
+speed:
+ land: 25
+abilities:
+- name: Boneblight
+  effect: >
+   A creature afflicted with boneblight must make a [save w/con con] after each long rest. On a failure, the creature’s Dexterity score
+   is reduced by one. If a creature’s Dexterity score is reduced to 0 by this disease, the creature dies and reanimates as a boneblight
+   skeleton in [diceroll 2 4 2] days. The disease is cured after three consecutive successful saving throws.
+attacks:
+- name: Slam
+  type: mw
+  ability: dex
+  onhit: >
+   [diceroll 1 6 dex] bludgeoning damage and the target must make a [save w/con con], contracting boneblight on a failure.
+flavor: This skeleton has been disfigured by awful knobs and growths. Where its hands should be, there are just clubs of fused bone.
+description:
+- header: Carriers of Disease
+  text: >
+   In life, boneblight skeletons were afflicted with a disease that caused their bones to grow in unnatural ways. Now, in undeath,
+   the skeletons continue to spread the plague.

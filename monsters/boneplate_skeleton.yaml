@@ -1,0 +1,58 @@
+name: Boneplate Skeleton
+headername: Skeleton, Boneplate
+type: undead
+size: medium
+alignment: lawful evil
+cr: 1/2
+ac:
+- 1
+- natural armor
+hd: 3
+speed:
+ land: 30
+stats:
+ str: 12
+ dex: 14
+ con: 16
+ int: 1
+ wis: 1
+ cha: 1
+immune:
+- poison
+- psychic
+vulnerable:
+- bludgeoning
+cond-immune:
+- charmed
+- frightened
+senses:
+- blindsight 60 ft
+abilities:
+- name: Pack Tactics
+- name: Single-Minded
+  effect: The boneplate skeleton cannot be controlled or turned, except by its creator.
+- name: Tactical Weakness
+  effect: Critical hits and attacks with a +8 or higher attack roll bonus deal an additional die of damage against the boneplate skeleton.
+attacks:
+- name: Scimitar
+  type: mw
+  ability: dex
+  onhit: "[diceroll 1 8 dex] slashing damage."
+reactions:
+- name: Parry
+variants:
+- name: Armored Boneplate
+  mods: >
+   Some boneplate skeletons have their bones coated in a black alchemical substance that offers additional protection. These skeletons
+   have resistance to piercing and slashing from non-magical weapons.
+flavor: The faces of these skeletons are covered with masks of bone, formed from the back of their skulls. They advance with the coordination of trained soldiers.
+description:
+- header: Elite Warriors
+  text: >
+   Boneplate skeletons have been trained to fight by being instilled with images of thousands of battles fought between warriors of old.
+   As a result of this programming, they are deadly opponents when confronted with traditional techniques, but can be hopelessly confused
+   by a unique fighting style.
+- header: Unrelenting
+  text: >
+   Created to be an invincible fighting force, it is impossible to stop a boneplate skeleton from carrying out its orders without
+   destroying it. More than one cleric has been killed by a legion of boneplate skeletons after their attempts at turning proved useless.

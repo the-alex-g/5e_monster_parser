@@ -102,3 +102,10 @@ def shortname(dictionary):
 # returns a dictionary with the name and a 0 profbonus
 def blank_params(name):
     return {"name":name, "profbonus":0}
+
+
+def get_key_if_exists(dictionary, key, default):
+    if key in dictionary:
+        return dictionary[key]
+    else:
+        return default

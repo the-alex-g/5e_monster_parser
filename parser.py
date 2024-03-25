@@ -105,20 +105,21 @@ def create_attack(attack, stats, params):
         bonus += attack["bonus"]
     if attack["type"] == "mw":
         attack_string += "Melee Weapon Attack:} "
-        attack_string += format_bonus(bonus) + " to hit, reach " + str(attack["reach"]) + " ft."
+        attack_string += format_bonus(bonus) + " to hit, reach " + str(get_key_if_exists(attack, "reach", 5)) + " ft."
     elif attack["type"] == "rw":
         attack_string += "Ranged Weapon Attack:} "
         attack_string += format_bonus(bonus) + " to hit, range " + str(attack["range"]) + " ft."
     elif attack["type"] == "ms":
         attack_string += "Melee Spell Attack:} "
-        attack_string += format_bonus(bonus) + " to hit, reach " + str(attack["reach"]) + " ft."
+        attack_string += format_bonus(bonus) + " to hit, reach " + str(get_key_if_exists(attack, "reach", 5)) + " ft."
     elif attack["type"] == "rs":
         attack_string += "Ranged Spell Attack:} "
         attack_string += format_bonus(bonus) + " to hit, range " + str(attack["range"]) + " ft."
     else:
         print("ERROR: Unknown attack type \"" + attack["type"] + "\"")
         
-    attack_string += ", " + attack["target"] + "." + NEWLINE + "\\textit{Hit:} " + brand.parse_string(attack["onhit"], stats, params)
+    attack_string += ", " + get_key_if_exists(attack, "target", "one target") + "." + NEWLINE + "\\textit{Hit:} "
+    attack_string += brand.parse_string(attack["onhit"], stats, params)
     if "special" in attack:
         attack_string += NEWLINE + brand.parse_string(attack["special"], stats, params)
     return attack_string + "}"
@@ -227,26 +228,30 @@ def check_missing_fields(monster):
     return error
 
 
-def format_actions(actions, stats, params):
+def format_actions(actions, stats, params, key="effect"):
     action_string = ""
     action_name_dict = {}
     for action in actions:
         action_name_dict[action["name"]] = action
     for action_name in sorted(action_name_dict):
         action = action_name_dict[action_name]
-        if action_name in PREBAKED_ABILITIES and not "effect" in action:
-            action["effect"] = PREBAKED_ABILITIES[action_name]
+        if action_name in PREBAKED_ABILITIES and not key in action:
+            action[key] = PREBAKED_ABILITIES[action_name]
         if "uses" in action:
             action_name += " (" + action["uses"].title() + ")"
         # the "cost" clause is for legendary actions
         elif "cost" in action:
             action_name += " (Costs " + str(action["cost"]) + " Actions)"
-        action_string += entry(action_name, brand.parse_string(action["effect"], stats, params)) + LINEBREAK
+        action_string += entry(action_name, brand.parse_string(action[key], stats, params)) + LINEBREAK
     return action_string
 
 
 def abilities(abilities, stats, params):
     return format_actions(abilities, stats, params)
+
+
+def variants(diffs, stats, params):
+    return "\\textbf{Variants}" + NEWLINE + "\\halfline" + format_actions(diffs, stats, params, key="mods")
 
 
 def description(descriptions, monster_type, name, include_default=True):
@@ -462,6 +467,9 @@ def create_monster(monster, header=True):
     
     if "legendary-actions" in monster:
         monster_string += legendary_actions(monster["legendary-actions"], bonuses, params)
+    
+    if "variants" in monster:
+        monster_string += variants(monster["variants"], bonuses, params)
 
     if "lair" in monster:
         monster_string += lair(monster["lair"], params, stats=bonuses)

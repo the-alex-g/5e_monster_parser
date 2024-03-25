@@ -207,6 +207,10 @@ DEFAULT_IMMUNITIES = {
         "paralyzed",
         "petrified",
         "poisoned"
+    ],
+    "undead":[
+        "exhaustion",
+        "poisoned"
     ]
 }
 NATURES = {
@@ -256,5 +260,6 @@ PREBAKED_ABILITIES = {
     "Pack Tactics":"The [name] has advantage on an attack roll against a creature if at least one of the [possessive [name]] allies is within 5 feet of the creature and the ally isn't incapacitated.",
     "Magic Resistance":"The [name] has advantage on saving throws to resist spells and other magical effects.",
     "Immutable Form":"The [name] is immune to spells and other effects that would alter its form.",
+    "Parry":"The [name] adds [profbonus] to its AC against one melee attack that would hit it. In order to do so, the [name] must see the attacker and be wielding a weapon.",
 }
 GROUP_ATTRIBUTES_NOT_TO_COPY = ["name", "sorttype", "flavor", "description", "include-monster-headers", "lair"]
