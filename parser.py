@@ -273,6 +273,35 @@ legendary actions at the start of its turn.""" + NEWLINE + LINEBREAK
     return string + format_actions(actions, stats, params)
 
 
+def lair_actions(actions, params, stats={}):
+    string = "\\textbf{Lair Actions}" + NEWLINE + """\\halfline On initiative count 20 (losing initiative ties),
+the """ + params["name"] + " can take one of the following lair actions. The " + params["name"] + """ can't
+take the same lair action two rounds in a row:""" + NEWLINE + LINEBREAK
+    return string + format_actions(actions, stats, params)
+
+
+def create_regional_effects(effects, death_effect, params, stats={}):
+    string = "\\textbf{Regional Effects}" + NEWLINE + "\\halfline The region containing a legendary "
+    string += possessive(params["name"]) + " lair is warped by the " + possessive(params["name"]) + """ magic,
+creating one or more of the following effects:""" + NEWLINE + LINEBREAK
+    string += format_actions(effects, stats, params) + " "
+    string += brand.parse_string(death_effect, stats, params)
+    return string
+
+
+def lair(lair, params, stats={}):
+    string = "\\subsection*{A " + possessive(params["name"]) + " Lair}"
+    if "description" in lair:
+        string += lair["description"] + NEWLINE + LINEBREAK
+    if "actions" in lair:
+        string += lair_actions(lair["actions"], params)
+    if "regional-effects" in lair:
+        regional_effects = lair["regional-effects"]
+        string += create_regional_effects(regional_effects["effects"], regional_effects["ondeath"], params)
+
+    return string
+
+
 def reactions(actions, stats, params):
     string = "\\textbf{Reactions}" + NEWLINE + "\\halfline"
     return string + format_actions(actions, stats, params)
@@ -491,7 +520,7 @@ def resolve_group(group, monsters):
         monster = monster_dict[index]
         # Copy group attributes to monster
         for field in group:
-            if not field in ["name", "sorttype", "flavor", "description", "include-monster-headers"]:
+            if not field in GROUP_ATTRIBUTES_NOT_TO_COPY:
                 if type(group[field]) == list:
                     for item in group[field]:
                         if field in monster:
@@ -512,6 +541,9 @@ def resolve_group(group, monsters):
                         monster[field] = group[field]
         
         group_string += create_monster(monster, header=include_monster_headers) + LINEBREAK
+
+    if "lair" in group:
+        group_string += lair(group["lair"], {"name":group["name"], "profbonus":0})
     
     return group_string
 
@@ -560,13 +592,15 @@ def create_doc():
     latexfile.write(PREAMBLE)
 
     monster_name_dict = {}
+    group_name_map = {}
     for group in get_yaml_from_directory("groups"):
-        monster_name_dict[group["name"]] = [group]
+        monster_name_dict[headername(group)] = [group]
+        group_name_map[group["name"]] = headername(group)
     
     for monster in get_yaml_from_directory("monsters"):
         monstername = headername(monster)
         if "group" in monster:
-            monster_name_dict[monster["group"]].append(monster)
+            monster_name_dict[group_name_map[monster["group"]]].append(monster)
         else:
             monster_name_dict[monstername] = monster
 

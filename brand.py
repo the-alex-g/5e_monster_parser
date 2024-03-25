@@ -26,6 +26,13 @@ def save(ability, abilitybonus, profbonus):
     return "DC " + str(dc) + " " + ability_name + " saving throw"
 
 
+def basicsave(ability, difficulty):
+    ability_name = ""
+    if ability != "w/none":
+        ability_name = ABILITIES_SPELLOUT[ability[2:]]
+    return "DC " + str(difficulty) + " " + ability_name + "saving throw"
+
+
 def check(dc, *skill):
     skill = separate(skill, " ")
     return "DC " + str(dc) + " " + ABILITIES_SPELLOUT[SKILL_ABILITY[skill]] + " (" + SKILL_PRETTYNAME[skill] + ") check"

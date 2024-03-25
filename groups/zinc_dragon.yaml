@@ -1,4 +1,5 @@
-name: Dragon, Zinc
+name: Zinc Dragon
+headername: Dragon, Zinc
 shortname: dragon
 include-monster-headers: False
 sorttype: index
@@ -72,3 +73,33 @@ actions:
     The dragon spits a [linelength]-foot-long, 5-foot-wide line of crackling electricity.
     All targets in the area take [breathweapon] lightning damage, or half
     as much with a successful [save w/dex con] saving throw.
+lair:
+ description: >
+  Zinc dragons make their lairs in the driest parts of the desert, usually near mountains or other tall rock formations on which they can live. The area around a zinc dragon’s
+  lair is completely devoid of water: there are no oases and it never rains. Because no animals would ever approach the dragon’s lair, zinc dragons must range far afield in
+  search of prey.
+ actions:
+ - name: Desiccate
+   effect: >
+    All living creatures of the dragon’s choice that are within 60 feet of it take [diceroll 4 8] necrotic damage, or half as much damage with a successful [basicsave w/con 20],
+    as moisture is forcibly drawn from their bodies.
+ - name: Sandstorm
+   effect: >
+    A cylinder of whirling sand, 60 feet high and 30 feet in diameter, appears centered on a point the dragon can see. The cylinder remains until initiative count 20 on the
+    following round. Whenever a creature enters the cylinder, or starts their turn in the cylinder, that creature suffers [diceroll 2 6] slashing damage. The area of the
+    cylinder is heavily obscured.
+ - name: Argent Agitation
+   effect: >
+    Until initiative count 20 on the following round, all attacks made with silver-colored metal weapons have disadvantage, because they are vibrating hard enough to make
+    it hard to attack accurately.
+ regional-effects:
+  effects:
+  - name: Arid
+    effect: The air within one mile of the dragon’s lair is supernaturally dry, doubling the water requirement of all living creatures.
+  - name: Windswept
+    effect: Winds are especially strong within three miles of the dragon’s lair, and small sandstorms or tornadoes are common.
+  - name: Dancing Silver
+    effect: Objects made of silver-colored metal seem to weigh less and quiver as though they’re trying to escape.
+  ondeath: >
+   If the dragon dies, the dryness and wind level return to normal over the course of [diceroll 1 6 1] days. Immediately when the dragon dies, all objects made out of
+   silver-colored metal within three miles of the lair double in weight. Affected objects return to their normal weight over the course of [diceroll 1 4] days.

@@ -257,3 +257,4 @@ PREBAKED_ABILITIES = {
     "Magic Resistance":"The [name] has advantage on saving throws to resist spells and other magical effects.",
     "Immutable Form":"The [name] is immune to spells and other effects that would alter its form.",
 }
+GROUP_ATTRIBUTES_NOT_TO_COPY = ["name", "sorttype", "flavor", "description", "include-monster-headers", "lair"]
