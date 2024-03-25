@@ -255,7 +255,7 @@ def description(descriptions, monster_type, name, include_default=True):
         string += entry(description["header"], description["text"])
     if monster_type in NATURES and include_default:
         description = NATURES[monster_type].copy()
-        description["text"] = description["text"].replace("[name]", name)
+        description["text"] = brand.parse_string(description["text"], {}, blank_params(name))
         string += entry(description["header"], description["text"])
     return string
 
@@ -290,7 +290,7 @@ creating one or more of the following effects:""" + NEWLINE + LINEBREAK
 
 
 def lair(lair, params, stats={}):
-    string = "\\subsection*{A " + possessive(params["name"]) + " Lair}"
+    string = "\\subsection*{" + brand.articulate(True, possessive(params["name"])) + " Lair}"
     if "description" in lair:
         string += lair["description"] + NEWLINE + LINEBREAK
     if "actions" in lair:
@@ -462,6 +462,9 @@ def create_monster(monster, header=True):
     
     if "legendary-actions" in monster:
         monster_string += legendary_actions(monster["legendary-actions"], bonuses, params)
+
+    if "lair" in monster:
+        monster_string += lair(monster["lair"], params, stats=bonuses)
     
     add_to_appendices(monster)
     return monster_string
@@ -543,7 +546,7 @@ def resolve_group(group, monsters):
         group_string += create_monster(monster, header=include_monster_headers) + LINEBREAK
 
     if "lair" in group:
-        group_string += lair(group["lair"], {"name":group["name"], "profbonus":0})
+        group_string += lair(group["lair"], blank_params(group["name"]))
     
     return group_string
 

@@ -83,6 +83,7 @@ def possessive(*name):
         return name + "'s"
 
 
+# returns headername field if it exists, or name field if it doesn't
 def headername(dictionary):
     if "headername" in dictionary:
         return dictionary["headername"]
@@ -90,8 +91,14 @@ def headername(dictionary):
         return dictionary["name"]
 
 
+# returns shortname field if it exists, or name field if it doesn't
 def shortname(dictionary):
     if "shortname" in dictionary:
         return dictionary["shortname"]
     else:
         return dictionary["name"].lower()
+
+
+# returns a dictionary with the name and a 0 profbonus
+def blank_params(name):
+    return {"name":name, "profbonus":0}

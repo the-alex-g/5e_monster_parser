@@ -39,14 +39,14 @@ abilities:
   effect: >
     The amnio has a pool of memory points that it can spend at any time to activate one of the effects below.
     Each effect can be activated only once between turns, and no more than 10 memory points can be spent on any
-    single effect. The amnio can never have more than [memorymax] memory points at one time. \begin{itemize}
-    \item For each memory point that the amnio spends, it heals 1d4 hit points.
-    \item One creature within 30 feet of the amnio must make a DC 10 + X Wisdom saving throw,
-    taking Xd4 psychic damage on a failure, where X is the number of memory points that the amnio spent.
-    \item For each memory point that the amnio spends, it gets +1 AC until the start of its next turn.
-    \item For each memory point that the amnio spends, it gets +1 to any one check or saving throw. Use of this ability must be declared before any dice are rolled.
-    \item For every two memory points that the amnio spends, it can make one attack.
-    \end{itemize}
+    single effect. The amnio can never have more than [memorymax] memory points at one time.
+    [bulletlist
+    For each memory point that the amnio spends, it heals 1d4 hit points. &
+    One creature within 30 feet of the amnio must make a DC 10 + X Wisdom saving throw,
+    taking Xd4 psychic damage on a failure, where X is the number of memory points that the amnio spent. &
+    For each memory point that the amnio spends, it gets +1 AC until the start of its next turn. &
+    For each memory point that the amnio spends, it gets +1 to any one check or saving throw. Use of this ability must be declared before any dice are rolled. &
+    For every two memory points that the amnio spends, it can make one attack.]
 actions:
 - name: Memory Drain
   effect: >

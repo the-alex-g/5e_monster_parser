@@ -33,6 +33,16 @@ def basicsave(ability, difficulty):
     return "DC " + str(difficulty) + " " + ability_name + "saving throw"
 
 
+def articulate(capitalized, *name):
+    name = separate(name, " ")
+    string = "a"
+    if name[0].lower() in ["a", "e", "i", "o", "u"]:
+        string += "n"
+    if capitalized:
+        string = string.title()
+    return string + " " + name
+
+
 def check(dc, *skill):
     skill = separate(skill, " ")
     return "DC " + str(dc) + " " + ABILITIES_SPELLOUT[SKILL_ABILITY[skill]] + " (" + SKILL_PRETTYNAME[skill] + ") check"
@@ -72,6 +82,18 @@ def dicetable(diesize, title, *entries):
     return tablestring
 
 
+def bulletlist(*items):
+    liststring = "\\\\\\begin{itemize}"
+    entry_string = ""
+    for item in items:
+        if item == "&":
+            liststring += "\\item " + entry_string
+            entry_string = ""
+        else:
+            entry_string += str(item) + " "
+    return liststring + "\\item " + entry_string + "\\end{itemize}"
+
+
 def format_and_execute(field, stats, profbonus):
     formatted_field = ""
     in_function_body = False
@@ -91,7 +113,7 @@ def format_and_execute(field, stats, profbonus):
                     formatted_field += ", "
                 if arg_text in ABILITY_LIST:
                     arg_text = str(stats[arg_text])
-                elif not arg_text.isdigit():
+                elif not arg_text.isdigit() and not arg_text == "True" and not arg_text == "False":
                     arg_text = "\"" + arg_text + "\""
                 formatted_field += arg_text
                 arg_text = ""
