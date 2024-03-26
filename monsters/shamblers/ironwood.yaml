@@ -1,0 +1,59 @@
+name: Ironwood Shambler
+headername: Shambler, Ironwood
+size: huge
+cr: 5
+ac:
+- 4
+- natural armor
+hd: 10
+speed:
+ land: 15
+stats:
+ str: 19
+ dex: 4
+ con: 14
+ int: 1
+ wis: 10
+ cha: 5
+saves:
+- str
+- con
+vulnerable:
+- slashing from magical weapons
+resist:
+- fire
+- bludgeoning, piercing, and slashing from non-magical weapons
+senses:
+- tremorsense 120 ft.
+abilities:
+- name: Exploding Seed Pods
+  effect: >
+   Whenever the ironwood shambler suffers fire damage, all creatures within 30 feet of it must make a [save w/dex wis], suffering
+   [diceroll 1 4] piercing damage on a failure.
+actions:
+- name: Multiattack
+  effect: The ironwood shambler makes three slam attacks.
+attacks:
+- name: Slam
+  type: mw
+  reach: 20
+  ability: str
+  onhit: "[diceroll 2 6 str] bludgeoning damage."
+flavor: The smooth, blue-grey trunk of this tree disappears into a huge canopy of broad, royal blue leaves.
+description:
+- header: Strength of Iron
+  text: >
+   Ironwood trees are extremely tough. The wood is very dense, making it almost impossible to cut or burn, and the waxy blue leaves are
+   similarly flame-resistant. However, because of its strength, wood from an ironwood tree is quite profitable for those who manage to
+   harvest it. A cord of wood can fetch up to 40 gc.
+- header: Fire-Reliant
+  text: >
+   Ironwood trees have fist-sized, tough seedpods that explode when heated. When a fire sweeps through the forest, the ironwood seedpods
+   explode and spread their seeds across a fairly large area. Someone who tries to set fire to an ironwood tree is often
+   unpleasantly surprised by a barrage of seeds.
+- header: Waxy Leaves
+  text: >
+   The leaves of ironwood trees are huge, blue, and covered in a thick, waxy coating. This coating is waterproof and resistant to fire.
+   Because of this coating, ironwood leaves are useful for a wide range of things, such as wrappers for alchemical explosives or simple
+   cups to hold water. Some chandlers have found a way to remove the wax coating and melt it down, so that it can be turned into
+   long-lasting candles.
