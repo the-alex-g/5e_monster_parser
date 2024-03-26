@@ -36,7 +36,6 @@ attacks:
 - name: Claw
   type: mw
   reach: 10
-  target: one target
   ability: str
   onhit: "[diceroll 2 8 str] slashing damage."
 flavor: Shards of ivory energy swirl around this towering fiend.

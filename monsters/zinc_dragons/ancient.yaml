@@ -40,14 +40,12 @@ attacks:
   type: mw
   ability: str
   reach: 15
-  target: one target
   onhit: >
     [diceroll 2 8 str] piercing damage plus [lightning] lightning damage.
 - name: Claw
   type: mw
   ability: str
   reach: 10
-  target: one target
   onhit: >
     [diceroll 2 6 str] slashing damage plus [lightning] lightning damage.
 legendary-actions:

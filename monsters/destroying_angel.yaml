@@ -67,7 +67,6 @@ attacks:
   type: mw
   ability: str
   reach: 10
-  target: one target
   onhit: >
    [diceroll 1 12 str] slashing damage and the target must make a [save w/con con], taking [diceroll 2 6] poison damage and [diceroll 2 6]
    necrotic damage on a failure, or half as much damage on a success. If the creature fails the saving throw, it becomes frightened of the

@@ -37,8 +37,6 @@ attacks:
 - name: Suntouch
   type: mw
   ability: dex
-  reach: 5
-  target: one target
   onhit: >
     [diceroll 1 4 dex] radiant damage, plus one fire damage during
     the day, or one cold damage at night.

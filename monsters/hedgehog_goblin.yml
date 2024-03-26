@@ -43,13 +43,10 @@ attacks:
   ability: dex
   bonus: 2
   range: 30/60
-  target: one target
   onhit: "[diceroll 1 4 dex] piercing damage"
 - name: Dagger
   type: mw
   ability: dex
-  reach: 5
-  target: one target
   onhit: "[diceroll 1 4 dex] bludgeoning damage"
 flavor: >
   This goblin is just like any other... except that it

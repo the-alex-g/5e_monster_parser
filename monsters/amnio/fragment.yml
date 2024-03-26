@@ -30,9 +30,7 @@ actions:
 attacks:
 - name: Claw
   type: mw
-  reach: 5
   ability: dex
-  target: one target
   onhit: "[diceroll 1 4 dex] slashing damage."
 flavor: A twisted, spiky shape skitters across the ground on four insectile legs.
 description:

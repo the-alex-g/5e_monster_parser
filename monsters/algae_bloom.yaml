@@ -64,7 +64,6 @@ attacks:
   type: rw
   ability: dex
   range: 20/30
-  target: one target
   onhit: >
     [diceroll 1 4] poison damage and the target must succeed on a [save w/con con] or
     become poisoned. An affected creature can repeat the saving throw at the end of each
@@ -72,8 +71,6 @@ attacks:
 - name: Slam
   type: mw
   ability: dex
-  reach: 5
-  target: one target
   onhit: "[diceroll 2 6 dex] bludgeoning damage."
 flavor: A wall of pond scum interspersed with water surges across the lake.
 description:

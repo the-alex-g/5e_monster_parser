@@ -33,12 +33,9 @@ attacks:
 - name: Claw
   type: mw
   ability: str
-  reach: 5
-  target: one target
   onhit: "[diceroll 1 8 str] slashing damage plus [lightning] lightning damage."
 - name: Bite
   type: mw
   ability: str
   reach: 10
-  target: one target
   onhit: "[diceroll 1 10 str] piercing damage plus [lightning] lightning damage."

@@ -69,7 +69,6 @@ attacks:
   type: mw
   reach: 10
   ability: str
-  target: one target
   onhit: >
    [diceroll 3 4 str] acid damage plus [diceroll 3 6] necrotic damage, and the ooze may grapple the target. The ooze may have
    up to two creatures grappled at any one time.

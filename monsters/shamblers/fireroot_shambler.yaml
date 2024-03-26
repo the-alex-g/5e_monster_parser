@@ -35,7 +35,6 @@ attacks:
   type: mw
   ability: str
   reach: 10
-  target: one target
   onhit: "[diceroll 1 6 str] bludgeoning damage plus 1 fire damage."
 flavor: An unassuming conifer suddenly lashes out with a thick root, tipped with a glowing orange bulb.
 description:

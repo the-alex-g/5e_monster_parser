@@ -45,8 +45,6 @@ attacks:
 - name: Maw
   type: mw
   ability: dex
-  reach: 5
-  target: one target
   onhit: "[diceroll 4 10 dex] slashing damage plus [diceroll 2 6] acid damage."
 - name: Eye Bites
   type: mw

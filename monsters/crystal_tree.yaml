@@ -55,7 +55,6 @@ attacks:
   type: mw
   ability: str
   reach: 15
-  target: one target
   onhit: >
    [diceroll 2 8 str] bludgeoning damage and the target is grappled by the tree. Until this grapple ends, the target is restrained.
    The tree has three root tendrils, and each one can grapple a creature. A root tendril that is grappling a creature cannot attack any

@@ -34,7 +34,6 @@ attacks:
   type: rw
   ability: dex
   range: 30/60
-  target: one target
   onhit: >
    [diceroll 1 4] lightning damage plus [diceroll 1 4] thunder damage, and all creatures within 5 feet of the target must succeed on a
    [save w/dex con] or take half as much damage.

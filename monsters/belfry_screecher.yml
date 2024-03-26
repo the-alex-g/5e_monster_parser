@@ -56,14 +56,11 @@ attacks:
 - name: Talons
   type: mw
   ability: str
-  reach: 5
-  target: one target
   onhit: "[diceroll 2 4 str] piercing damage."
 - name: Acidic Bile
   type: rw
   ability: dex
   range: 10/30
-  target: one target
   onhit: "[diceroll 2 4] acid damage, and the target takes [diceroll 1 4] acid damage at the start of their next turn."
 flavor: A hideous, vulture-like creature, covered in ragged black feathers, utters an unearthly shriek from its perch in the bell tower.
 description:

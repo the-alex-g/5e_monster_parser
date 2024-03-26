@@ -30,6 +30,4 @@ attacks:
 - name: Bite
   type: mw
   ability: str
-  reach: 5
-  target: one target
   onhit: "[diceroll 1 8 str] piercing damage plus [lightning] lightning damage."

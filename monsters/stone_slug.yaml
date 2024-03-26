@@ -42,15 +42,11 @@ attacks:
 - name: Flail
   type: mw
   ability: str
-  reach: 5
-  target: one target
   onhit: >
     [diceroll 1 10 str] bludgeoning damage.
 - name: Grinding Bite
   type: mw
   ability: str
-  reach: 5
-  target: one target
   onhit: >
     [diceroll 2 4 str] slashing damage. If the target is wearing non-magical body
     armor, they must succeed on a [save w/dex str] or their armor is damaged.

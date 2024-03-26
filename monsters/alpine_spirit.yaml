@@ -71,7 +71,6 @@ attacks:
   type: rs
   ability: wis
   range: 120
-  target: one target
   onhit: >
     [diceroll 4 12] lightning damage plus [diceroll 2 6] thunder damage.
   special: This attack can only be made if Aegis of Thunder is active.
@@ -79,20 +78,17 @@ attacks:
   type: rs
   ability: wis
   range: 60
-  target: one target
   onhit: "[diceroll 4 6] fire damage."
   special: This attack can only be made if Aegis of Fire is active.
 - name: Smash
   type: mw
   ability: str
   reach: 10
-  target: one target
   onhit: "[diceroll 6 6 str] bludgeoning damage."
 - name: Throw Boulder
   type: rw
   ability: str
   range: 60/90
-  target: one target
   onhit: "[diceroll 4 6 str] bludgeoning damage."
 flavor: A towering stone figure looms against a fiery dawn.
 description:

@@ -40,7 +40,6 @@ attacks:
   type: mw
   reach: 10
   ability: str
-  target: one target
   onhit: "[diceroll 1 8 str] slashing damage plus [diceroll 2 4] acid damage."
 flavor: This nightmarish creature is completely covered in sticky black acid.
 description:

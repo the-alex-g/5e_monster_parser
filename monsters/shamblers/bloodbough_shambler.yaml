@@ -50,7 +50,6 @@ attacks:
   type: mw
   reach: 20
   ability: str
-  target: one target
   onhit: "[diceroll 1 8 str] bludgeoning damage plus [diceroll 1 4] acid damage."
 flavor: Everything about this tree is red---the bark is reddish-brown, the leaves are a dull red, and scarlet sap drips from the boughs.
 description:

@@ -33,8 +33,6 @@ attacks:
 - name: Claw
   type: mw
   ability: dex
-  reach: 5
-  target: one target
   onhit: >
    [diceroll 1 6 dex] slashing damage and the crab may grapple the target. The crab has two claws, each of which can grapple one target.
 flavor: This crab has several large anemones attached to its shell, providing both protection and camouflage.

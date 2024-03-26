@@ -39,15 +39,12 @@ actions:
 attacks:
 - name: Claw
   type: mw
-  reach: 5
   ability: dex
-  target: one target
   onhit: "[diceroll 1 6 dex] slashing damage plus [diceroll 1 4] acid damage."
 - name: Spit Acid
   type: rw
   range: 40/60
   ability: dex
-  target: one target
   onhit: "[diceroll 1 4 dex] acid damage, and the target takes [diceroll 1 4] acid damage at the end of their next turn."
 flavor: Where this long-limbed fiend’s face might be, there is a featureless mask of bone.
 description:

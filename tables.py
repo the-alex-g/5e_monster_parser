@@ -243,6 +243,22 @@ NATURES = {
         "text":"[articulate True [name]] does not require sleep."
     }
 }
+MONSTER_TYPE_PLURALS = {
+    "elemental":"elementals",
+    "undead":"undead",
+    "construct":"constructs",
+    "fiend":"fiends",
+    "celestial":"celestials",
+    "ooze":"oozes",
+    "plant":"plants",
+    "humanoid":"humanoids",
+    "giant":"giants",
+    "monstrosity":"monstrosities",
+    "fey":"fey",
+    "dragon":"dragons",
+    "aberration":"aberrations",
+    "beast":"beasts",
+}
 PREBAKED_ABILITIES = {
     "Spider Climb":"The [name] can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.",
     "Nimble Escape":"The [name] can take the Disengage or Hide action as a bonus action on each of its turns.",

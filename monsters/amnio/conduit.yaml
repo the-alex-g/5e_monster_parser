@@ -43,7 +43,6 @@ attacks:
   type: mw
   reach: 10
   ability: str
-  target: one target
   onhit: "[diceroll 2 10 str] slashing damage plus [diceroll 1 4] acid damage."
 flavor: The hole in the chest of this spiny monstrosity seems to be a gate to another world.
 description:

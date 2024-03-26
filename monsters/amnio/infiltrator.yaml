@@ -43,9 +43,7 @@ actions:
 attacks:
 - name: Claw (Natural Form Only)
   type: mw
-  reach: 5
   ability: dex
-  target: one target
   onhit: "[diceroll 1 6 dex] slashing damage plus [diceroll 1 4] acid damage."
 flavor: >
   Unlike most amnio, this one is clearly humanoid in silhouette. Like the erasers, where a person’s face should be,

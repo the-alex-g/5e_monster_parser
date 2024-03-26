@@ -47,14 +47,10 @@ attacks:
 - name: Spear
   type: mw
   ability: dex
-  reach: 5
-  target: one target
   onhit: "[diceroll 1 6 dex] piercing damage."
 - name: Tail Barb
   type: mw
   ability: dex
-  reach: 5
-  target: one target
   onhit: >
    [diceroll 1 4 dex] slashing damage and the target must succeed on a [save w/con con] or be poisoned for one minute. An affected
    creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.

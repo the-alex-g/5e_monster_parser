@@ -4,6 +4,7 @@ size: medium
 type: undead
 alignment: lawful evil
 cr: 1/4
+hd: 2
 ac:
 - 1
 - natural armor
@@ -14,8 +15,10 @@ stats:
  int: 6
  wis: 8
  cha: 5
-immune: poison
-vulnerable: bludgeoning
+immune:
+- poison
+vulnerable:
+- bludgeoning
 senses:
 - darkvision 60 ft.
 speed:

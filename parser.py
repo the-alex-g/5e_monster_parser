@@ -31,6 +31,10 @@ def hitpoints(num, size, conbonus):
     return brand.diceroll(num, HIT_DIE_SIZE[size], conbonus * num)
 
 
+def partition(title):
+    return "\\textbf{" + title + "}" + NEWLINE + "\\halfline "
+
+
 def ac(dex, bonus, reason):
     ac_string = str(10 + dex + bonus)
     if reason != "":
@@ -251,7 +255,7 @@ def abilities(abilities, stats, params):
 
 
 def variants(diffs, stats, params):
-    return "\\textbf{Variants}" + NEWLINE + "\\halfline" + format_actions(diffs, stats, params, key="mods")
+    return partition("Variants") + format_actions(diffs, stats, params, key="mods")
 
 
 def description(descriptions, monster_type, name, include_default=True):
@@ -266,7 +270,7 @@ def description(descriptions, monster_type, name, include_default=True):
 
 
 def legendary_actions(actions, stats, params):
-    string = "\\textbf{Legendary Actions}" + NEWLINE + "\\halfline The " + params["name"] + " can take "
+    string = partition("Legendary Actions") + "The " + params["name"] + " can take "
     if "uses" in actions:
         string += str(actions["uses"])
         actions = actions["actions"]
@@ -279,14 +283,14 @@ legendary actions at the start of its turn.""" + NEWLINE + LINEBREAK
 
 
 def lair_actions(actions, params, stats={}):
-    string = "\\textbf{Lair Actions}" + NEWLINE + """\\halfline On initiative count 20 (losing initiative ties),
+    string = partition("Lair Actions") + """On initiative count 20 (losing initiative ties),
 the """ + params["name"] + " can take one of the following lair actions. The " + params["name"] + """ can't
 take the same lair action two rounds in a row:""" + NEWLINE + LINEBREAK
     return string + format_actions(actions, stats, params)
 
 
 def create_regional_effects(effects, death_effect, params, stats={}):
-    string = "\\textbf{Regional Effects}" + NEWLINE + "\\halfline The region containing a legendary "
+    string = partition("Regional Effects") + "The region containing a legendary "
     string += possessive(params["name"]) + " lair is warped by the " + possessive(params["name"]) + """ magic,
 creating one or more of the following effects:""" + NEWLINE + LINEBREAK
     string += format_actions(effects, stats, params) + " "
@@ -308,8 +312,7 @@ def lair(lair, params, stats={}):
 
 
 def reactions(actions, stats, params):
-    string = "\\textbf{Reactions}" + NEWLINE + "\\halfline"
-    return string + format_actions(actions, stats, params)
+    return partition("Reactions") + format_actions(actions, stats, params)
 
 
 def create_header(name, mark=True):
@@ -441,7 +444,7 @@ def create_monster(monster, header=True):
         monster_string += LINEBREAK
     
     if "attacks" in monster or "actions" in monster:
-        monster_string += "\\textbf{Actions}" + NEWLINE + "\\halfline" + MULTIATTACK_SPLICE_KEY
+        monster_string += partition("Actions") + MULTIATTACK_SPLICE_KEY
 
     if "attacks" in monster:
         attack_name_dict = {}
@@ -491,10 +494,11 @@ def add_to_appendices(monster):
     else:
         monsters_by_habitat["any"] = [monstername]
 
-    if monster["type"] + "s" in monsters_by_type:
-        monsters_by_type[monster["type"] + "s"].append(monstername)
+    monster_plural = MONSTER_TYPE_PLURALS[monster["type"]]
+    if monster_plural in monsters_by_type:
+        monsters_by_type[monster_plural].append(monstername)
     else:
-        monsters_by_type[monster["type"] + "s"] = [monstername]
+        monsters_by_type[monster_plural] = [monstername]
     monster_cr = cr_to_digit(monster["cr"])
     if monster_cr in monsters_by_cr:
         monsters_by_cr[monster_cr].append(monstername)

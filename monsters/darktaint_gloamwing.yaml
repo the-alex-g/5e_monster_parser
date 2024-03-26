@@ -37,8 +37,6 @@ attacks:
 - name: Draining Touch
   type: mw
   ability: dex
-  reach: 5
-  target: one target
   onhit: "[diceroll 1 4 dex] necrotic damage."
 flavor: A batlike shred of shadow flutters through the air, casting a shroud of darkness around it.
 description:

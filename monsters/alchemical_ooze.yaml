@@ -32,8 +32,6 @@ attacks:
 - name: Pseudopod
   type: mw
   ability: str
-  reach: 5
-  target: one target
   onhit: "[diceroll 1 5 str] damage. The damage type is the same type that the ooze is immune to this turn."
 flavor: A rounded ooze, covered with iridescent colors like a soap bubble, slimes across the ground.
 description:
