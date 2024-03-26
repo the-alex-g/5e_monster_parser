@@ -1,0 +1,52 @@
+name: Pharaoh Monkey
+type: monstrosity
+size: small
+alignment: chaotic evil
+cr: 1/2
+hd: 5
+speed:
+ land: 30
+ climb: 30
+stats:
+ str: 15
+ dex: 15
+ con: 12
+ int: 5
+ wis: 14
+ cha: 10
+saves:
+- dex
+- con
+- cha
+skills:
+- survival
+cond-immune:
+- charmed
+- frightened
+resist:
+- necrotic
+abilities:
+- name: Magic Resistance
+- name: Spellweaver's Curse
+  effect: >
+   When a creature within 60 feet of the monkey casts a spell, that creature is cursed. While cursed in this way, any time the creature
+   casts a spell, it must make an Intelligence saving throw with a DC equal to 11 + the level of the spell slot being expended
+   (0 for cantrips). If the creature fails, the spell is not cast and the action is wasted, but the spell slot is not lost. The
+   curse lasts for 24 hours or until removed by a Remove Curse spell or similar magic.
+attacks:
+- name: Bite
+  type: mw
+  ability: str
+  onhit: "[diceroll 1 6 str] piercing damage and the target must pass a [save w/int con] or take [diceroll 1 4] necrotic damage."
+- name: Rend
+  type: mw
+  ability: str
+  onhit: "[diceroll 2 4 str] bludgeoning damage."
+flavor: This golden-haired monkey screams in a crude mockery of language.
+description:
+- header: Cursed Monkeys
+  text: >
+   The [name] were themselves cursed by an ancient pharaoh to guard his tomb. The curse, combined with the dark magic surrounding the
+   dead pharaoh's tomb, warped the monkeys, making them far more aggressive and giving them a strong resistance to magic. As a side-effect
+   of the curse, the monkeys can now put a curse on those who try to enchant them. This curse makes it far more difficult for the victim
+   to cast spells.

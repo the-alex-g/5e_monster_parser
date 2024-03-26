@@ -91,7 +91,7 @@ def headername(dictionary):
         return dictionary["name"]
 
 
-# returns shortname field if it exists, or name field if it doesn't
+# returns shortname field if it exists, or lowercased name field if it doesn't
 def shortname(dictionary):
     if "shortname" in dictionary:
         return dictionary["shortname"]
@@ -104,6 +104,7 @@ def blank_params(name):
     return {"name":name, "profbonus":0}
 
 
+# returns the given key from the dictionary if it exists, or returns the default if the key does not exist
 def get_key_if_exists(dictionary, key, default):
     if key in dictionary:
         return dictionary[key]

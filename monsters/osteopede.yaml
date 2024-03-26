@@ -1,0 +1,71 @@
+name: Osteopede
+type: monstrosity
+size: medium
+alignment: neutral evil
+cr: 3
+hd: 16
+ac:
+- 3
+- natural armor
+speed:
+ land: 40
+ climb: 30
+ burrow: 10
+stats:
+ str: 14
+ dex: 15
+ con: 13
+ int: 1
+ wis: 9
+ cha: 2
+saves:
+- dex
+cond-immune:
+- charmed
+- exhaustion
+- frightened
+- poisoned
+resist:
+- poison
+- necrotic
+vulnerable:
+- bludgeoning
+senses:
+- tremorsense 60 ft.
+abilities:
+- name: Spider Climb
+actions:
+- name: Multiattack
+  effect: The [name] makes three stab attacks and one ossifying bite attack.
+- name: Bone Shards
+  effect: >
+   The osteopede takes 1 damage. All creatures in a 30-foot cone must make a [save w/dex dex], taking [diceroll 2 6] piercing damage on a
+   failure or half as much on a success.
+- name: Harvest Bones
+  effect: >
+    If the osteopede is within 5 feet of a source of bones (a dead guy, smashed skeleton, random pile of bones, etc.), it can absorb the
+    bones and regain [diceroll 3 4] hit points.
+attacks:
+- name: Stab
+  type: mw
+  ability: dex
+  onhit: "[diceroll 1 4 dex] piercing damage."
+- name: Ossifying Bite
+  type: mw
+  ability: dex
+  onhit: >
+   [diceroll 2 4 dex] piercing damage, and if the target is a living creature, it must make a [save w/con con] or have their Dex score
+   reduced by one and take 7 (2d6) necrotic damage. If a creature’s Dex score is reduced to 0, they are paralyzed but still alive.
+flavor: This giant centipede-like creature is either covered with or made out of bones.
+description:
+- header: Bone Harvesters
+  text: >
+   Osteopedes are insectile horrors that collect bones from the dead and attach them to their carapace, giving them the appearance
+   of being made out of bone. If attacked, and osteopede can detach some of the bones from its shell and release them as a deadly barrage
+   of broken bone. Osteopedes haunt locations with plentiful bone supplies, such as old battlefields, catacombs, or even
+   village graveyards.
+- header: Ossification
+  text: >
+   The bite of an osteopede causes the victim's bones to grow unnaturally, eventually incapacitating the unfortunate.
+   Some people speculate that osteopedes somehow created the first boneblight skeletons, but so far no solid evidence
+   has been found to support this theory.

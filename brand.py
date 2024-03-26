@@ -3,6 +3,7 @@ from tables import *
 from parser_utility import *
 
 
+# returns in the form of "result (dice + bonus)"
 def diceroll(num, size, *bonuses):
     total_bonus = 0
     for bonus in bonuses:
@@ -18,6 +19,7 @@ def diceroll(num, size, *bonuses):
     return string + ")"
 
 
+# returns in the form of "DC challenge Ability saving throw"
 def save(ability, abilitybonus, profbonus):
     dc = 8 + abilitybonus + profbonus
     ability_name = ""
@@ -26,6 +28,7 @@ def save(ability, abilitybonus, profbonus):
     return "DC " + str(dc) + " " + ability_name + " saving throw"
 
 
+# returns in the form of "DC challenge Ability saving throw"
 def basicsave(ability, difficulty):
     ability_name = ""
     if ability != "w/none":
@@ -33,6 +36,7 @@ def basicsave(ability, difficulty):
     return "DC " + str(difficulty) + " " + ability_name + "saving throw"
 
 
+# returns the name with the proper indefinite article prefixed to it
 def articulate(capitalized, *name):
     name = separate(name, " ")
     string = "a"
@@ -43,27 +47,33 @@ def articulate(capitalized, *name):
     return string + " " + name
 
 
+# returns in the form of "DC challenge Ability (Skill) check"
 def check(dc, *skill):
     skill = separate(skill, " ")
     return "DC " + str(dc) + " " + ABILITIES_SPELLOUT[SKILL_ABILITY[skill]] + " (" + SKILL_PRETTYNAME[skill] + ") check"
 
 
+# returns in the form of "score (bonus)"
 def stat(score):
     return str(score) + " (" + format_bonus(score_to_bonus(score)) + ")"
 
 
+# returns spellname in italics
 def spell(*spellname):
     return "\\textit{" + separate(spellname, " ") + "}"
 
 
+# returns monster name in bold
 def monster(*monstername):
     return "\\textbf{" + separate(monstername, " ") + "}"
 
 
+# collects all parameters as a brand-recognized string group
 def bind(*stuff):
     return "<" + separate(stuff, " ") + ">"
 
 
+# returns a table mapping the roll of a die to ampersand-separated entries
 def dicetable(diesize, title, *entries):
     endline = "\\\\\\hline"
     tablestring = "\\\\\\begin{tabular}{|l|l|}\\hline1d" + str(diesize) + "&" + title + endline
@@ -82,6 +92,7 @@ def dicetable(diesize, title, *entries):
     return tablestring
 
 
+# returns a bulleted list of all items
 def bulletlist(*items):
     liststring = "\\\\\\begin{itemize}"
     entry_string = ""
@@ -94,14 +105,14 @@ def bulletlist(*items):
     return liststring + "\\item " + entry_string + "\\end{itemize}"
 
 
+# builds and executes function from bracketed command string
 def format_and_execute(field, stats, profbonus):
     formatted_field = ""
     in_function_body = False
     in_string_block = False
     arg_text = ""
     function_name = ""
-    # the extra space at the end of field
-    # causes the last argument to be processed
+    # the extra space at the end of field causes the last argument to be processed
     for char in field + " ":
         if char == "<":
             in_string_block = True
@@ -131,6 +142,7 @@ def format_and_execute(field, stats, profbonus):
     return eval(formatted_field + ")")
 
 
+# processes a string to extract and execute all bracketed command sequences
 def resolve_functions(string, stats, profbonus):
     updated_string = ""
     field = ""
@@ -163,6 +175,7 @@ def resolve_functions(string, stats, profbonus):
     return updated_string
 
 
+# processes all bracketed commands in the given string
 def parse_string(string, stats, params):
     for key in params:
         string = string.replace("[" + key + "]", str(params[key]))
