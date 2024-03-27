@@ -123,7 +123,7 @@ def get_list_body(items):
             list_body += "\\item " + entry
             entry = ""
         else:
-            entry_string += str(item) + " "
+            entry += str(item) + " "
     return list_body + "\\item " + entry
 
 

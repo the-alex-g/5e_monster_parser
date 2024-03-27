@@ -1,4 +1,5 @@
 name: Wyv Poisonspitter
+group: Wyv
 params:
  puncture-damage: 2
 cr: 1/8

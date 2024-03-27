@@ -5,6 +5,8 @@ size: medium
 alignment: lawful evil
 hd: 7
 cr: 1/2
+speed:
+ land: 25
 ac:
 - 4
 - natural armor

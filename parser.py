@@ -315,8 +315,10 @@ def reactions(actions, stats, params):
     return partition("Reactions") + format_actions(actions, stats, params)
 
 
-def create_header(name, mark=True):
-    header = "\\section*{" + name + "}\\label{" + name + "}"
+def create_header(name, mark=True, label=True):
+    header = "\\section*{" + name + "}"
+    if label:
+        header += "\\label{" + name + "}"
     if mark:
         header += "\\markboth{" + name + "}{" + name + "}\\addcontentsline{toc}{subsection}{" + name + "}"
     header += "\\halfline" + LINEBREAK
@@ -508,7 +510,7 @@ def add_to_appendices(monster):
 
 def resolve_group(group, monsters):
     include_monster_headers = group["include-monster-headers"]
-    group_string = create_header(group["name"], mark=not include_monster_headers)
+    group_string = create_header(group["name"], mark=not include_monster_headers, label=False)
     if "flavor" in group:
         group_string += "\\textit{" + group["flavor"] + "}" + NEWLINE + LINEBREAK
 
