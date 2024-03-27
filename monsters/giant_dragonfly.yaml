@@ -1,0 +1,41 @@
+name: Giant Dragonfly
+shortname: dragonfly
+size: medium
+type: beast
+cr: 4
+ac:
+- 1
+- natural armor
+hd: 5
+speed:
+ land: 10
+ fly: 70
+stats:
+ str: 8
+ dex: 20
+ con: 11
+ int: 1
+ wis: 12
+ cha: 7
+saves:
+- dex
+skills:
+- perception
+- perception
+abilities:
+- name: Avoidance
+- name: Nimble Escape
+attacks:
+- name: Bite
+  ability: dex
+  type: mw
+  onhit: "[diceroll 2 6 dex] slashing damage."
+habitat:
+- coastal
+- swamp
+flavor: A six-foot-long dragonfly darts over the surface of the lake.
+description:
+- header: Lake Predators
+  text: >
+   Giant dragonflies use their speed and stealth to ambush their prey, swooping in and attacking before anyone knows they're there.
+   Normally, giant dragonflies prey on large fish or birds, but there are a few recorded incidents of people being attacked by dragonflies.

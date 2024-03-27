@@ -1,0 +1,27 @@
+name: Wyv
+sorttype: Alphabetical
+include-monster-headers: False
+type: beast
+size: tiny
+abilities:
+- name: Inner Gas Chamber
+  effect: >
+   If the wyv suffers [puncture-damage] or more piercing damage from a single source, it loses its flying speed and its
+   walking speed is halved.
+flavor: This serpentine creature seems to swim through the air, held aloft by a large gas chamber.
+description:
+- header: Colonial Predators
+  text: >
+   Wyvs live in groups of around a hundred individuals, all living within a huge termite-mound-like structure. The wyvs will attack
+   almost any creature that enters their territory, using their poison and large numbers to take down creatures many times bigger than
+   themselves.
+- header: Flotation Chambers
+  text: >
+   Wyvs can fly by means of a gas-filled chamber in their bodies. This chamber looks somewhat like a cobra's hood or a set of wings. If
+   their flotation chamber is punctured, wyvs can no longer fly and will be set upon by other colony members before long.
+- header: Poison Spitters
+  text: >
+   All wyvs have a mild venom, but a few of them have the ability to spit their venom a short distance. These specialized wyvs are
+   hardly more dangerous than their cousins, though.
+habitat:
+- grassland

@@ -1,0 +1,28 @@
+name: Wyv Poisonspitter
+params:
+ puncture-damage: 2
+cr: 1/8
+ac:
+- 1
+- natural armor
+hd: 3
+speed:
+ land: 20
+ hover: 30
+stats:
+ str: 3
+ dex: 11
+ con: 11
+ int: 2
+ wis: 11
+ cha: 10
+attacks:
+- name: Bite
+  type: mw
+  ability: dex
+  onhit: 1 piercing damage plus [diceroll 1 4] poison damage.
+- name: Spit Poison (Recharge 4-6)
+  type: rw
+  ability: dex
+  range: 20/30
+  onhit: "[diceroll 1 4] poison damage."

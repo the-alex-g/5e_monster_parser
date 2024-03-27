@@ -277,5 +277,9 @@ PREBAKED_ABILITIES = {
     "Magic Resistance":"The [name] has advantage on saving throws to resist spells and other magical effects.",
     "Immutable Form":"The [name] is immune to spells and other effects that would alter its form.",
     "Parry":"The [name] adds [profbonus] to its AC against one melee attack that would hit it. In order to do so, the [name] must see the attacker and be wielding a weapon.",
+    "Web Sense":"While in contact with a web, the [name] knows the exact location of any other creature in contact with the same web.",
+    "Web Walker":"The [name] ignores movement restrictions caused by webbing.",
+    "Damage Transfer":"While the [name] is attached to a creature, it takes half damage from all attacks directed against it, and the creature it is attached to takes the other half.",
+    "Amorphous":"The [name] can move through a space as narrow as 1 inch wide without squeezing.",
 }
 GROUP_ATTRIBUTES_NOT_TO_COPY = ["name", "sorttype", "flavor", "description", "include-monster-headers", "lair"]

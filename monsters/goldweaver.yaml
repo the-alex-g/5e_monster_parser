@@ -1,0 +1,49 @@
+name: Goldweaver
+size: tiny
+type: monstrosity
+cr: 2
+ac:
+- 2
+- natural armor
+hd: 2
+speed:
+ land: 30
+ climb: 30
+stats:
+ str: 1
+ dex: 16
+ con: 11
+ int: 2
+ wis: 11
+ cha: 10
+immune:
+- acid
+- poison
+- psychic
+cond-immune:
+- petrified
+- poisoned
+abilities:
+- name: Spider Climb
+- name: Web Sense
+- name: Web Walker
+attacks:
+- name: Bite
+  type: mw
+  ability: dex
+  onhit: >
+   1 piercing damage and the target must make a [basicsave w/con 17] or become poisoned. While poisoned in this way, a creature must
+   repeat the saving throw at the end of each of its turns, taking [diceroll 4 4] poison damage on a failure or half as much on a success.
+   The poisoned condition ends when a creature gets two consecutive successful saving throws.
+flavor: This small spider appears to be made out of gold.
+description:
+- header: Golden Webs
+  text: >
+   Goldweavers are mostly composed of pure gold, and some specimens have bits of gemstones or other precious metals embedded in them.
+   Goldweavers spin fine webs of pure gold, which can then be harvested and sold. A single dead goldweaver will fetch at least 5 gc
+   based on the precious metal content, and live ones are worth upward of 50 gc.
+- header: Potent Venom
+  text: >
+   Although tiny and easily killed, goldweavers have incredibly potent venom. Anyone who keeps goldweavers must take great care to avoid
+   being bitten while harvesting their webs. Many alchemists would like to study goldweaver venom and are willing to pay a large sum
+   for a venom sample.

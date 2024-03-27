@@ -2,6 +2,8 @@ from math import floor
 from tables import *
 from parser_utility import *
 
+FUNCTIONS_REQUIRING_PROFBONUS = ["save", "opposedcheck"]
+
 
 # returns in the form of "result (dice + bonus)"
 def diceroll(num, size, *bonuses):
@@ -24,15 +26,15 @@ def save(ability, abilitybonus, profbonus):
     dc = 8 + abilitybonus + profbonus
     ability_name = ""
     if ability != "w/none":
-        ability_name = ABILITIES_SPELLOUT[ability[2:]]
-    return "DC " + str(dc) + " " + ability_name + " saving throw"
+        ability_name = ABILITIES_SPELLOUT[ability[2:]] + " "
+    return "DC " + str(dc) + " " + ability_name + "saving throw"
 
 
 # returns in the form of "DC challenge Ability saving throw"
 def basicsave(ability, difficulty):
     ability_name = ""
     if ability != "w/none":
-        ability_name = ABILITIES_SPELLOUT[ability[2:]]
+        ability_name = ABILITIES_SPELLOUT[ability[2:]] + " "
     return "DC " + str(difficulty) + " " + ability_name + "saving throw"
 
 
@@ -51,6 +53,18 @@ def articulate(capitalized, *name):
 def check(dc, *skill):
     skill = separate(skill, " ")
     return "DC " + str(dc) + " " + ABILITIES_SPELLOUT[SKILL_ABILITY[skill]] + " (" + SKILL_PRETTYNAME[skill] + ") check"
+
+
+def opposedcheck(ability, abilitybonus, profbonus):
+    dc = 8 + abilitybonus + profbonus
+    ability_name = ""
+    if ability != "w/none":
+        ability_name = ABILITIES_SPELLOUT[ability[2:]] + " "
+    return "DC " + str(dc) + " " + ability_name + "check"
+
+
+def math(*stuff):
+    return eval(separate(stuff, " "))
 
 
 # returns in the form of "score (bonus)"
@@ -94,15 +108,23 @@ def dicetable(diesize, title, *entries):
 
 # returns a bulleted list of all items
 def bulletlist(*items):
-    liststring = "\\\\\\begin{itemize}"
-    entry_string = ""
+    return "\\\\\\begin{itemize}" + get_list_body(items) + "\\end{itemize}"
+
+
+def numberlist(*items):
+    return "\\\\\\begin{enumerate}" + get_list_body(items) + "\\end{enumerate}"
+
+
+def get_list_body(items):
+    list_body = ""
+    entry = ""
     for item in items:
         if item == "&":
-            liststring += "\\item " + entry_string
-            entry_string = ""
+            list_body += "\\item " + entry
+            entry = ""
         else:
             entry_string += str(item) + " "
-    return liststring + "\\item " + entry_string + "\\end{itemize}"
+    return list_body + "\\item " + entry
 
 
 # builds and executes function from bracketed command string
@@ -137,7 +159,7 @@ def format_and_execute(field, stats, profbonus):
             else:
                 formatted_field += char
                 function_name += char
-    if function_name == "save":
+    if function_name in FUNCTIONS_REQUIRING_PROFBONUS:
         formatted_field += ", " + str(profbonus)
     return eval(formatted_field + ")")
 

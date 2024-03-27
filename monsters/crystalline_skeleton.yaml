@@ -1,0 +1,40 @@
+name: Crystalline Skeleton
+headername: Skeleton, Crystalline
+type: undead
+size: medium
+alignment: lawful evil
+hd: 7
+cr: 1/2
+ac:
+- 4
+- natural armor
+immune:
+- poison
+senses:
+- darkvision 60 ft.
+stats:
+ str: 12
+ dex: 9
+ con: 16
+ int: 5
+ wis: 9
+ cha: 6
+attacks:
+- name: Encrusting Slam
+  type: mw
+  ability: str
+  onhit: >
+   [diceroll 2 4 str] bludgeoning damage and the target must succeed on a [save w/con con] or suffer [diceroll 1 4] necrotic damage
+   as small crystals grow from the creature's skin. These crystals reduce the affected creature's Dex score by one, and their AC cannot
+   be less than 11. The crystal effect is cumulative, so a creature that had been hit twice would have their Dex score reduced by two and
+   a minimum AC of 12. The crystals fall off after 24 hours, or can be removed with any effect that cures disease. If a creature's Dex
+   score is reduced to 0 by encrusting crystals, they are paralyzed but not dead.
+flavor: This skeleton's bones are encrusted in a layer of crystals.
+description:
+- header: Crystal Coating
+  text: >
+   Crystalline skeletons are formed when a crystal-encrusted skeleton is animated. Sometimes the encrustation is a result of natural
+   crystal growth, and sometimes it is a result of magic or disease, such as from the bite of a crystal spider. The skeletons can cause
+   crystals to grow on the creatures they attack, but such encrustation is only temporary.
+habitat:
+- underground

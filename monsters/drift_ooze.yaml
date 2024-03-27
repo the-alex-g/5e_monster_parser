@@ -1,0 +1,39 @@
+name: Drift Ooze
+type: ooze
+size: small
+cr: 1/2
+hd: 2
+speed:
+ land: 15
+ climb: 15
+ hover: 20
+stats:
+ str: 10
+ dex: 9
+ con: 12
+ int: 1
+ wis: 2
+ cha: 2
+resist:
+- piercing and bludgeoning from non-magical weapons
+vulnerable:
+- slashing
+senses:
+- blindsight 60 ft. (blind beyond this radius)
+abilities:
+- name: Damage Transfer
+- name: Amorphous
+attacks:
+- name: Envelop
+  type: mw
+  ability: str
+  onhit: >
+   [diceroll 2 4] acid damage and the ooze attaches itself to its target’s face. While the ooze is attached, the target cannot breathe.
+   The ooze moves with any creature it is attached to, and cannot use this attack on another target while attached to a creature. 
+   The ooze can detach itself as an action, or it can be forcibly removed with a DC 14 Strength or Dexterity check.
+flavor: This doormat-sized slab of greenish jelly floats through the air, seeking any living matter to attach itself to.
+description:
+- header: Floating Ooze
+  text: >
+   Drift oozes generate a bouyant gas that they store in bubbles inside their bodies, allowing them to float. Through the power of
+   flight, drift oozes gain access to a wide range of new food sources, including birds and faces.

@@ -1,0 +1,86 @@
+name: Crystal Spider
+size: small
+type: monstrosity
+stats:
+ str: 10
+ dex: 14
+ con: 15
+ int: 2
+ wis: 11
+ cha: 7
+cr: 1
+ac:
+- 3
+- natural armor
+hd: 10
+immune:
+- poison
+- fire
+resist:
+- cold
+cond-immune:
+- poisoned
+- petrified
+- paralyzed
+speed:
+ land: 25
+ climb: 25
+abilities:
+- name: Web Walker
+- name: Web Sense
+- name: Spider Climb
+- name: Crystalline Disease
+  effect: >
+   After each long rest, a creature afflicted with crystalline disease must make a [save w/con con]. On a success, nothing happens. On
+   a failure, the disease stage increases by one. The disease starts at stage 0, which has no effect. See the list below for the effect
+   of each stage. Note that the effects are cumulative: a creature with stage 3 disease suffers from the effects of stages 1-3.
+   [numberlist
+   Small crystals begin to grow on the afflicted creature's skin. When the creature's disease stage increases, the creature takes
+   [diceroll 1 4] necrotic damage. &
+   The crystals begin to hamper the creature's movement, reducing its Dex score by one. &
+   The crystals increase in thickness, reducing the creature's Dex score by one. The creature's AC cannot be less than 13, regardless
+   of what armor they might be wearing. &
+   Same as Stage 1 &
+   Same as Stage 2 &
+   Same as Stage 2. At this point, the creature's AC cannot be less than 15. &
+   The creature begins to be fully crystallized. Their movement speed is halved and their Dex score cannot be greater than 8. &
+   The creature's Dex score cannot be greater than 4. Their AC cannot be less than 17. &
+   The creature is petrified (turned into solid crystal) until the disease is cured.]
+attacks:
+- name: Bite
+  type: mw
+  ability: dex
+  onhit: >
+   [diceroll 1 3 dex] slashing damage and the target must succeed on a [save w/con con] or contract crystalline disease and be poisoned.
+   While poisoned in this way, a creature must repeat the saving throw at the start of each of their turns. On a failure, the crystalline
+   disease stage increases by one. On a success, the poisoned condition is ended.
+- name: Crystalline Web (Recharge 6)
+  type: rw
+  ability: dex
+  range: 30/60
+  onhit: >
+   The target is restrained by strands of crystalline webbing. As an action, the restrained target can make a [opposedcheck w/str con],
+   shattering the webbing on a success. Regardless of success or failure, the restrained creature takes [diceroll 1 4] slashing damage
+   from the sharp crystal. The webbing can also be attacked and destroyed (AC 15; hp 10; vulnerability to bludgeoning damage; immunity to
+   poison and psychic damage).
+habitat:
+- underground
+flavor: This spider is the size of a small dog and completely covered in thick crystalline growths.
+description:
+- header: Crystal Tenders
+  text: >
+   Crystal spiders care for groves of crystals deep underground. They have the ability to extrude crystalline material, but only rarely
+   do they spin it into anything resembling a traditional spiderweb, instead preferring to craft beautiful gemstone nodules on every
+   available surface.
+- header: Crystallizing Venom
+  text: >
+   The bite of a crystal spider inflicts a disease that slowly turns the afflicted creature into a crystalline statue. The spiders seem
+   to find the organic shapes of crystallized prey unattractive, because they always consume such unfortunate creatures and use them as
+   raw building material for their favorite geometric patterns.
+- header: Valuable Commodity
+  text: >
+   Crystal spiders are highly valuable, with live specimens worth upwards of 100 gc, and dead ones still being worth at least 30 gc.
+   Many underdark races trade in crystal spiders, but the spiders are hard to find and defend their homes tenaciously.
+- header: Extraplanar Origins
+  text: >
+   Crystal spiders were probably created from a mundane variety of spider that was warped by elemental energy.
