@@ -1,6 +1,9 @@
 name: Amnio
 sorttype: alphabetical
-include-monster-headers: True
+headers:
+ mark: monster
+ toc: monster
+ title: monster
 type: fiend
 alignment: neutral evil
 tags:

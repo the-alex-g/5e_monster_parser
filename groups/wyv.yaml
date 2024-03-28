@@ -1,6 +1,8 @@
 name: Wyv
 sorttype: alphabetical
-include-monster-headers: False
+headers:
+ mark: monster
+ toc: monster
 type: beast
 size: tiny
 abilities:

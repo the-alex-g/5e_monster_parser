@@ -315,17 +315,20 @@ def reactions(actions, stats, params):
     return partition("Reactions") + format_actions(actions, stats, params)
 
 
-def create_header(name, mark=True, label=True):
-    header = "\\section*{" + name + "}"
+def create_header(name, title=True, mark=True, label=True, addtoc=True):
+    header = ""
     if label:
         header += "\\label{" + name + "}"
     if mark:
-        header += "\\markboth{" + name + "}{" + name + "}\\addcontentsline{toc}{subsection}{" + name + "}"
-    header += "\\halfline" + LINEBREAK
+        header += "\\markboth{" + name + "}{" + name + "}"
+    if addtoc:
+        header += "\\addcontentsline{toc}{subsection}{" + name + "}"
+    if title:
+        header += "\\section*{" + name + "}\\halfline" + LINEBREAK
     return header
 
 
-def create_monster(monster, header=True):
+def create_monster(monster, title=True, mark=True, addtoc=True):
     if check_missing_fields(monster):
         return ""
     monster_string = ""
@@ -342,10 +345,7 @@ def create_monster(monster, header=True):
     if "params" in monster:
         for param in monster["params"]:
             params[param] = monster["params"][param]
-    if header:
-        monster_string = create_header(header_name)
-    else:
-        monster_string += "\\label{" + header_name + "}"
+    monster_string += create_header(header_name, title=title, mark=mark, addtoc=addtoc)
 
     if "flavor" in monster:
         monster_string += "\\textit{" + monster["flavor"] + "}" + NEWLINE + LINEBREAK
@@ -509,8 +509,10 @@ def add_to_appendices(monster):
 
 
 def resolve_group(group, monsters):
-    include_monster_headers = group["include-monster-headers"]
-    group_string = create_header(group["name"], mark=not include_monster_headers, label=False)
+    mark = group["headers"]["mark"]
+    addtoc = group["headers"]["toc"]
+    title = "title" in group["headers"] and group["headers"]["title"] == "monster"
+    group_string = create_header(headername(group), mark=mark=="group", label=False, addtoc=addtoc=="group")
     if "flavor" in group:
         group_string += "\\textit{" + group["flavor"] + "}" + NEWLINE + LINEBREAK
 
@@ -519,7 +521,7 @@ def resolve_group(group, monsters):
         group_shortname = shortname(group)
         if "type" in group:
             group_type = group["type"]
-        group_string += description(group["description"], group_type, group_shortname, include_default=not include_monster_headers) + LINEBREAK
+        group_string += description(group["description"], group_type, group_shortname, include_default=not title) + LINEBREAK
 
     monster_dict = {}
     if "sorttype" in group:
@@ -557,7 +559,7 @@ def resolve_group(group, monsters):
                     if not field in monster:
                         monster[field] = group[field]
         
-        group_string += create_monster(monster, header=include_monster_headers) + LINEBREAK
+        group_string += create_monster(monster, title=title, mark=mark=="monster", addtoc=addtoc=="monster") + LINEBREAK
 
     if "lair" in group:
         group_string += lair(group["lair"], blank_params(group["name"]))

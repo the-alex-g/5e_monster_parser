@@ -1,7 +1,9 @@
 name: Zinc Dragon
 headername: Dragon, Zinc
 shortname: dragon
-include-monster-headers: False
+headers:
+ mark: group
+ toc: group
 sorttype: index
 type: dragon
 flavor: This dragon’s brilliant silver scales practically glow in the blazing desert sun as it swoops overhead.
